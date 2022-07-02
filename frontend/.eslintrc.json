@@ -1,0 +1,46 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "google",
+    "plugin:vue/vue3-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:@typescript-eslint/strict",
+    "prettier"],
+  "rules": {
+    "max-len": [
+      "error",
+      {
+        "code": 119
+      }
+    ],
+    "require-jsdoc": "off",
+    "camelcase": ["error", {"allow": ["jwt_decode"]}],
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
+    "@typescript-eslint/unbound-method": "off",
+    "@typescript-eslint/no-unsafe-argument": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-empty-function": "off"
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "project": ["./tsconfig.json"],
+    "extraFileExtensions": [".vue"]
+  },
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parser": "@typescript-eslint/parser"
+    },
+    {
+      "files": ["*.vue"],
+      "parser": "vue-eslint-parser",
+      "parserOptions": {
+        "parser": "@typescript-eslint/parser",
+        "sourceType": "module"
+      }
+    }
+]
+}

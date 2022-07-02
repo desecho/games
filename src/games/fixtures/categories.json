@@ -1,0 +1,44 @@
+[
+{
+  "model": "games.category",
+  "pk": 1,
+  "fields": {
+    "name": "Main Game"
+  }
+},
+{
+  "model": "games.category",
+  "pk": 2,
+  "fields": {
+    "name": "DLC"
+  }
+},
+{
+  "model": "games.category",
+  "pk": 3,
+  "fields": {
+    "name": "Expansion"
+  }
+},
+{
+  "model": "games.category",
+  "pk": 4,
+  "fields": {
+    "name": "Standalone Expansion"
+  }
+},
+{
+  "model": "games.category",
+  "pk": 6,
+  "fields": {
+    "name": "Remake"
+  }
+},
+{
+  "model": "games.category",
+  "pk": 7,
+  "fields": {
+    "name": "Remaster"
+  }
+}
+]

@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: games
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: games
+  template:
+    metadata:
+      labels:
+        app: games
+    spec:
+      terminationGracePeriodSeconds: 30
+      restartPolicy: Always
+      containers:
+        - name: backend
+          image: ghcr.io/desecho/games:backend
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: games
+            - configMapRef:
+                name: games
+        - name: frontend
+          image: ghcr.io/desecho/games:frontend
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9000
