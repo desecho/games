@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: games
+data:
+  PROJECT_DOMAIN: api.games.samarchyan.me
+  ADMIN_EMAIL: desecho@gmail.com
+  EMAIL_HOST: smtp.gmail.com
+  EMAIL_HOST_USER: desecho@gmail.com
+  DB_HOST: mysql
+  DB_USER: games
+  STATIC_URL: https://cdn.games.samarchyan.me/
+  REDIS_URL: redis://redis:6379/
+  FRONTEND_URL: https://games.samarchyan.me

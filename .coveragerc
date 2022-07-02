@@ -1,0 +1,24 @@
+[run]
+branch = True
+omit =
+    src/games/tests/*
+    src/games/migrations/*
+    src/manage.py
+    src/games_project/*sgi.py
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    if self\.debug
+    raise AssertionError
+    raise NotImplementedError
+
+ignore_errors = True
+show_missing = True
+
+omit =
+    src/games/tests/*
+    src/games/migrations/*
+    src/manage.py
+    src/games_project/*sgi.py

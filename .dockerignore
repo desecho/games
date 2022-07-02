@@ -1,0 +1,6 @@
+src/games/static
+venv
+.tox
+.github
+.vscode
+static

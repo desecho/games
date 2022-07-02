@@ -1,0 +1,28 @@
+-r requirements.txt
+
+# Pytest
+pytest
+pytest-cov
+pytest-sugar
+pytest-mock
+pytest-django
+
+# Django
+django-test-without-migrations
+
+# Linting
+pylint
+isort
+flake8
+bandit
+pydiatra
+pydocstyle
+safety
+autoflake
+black
+restructuredtext_lint
+mypy
+
+# Stubs
+django-stubs
+djangorestframework-stubs[compatible-mypy]==1.7.0
