@@ -1,5 +1,5 @@
 <template>
-  <v-img v-if="game.cover" :src="game.cover" title="game.name" :alt="game.name" height="225">
+  <v-img v-if="game.cover" :src="game.cover" :title="game.name" :alt="game.name" height="225">
     <GameCategory :name="game.category" color="white" />
   </v-img>
   <v-img v-else src="/img/image-not-found.svg" class="no-img" :title="game.name" :alt="game.name" height="225">
