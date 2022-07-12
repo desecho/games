@@ -6,8 +6,10 @@
       :records="records"
       :is-own-profile="isOwnProfile"
     >
-      <v-card-title v-if="username" class="bg-purple-darken-2">
-        {{ username }}
+      <v-card-title v-if="username" class="username-bar">
+        <v-img src="/img/cover.png" width="100%" cover
+          ><div class="username">{{ username }}</div></v-img
+        >
       </v-card-title>
     </GamesList>
     <v-alert v-if="userNotFound || userIsHidden" prominent type="error" variant="outlined" class="ma-5">
