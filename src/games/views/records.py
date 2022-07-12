@@ -7,7 +7,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ..models import Game, ListModel, Record, User
+from ..models import Game, List, Record, User
 from .common import IGDBAPIView
 
 
@@ -82,7 +82,7 @@ class RecordAdd(IGDBAPIView):
         except (KeyError, ValueError):
             return Response(status=HTTPStatus.BAD_REQUEST)
 
-        if not ListModel.is_valid_id(list_id):
+        if not List.is_valid_id(list_id):
             return Response(status=HTTPStatus.BAD_REQUEST)
 
         self._add_game_to_list(game_id, list_id)
@@ -99,7 +99,7 @@ class ChangeListView(APIView):
         except (KeyError, ValueError):
             return Response(status=HTTPStatus.BAD_REQUEST)
 
-        if not ListModel.is_valid_id(list_id):
+        if not List.is_valid_id(list_id):
             return Response(status=HTTPStatus.BAD_REQUEST)
 
         user: User = request.user  # type: ignore

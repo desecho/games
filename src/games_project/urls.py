@@ -1,6 +1,4 @@
 """URL Configuration."""
-from typing import List
-
 import debug_toolbar
 from django.conf import settings
 from django.conf.urls import include
@@ -20,7 +18,7 @@ from games.views import (
     UserRecordsView,
 )
 
-urlpatterns: List[URL] = []
+urlpatterns: list[URL] = []
 
 if settings.DEBUG:  # pragma: no cover
     urlpatterns += [

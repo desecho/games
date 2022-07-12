@@ -5,7 +5,7 @@ from django.contrib.admin import ModelAdmin, register, site
 from django.contrib.auth.models import Group
 from django.http import HttpRequest
 
-from .models import Category, Game, ListModel, Record, User
+from .models import Category, Game, List, Record, User
 
 
 @register(Record)
@@ -24,12 +24,12 @@ class GameAdmin(ModelAdmin[Game]):  # pylint:disable=unsubscriptable-object
     search_fields = ("name",)
 
 
-@register(ListModel)
-class ListAdmin(ModelAdmin[ListModel]):  # pylint:disable=unsubscriptable-object
+@register(List)
+class ListAdmin(ModelAdmin[List]):  # pylint:disable=unsubscriptable-object
     """List admin."""
 
     def has_delete_permission(  # pylint:disable=no-self-use,unused-argument
-        self, request: HttpRequest, obj: Optional[ListModel] = None
+        self, request: HttpRequest, obj: Optional[List] = None
     ) -> bool:
         """Return True if the user has delete permission."""
         return False

@@ -1,7 +1,6 @@
 """IGDB."""
 import json
 from datetime import datetime
-from typing import List
 
 from authlib.integrations.requests_client import OAuth2Session
 from django.conf import settings
@@ -69,9 +68,9 @@ class IGDB:
         self.igdb = IGDBWrapper(settings.IGDB_CLIENT_ID, token)
 
     @staticmethod
-    def _process_search_games_results(results: List[IGDBGamesSearchResultRaw]) -> List[IGDBGamesSearchResult]:
+    def _process_search_games_results(results: list[IGDBGamesSearchResultRaw]) -> list[IGDBGamesSearchResult]:
         """Process search games results."""
-        results_processed: List[IGDBGamesSearchResult] = []
+        results_processed: list[IGDBGamesSearchResult] = []
         for result in results:
             result_processed: IGDBGamesSearchResult = {
                 "id": result["id"],
@@ -83,7 +82,7 @@ class IGDB:
             results_processed.append(result_processed)
         return results_processed
 
-    def search_games(self, query: str) -> List[IGDBGamesSearchResult]:
+    def search_games(self, query: str) -> list[IGDBGamesSearchResult]:
         """Search games."""
         request = f"""
             fields name, cover.image_id, category;
@@ -97,7 +96,7 @@ class IGDB:
             response = self.igdb.api_request("games", request)
         except Exception as exc:
             raise IGDBError from exc
-        results: List[IGDBGamesSearchResultRaw] = json.loads(response)
+        results: list[IGDBGamesSearchResultRaw] = json.loads(response)
         return self._process_search_games_results(results)
 
     @staticmethod

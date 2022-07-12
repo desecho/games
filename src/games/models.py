@@ -87,7 +87,7 @@ class Game(Model):
         }
 
 
-class ListModel(Model):
+class List(Model):
     """List."""
 
     WANT_TO_PLAY = 1
@@ -100,8 +100,6 @@ class ListModel(Model):
     class Meta:
         """Meta."""
 
-        verbose_name = "list"
-        verbose_name_plural = "lists"
         ordering = ["pk"]
 
     def __str__(self) -> str:
@@ -119,7 +117,7 @@ class Record(Model):
 
     user = ForeignKey(User, CASCADE, related_name="records")
     game = ForeignKey(Game, CASCADE, related_name="records")
-    list = ForeignKey(ListModel, CASCADE)
+    list = ForeignKey(List, CASCADE)
     rating = PositiveSmallIntegerField(default=0)
     order = PositiveSmallIntegerField(default=0)
     comment = CharField(max_length=255, default="")

@@ -1,6 +1,5 @@
 """Search views."""
 from http import HTTPStatus
-from typing import List
 
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -13,9 +12,9 @@ from .common import IGDBAPIView
 class SearchView(IGDBAPIView):
     """Search view."""
 
-    permission_classes: List[str] = []  # type: ignore
+    permission_classes: list[str] = []  # type: ignore
 
-    def _filter_out_users_games(self, results: List[IGDBGamesSearchResult]) -> None:
+    def _filter_out_users_games(self, results: list[IGDBGamesSearchResult]) -> None:
         """Filter out users games."""
         user: User = self.request.user  # type: ignore
         user_games_ids = user.records.values_list("game__id", flat=True)

@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from datetime import timedelta
 from os import getenv
 from os.path import abspath, dirname, join
-from typing import List
 
 import django_stubs_ext
 import sentry_sdk
@@ -102,7 +101,7 @@ if DEBUG:  # pragma: no cover
 
 ROOT_URLCONF = "games_project.urls"
 
-TEMPLATES: List[TemplatesSettings] = [
+TEMPLATES: list[TemplatesSettings] = [
     {
         "NAME": "Main",
         "BACKEND": "django.template.backends.django.DjangoTemplates",

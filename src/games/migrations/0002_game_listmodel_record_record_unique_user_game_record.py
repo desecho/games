@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='ListModel',
+            name='List',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=255, unique=True)),
@@ -41,7 +41,7 @@ class Migration(migrations.Migration):
                 ('comment', models.CharField(default='', max_length=255)),
                 ('date_added', models.DateTimeField(auto_now_add=True)),
                 ('game', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='records', to='games.game')),
-                ('list', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='games.listmodel')),
+                ('list', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='games.list')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='records', to=settings.AUTH_USER_MODEL)),
             ],
         ),

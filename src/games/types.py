@@ -1,7 +1,7 @@
 """Custom Types."""
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional, TypeAlias, Union
+from typing import Any, Dict, Optional, TypeAlias, Union
 
 from django.urls import URLPattern, URLResolver
 from typing_extensions import NotRequired, TypedDict
@@ -10,9 +10,9 @@ from typing_extensions import NotRequired, TypedDict
 class TemplatesSettingsOptions(TypedDict):
     """Templates settings options."""
 
-    context_processors: List[str]
-    # loaders: List[str | Tuple[str, List[str]]]
-    # builtins: List[str]
+    context_processors: list[str]
+    # loaders: list[str | Tuple[str, list[str]]]
+    # builtins: list[str]
 
 
 class TemplatesSettings(TypedDict):
@@ -20,7 +20,7 @@ class TemplatesSettings(TypedDict):
 
     NAME: str
     BACKEND: str
-    DIRS: NotRequired[List[str]]
+    DIRS: NotRequired[list[str]]
     OPTIONS: NotRequired[TemplatesSettingsOptions]
     APP_DIRS: NotRequired[Optional[bool]]
 
