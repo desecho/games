@@ -1,24 +1,8 @@
 <template>
-  <v-img
-    v-if="game.cover"
-    class="mx-auto mt-3"
-    :src="game.cover"
-    :title="game.name"
-    :alt="game.name"
-    width="200"
-    height="225"
-  >
+  <v-img v-if="game.cover" :src="game.cover" title="game.name" :alt="game.name" height="225">
     <GameCategory :name="game.category" color="white" />
   </v-img>
-  <v-img
-    v-else
-    class="mx-auto mt-3"
-    src="img/image-not-found.svg"
-    :title="game.name"
-    :alt="game.name"
-    width="100"
-    height="225"
-  >
+  <v-img v-else src="/img/image-not-found.svg" class="no-img" :title="game.name" :alt="game.name" height="225">
     <GameCategory :name="game.category" />
   </v-img>
 </template>

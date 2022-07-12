@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mb-5 mr-5" width="200" height="285">
+  <v-card class="mb-5 mr-5" width="168" height="275">
     <GameCover :game="record.game" />
     <v-card-actions>
       <v-spacer></v-spacer>

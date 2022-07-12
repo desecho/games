@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mb-5 mr-5" width="200" height="320">
+  <v-card class="mb-5 mr-5" width="168" height="310">
     <GameCover :game="game" />
     <v-card-title class="game-title" :title="game.name">
       {{ game.name }}
