@@ -1,7 +1,7 @@
 """Custom Types."""
 from __future__ import annotations
 
-from typing import Any, Dict, Optional, TypeAlias, Union
+from typing import Any, Optional, TypeAlias
 
 from django.urls import URLPattern, URLResolver
 from typing_extensions import NotRequired, TypedDict
@@ -43,5 +43,5 @@ class RecordObject(TypedDict):
     order: int
 
 
-UntypedObject: TypeAlias = Dict[str, Any]
-URL: TypeAlias = Union[URLPattern, URLResolver]
+UntypedObject: TypeAlias = dict[str, Any]
+URL: TypeAlias = URLPattern | URLResolver
