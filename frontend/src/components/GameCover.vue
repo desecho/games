@@ -1,9 +1,6 @@
 <template>
-  <v-img v-if="game.cover" :src="game.cover" :title="game.name" :alt="game.name" height="225">
-    <GameCategory :name="game.category" color="white" />
-  </v-img>
-  <v-img v-else src="/img/image-not-found.svg" class="no-img" :title="game.name" :alt="game.name" height="225">
-    <GameCategory :name="game.category" />
+  <v-img :src="src" :title="game.name" :alt="game.name" height="225" :class="{ 'no-img': !game.cover }">
+    <GameCategory :name="game.category" :color="game.cover ? 'white' : undefined" />
   </v-img>
 </template>
 
@@ -23,6 +20,14 @@ export default defineComponent({
       // eslint-disable-next-line @typescript-eslint/ban-types
       type: Object as PropType<GameSearchResult> | Object as PropType<Game>,
       required: true,
+    },
+  },
+  computed: {
+    src(): string {
+      if (this.game.cover) {
+        return this.game.cover;
+      }
+      return "/img/image-not-found.svg";
     },
   },
 });
