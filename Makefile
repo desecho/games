@@ -337,15 +337,27 @@ load-db: drop-db create-db
 #------------------------------------
 
 #------------------------------------
-# Formatting
+# Formatting backend
 #------------------------------------
 .PHONY: format
-## Format python code | Formatting
+## Format python code | Formatting backend
 format:
 	${SOURCE_CMDS} && \
 	autoflake --remove-all-unused-imports --in-place -r src && \
 	isort src && \
 	black .
+
+.PHONY: f
+## Format python code (format alias)
+f: format
+#------------------------------------
+
+#------------------------------------
+# Formatting miscellaneous
+#------------------------------------
+.PHONY: format-misc
+## Format sh, json, yaml files | Formatting miscellaneous
+format-misc: format-sh format-json format-yaml
 
 .PHONY: format-sh
 ## Format sh files
@@ -357,6 +369,24 @@ format-sh:
 format-json:
 	${CMD_FRONTEND} && \
 	yarn run prettier --write ../**/*.json
+
+.PHONY: format-yaml
+## Format yaml files
+format-yaml:
+	${CMD_FRONTEND} && \
+	yarn run prettier --write ../deployment/*.yaml ../.github/**/*.yaml
+#------------------------------------
+
+#------------------------------------
+# Formatting frontend
+#------------------------------------
+.PHONY: format-frontend
+## Format files for frontend (vue, ts, scss, html) | Formatting frontend
+format-frontend: format-html format-ts format-scss format-vue
+
+.PHONY: ff
+## Format files for frontend (vue, ts, scss, html) (format-frontend alias)
+ff: format-frontend
 
 .PHONY: format-ts
 ## Format ts files
@@ -376,21 +406,23 @@ format-vue:
 	${CMD_FRONTEND} && \
 	yarn run prettier --write src/App.vue src/components/*.vue src/views/*.vue
 
-.PHONY: format-yaml
-## Format yaml files
-format-yaml:
-	${CMD_FRONTEND} && \
-	yarn run prettier --write ../deployment/*.yaml ../.github/**/*.yaml
-
 .PHONY: format-html
 ## Format html files
 format-html:
 	${CMD_FRONTEND} && \
 	yarn run prettier --write ./*.html
+#------------------------------------
 
+#------------------------------------
+# Formatting all
+#------------------------------------
 .PHONY: format-all
-## Format code
-format-all: format format-html format-ts format-scss format-sh format-json format-yaml format-vue
+## Format code | Formatting all
+format-all: format format-sh format-json format-yaml format-frontend
+
+.PHONY: fa
+## Format code (format-all alias)
+fa: format-all
 #------------------------------------
 
 #------------------------------------
