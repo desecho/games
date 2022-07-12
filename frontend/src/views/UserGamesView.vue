@@ -2,7 +2,6 @@
   <div v-if="isLoaded">
     <GamesList
       v-if="!userNotFound && !userIsHidden"
-      :to="getPath(listKey)"
       :username="username"
       :records="records"
       :is-own-profile="isOwnProfile"
