@@ -1,5 +1,5 @@
 <template>
-  <GamesList :to="getPath(listKey)" :records="records" />
+  <GamesList :records="records" />
 </template>
 
 <script lang="ts">
@@ -29,11 +29,6 @@ export default defineComponent({
       console.log(error);
       this.$toast.error("Error loading games");
     });
-  },
-  methods: {
-    getPath(listKey: string): string {
-      return "/games/" + listKey;
-    },
   },
 });
 </script>
