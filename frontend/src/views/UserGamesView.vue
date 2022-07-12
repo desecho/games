@@ -3,8 +3,8 @@
     <GamesList
       v-if="!userNotFound && !userIsHidden"
       :to="getPath(listKey)"
+      :username="username"
       :records="records"
-      :is-profile="true"
       :is-own-profile="isOwnProfile"
     >
       <v-card-title v-if="username" class="bg-purple-darken-2">
@@ -74,11 +74,6 @@ export default defineComponent({
           this.$toast.error("Error loading games");
         }
       });
-  },
-  methods: {
-    getPath(listKey: string): string {
-      return `/user/${this.username}/${listKey}`;
-    },
   },
 });
 </script>

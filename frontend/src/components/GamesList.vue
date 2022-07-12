@@ -2,7 +2,7 @@
   <v-card variant="flat">
     <slot></slot>
     <v-tabs v-model="tab" background-color="deep-purple-accent-4" centered stacked>
-      <v-tab v-for="list in lists" :key="list.id" :value="list.key" :to="to">
+      <v-tab v-for="list in lists" :key="list.id" :value="list.key" :to="getPath(list.key)">
         <v-icon>mdi-{{ list.icon }}</v-icon>
         {{ list.name }}
       </v-tab>
@@ -27,23 +27,19 @@ import ListWindowItem from "../components/ListWindowItem.vue";
 import { RecordType } from "../types";
 
 export default defineComponent({
-  name: "GamesView",
+  name: "GamesListView",
   components: {
     ListWindowItem,
   },
   props: {
-    to: {
-      type: String,
-      required: true,
-    },
     records: {
       type: Object as PropType<RecordType[]>,
       required: true,
     },
-    isProfile: {
-      type: Boolean,
+    username: {
+      type: String,
       required: false,
-      default: false,
+      default: null,
     },
     isOwnProfile: {
       type: Boolean,
@@ -54,8 +50,24 @@ export default defineComponent({
   data() {
     return {
       lists: Lists,
-      tab: null,
+      tab: "want-to-play",
     };
+  },
+  computed: {
+    isProfile(): boolean {
+      if (this.username) {
+        return true;
+      }
+      return false;
+    },
+  },
+  methods: {
+    getPath(listKey: string): string {
+      if (this.isProfile) {
+        return `/user/${this.username}/${listKey}`;
+      }
+      return `/games/${listKey}`;
+    },
   },
 });
 </script>
