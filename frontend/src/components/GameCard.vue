@@ -1,28 +1,31 @@
 <template>
-  <v-card class="mb-5 mr-5" width="168" height="275">
+  <v-card class="mb-5 mr-5" width="168" :height="height">
     <GameCover :game="record.game" />
-    <v-card-actions>
+    <v-card-actions v-if="areActionsVisible">
       <v-spacer></v-spacer>
       <ActionButton
         v-for="list in lists"
         :key="list.id"
         :title="list.name"
         :icon="list.icon"
-        @click="changeList(record.id, list.id, index)"
+        @click="action(list.id)"
       />
-      <ActionButton title="Delete Game" icon="delete" @click="deleteGame(record.id, index)" />
+      <ActionButton v-if="!isProfile" title="Delete Game" icon="delete" @click="deleteGame(record.id, index)" />
     </v-card-actions>
   </v-card>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
+import { mapWritableState } from "pinia";
 
 import { RecordType } from "../types";
 import { getUrl } from "../helpers";
 import { ListKeys, Lists } from "../const";
 import { useGamesStore } from "../stores/games";
+import { useAuthStore } from "../stores/auth";
 import { requireAuthenticated } from "../helpers";
+import { addToList } from "./common";
 import ActionButton from "./ActionButton.vue";
 import GameCover from "./GameCover.vue";
 
@@ -45,6 +48,27 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    isProfile: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    isOwnProfile: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
+  data() {
+    return {
+      action: (listId: number) => {
+        if (this.isProfile) {
+          this.addToList(this.record.game.id, listId, this.index, true);
+        } else {
+          this.changeList(this.record.id, listId, this.index);
+        }
+      },
+    };
   },
   computed: {
     lists() {
@@ -52,6 +76,17 @@ export default defineComponent({
         return list.key != this.listKey;
       });
     },
+    isLoggedIn() {
+      const { user } = useAuthStore();
+      return user.isLoggedIn;
+    },
+    height() {
+      return this.areActionsVisible ? 275 : 224;
+    },
+    areActionsVisible() {
+      return this.isLoggedIn && !this.isOwnProfile;
+    },
+    ...mapWritableState(useGamesStore, ["records"]),
   },
   methods: {
     changeList(recordId: number, listId: number, index: number) {
@@ -59,11 +94,10 @@ export default defineComponent({
       this.axios
         .put(getUrl(`records/${recordId}/change-list/`), { listId: listId })
         .then(() => {
-          const { games } = useGamesStore();
-          const record = games.records[index];
-          record.listKey = ListKeys[listId];
+          this.records[index].listKey = ListKeys[listId];
         })
-        .catch(() => {
+        .catch((error) => {
+          console.log(error);
           this.$toast.error("Error changing list");
         });
     },
@@ -72,13 +106,14 @@ export default defineComponent({
       this.axios
         .delete(getUrl(`records/${recordId}/delete/`))
         .then(() => {
-          const { games } = useGamesStore();
-          games.records.splice(index, 1);
+          this.records.splice(index, 1);
         })
-        .catch(() => {
+        .catch((error) => {
+          console.log(error);
           this.$toast.error("Error deleting game");
         });
     },
+    addToList: addToList,
   },
 });
 </script>

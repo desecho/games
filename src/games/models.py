@@ -80,6 +80,7 @@ class Game(Model):
     def object(self) -> GameObject:
         """Get object."""
         return {
+            "id": self.pk,
             "name": self.name,
             "cover": self.cover_url,
             "category": self.category.name,

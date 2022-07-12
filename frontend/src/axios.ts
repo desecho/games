@@ -1,4 +1,4 @@
-import { AxiosRequestHeaders } from "axios";
+import { AxiosRequestHeaders, AxiosError } from "axios";
 import axios from "axios";
 
 import { useAuthStore } from "./stores/auth";
@@ -20,10 +20,10 @@ export function initAxios() {
     (response) => {
       return response;
     },
-    async (error) => {
-      if ("response" in error && "status" in error.response && error.response.status === 401) {
+    async (error: AxiosError) => {
+      if (error.response.status === 401) {
         if (user.isLoggedIn) {
-          if ("code" in error.response && error.response.code === "token_not_valid") {
+          if (error.response.code === "token_not_valid") {
             try {
               await refreshToken();
             } catch (error) {

@@ -6,6 +6,7 @@ import { JWTDecoded } from "./types";
 import LoginView from "./views/LoginView.vue";
 import LogoutView from "./views/LogoutView.vue";
 import GamesView from "./views/GamesView.vue";
+import UserGamesView from "./views/UserGamesView.vue";
 import SearchView from "./views/SearchView.vue";
 import AboutView from "./views/AboutView.vue";
 
@@ -17,8 +18,8 @@ export const router = createRouter({
     { path: "/games", component: GamesView },
     { path: "/games/:listKey", component: GamesView, props: true },
     { path: "/about", component: AboutView },
-    { path: "/user/:username", component: GamesView, props: true },
-    { path: "/user/:username/:listKey", component: GamesView, props: true },
+    { path: "/user/:username", component: UserGamesView, props: true },
+    { path: "/user/:username/:listKey", component: UserGamesView, props: true },
     { path: "/login", component: LoginView },
     { path: "/logout", component: LogoutView },
   ],

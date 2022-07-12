@@ -66,7 +66,8 @@ export default defineComponent({
         .then((response) => {
           this.games = response.data;
         })
-        .catch(() => {
+        .catch((error) => {
+          console.log(error);
           this.$toast.error("Search error");
         });
     },

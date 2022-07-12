@@ -32,6 +32,7 @@ export interface SortData {
 }
 
 export interface Game {
+  id: number;
   name: string;
   cover: string | null;
   category: string;
@@ -42,9 +43,4 @@ export interface RecordType {
   game: Game;
   listKey: string;
   order: number;
-}
-
-export interface GamesStore {
-  records: RecordType[];
-  areLoaded: boolean;
 }

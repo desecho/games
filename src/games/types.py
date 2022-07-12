@@ -28,6 +28,7 @@ class TemplatesSettings(TypedDict):
 class GameObject(TypedDict):
     """Game object."""
 
+    id: int
     name: str
     cover: Optional[str]
     category: str

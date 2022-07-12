@@ -66,6 +66,7 @@ export default defineComponent({
       try {
         await login(this.username, this.password);
       } catch (error) {
+        console.log(error);
         this.$toast.error(error.response.data.detail);
       }
     },

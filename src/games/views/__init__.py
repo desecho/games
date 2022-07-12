@@ -1,15 +1,15 @@
 """Views."""
-from .games import GamesView
 from .health import HealthView
-from .records import AddGameToListView, ChangeListView, RecordDeleteView, RecordsSaveOrderView
+from .records import ChangeListView, RecordAdd, RecordDeleteView, RecordsSaveOrderView, RecordsView, UserRecordsView
 from .search import SearchView
 
 __all__ = [
     "SearchView",
-    "AddGameToListView",
+    "RecordAdd",
     "ChangeListView",
     "RecordDeleteView",
     "RecordsSaveOrderView",
-    "GamesView",
+    "RecordsView",
     "HealthView",
+    "UserRecordsView",
 ]

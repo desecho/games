@@ -3,9 +3,23 @@
     <v-card>
       <v-card-text>
         <div class="d-flex align-content-space-around flex-wrap">
-          <draggable v-model="records" item-key="id" class="d-flex flex-wrap" @sort="saveRecordsOrder">
+          <draggable
+            v-model="records"
+            item-key="id"
+            class="d-flex flex-wrap"
+            :disabled="isProfile"
+            :class="{ draggable: !isProfile }"
+            @sort="saveRecordsOrder"
+          >
             <template #item="{ element, index }">
-              <GameCard v-if="element.listKey == listKey" :record="element" :index="index" :list-key="listKey" />
+              <GameCard
+                v-if="element.listKey == listKey"
+                :record="element"
+                :index="index"
+                :list-key="listKey"
+                :is-profile="isProfile"
+                :is-own-profile="isOwnProfile"
+              />
             </template>
           </draggable>
         </div>
@@ -13,6 +27,7 @@
     </v-card>
   </v-window-item>
 </template>
+
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import Draggable from "vuedraggable";
@@ -34,6 +49,16 @@ export default defineComponent({
     listKey: {
       type: String,
       required: true,
+    },
+    isProfile: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    isOwnProfile: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   computed: {
@@ -57,7 +82,8 @@ export default defineComponent({
         });
         return data;
       };
-      this.axios.put(getUrl("records/save-order/"), { records: getSortData() }).catch(() => {
+      this.axios.put(getUrl("records/save-order/"), { records: getSortData() }).catch((error) => {
+        console.log(error);
         this.$toast.error("Error saving games order");
       });
     },

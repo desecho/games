@@ -11,7 +11,48 @@ from ..models import Game, ListModel, Record, User
 from .common import IGDBAPIView
 
 
-class AddGameToListView(IGDBAPIView):
+class RecordsView(APIView):
+    """Records view."""
+
+    def get(self, request: Request) -> Response:  # pylint: disable=no-self-use
+        """Get game records."""
+        user: User = request.user  # type: ignore
+        records: QuerySet[Record] = user.records.all()
+        records_objects = [record.object for record in records]
+        return Response(records_objects)
+
+
+class UserRecordsView(APIView):
+    """User records view."""
+
+    permission_classes: list[str] = []  # type: ignore
+
+    def _is_own_profile(self, username: str) -> bool:
+        """Return True if it is user's own profile."""
+        request_user = self.request.user
+        return request_user.is_authenticated and request_user.username == username
+
+    def get(self, request: Request, username: str) -> Response:  # pylint: disable=no-self-use,unused-argument
+        """Get game records."""
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return Response(status=HTTPStatus.NOT_FOUND)
+
+        if user.hidden:
+            return Response(status=HTTPStatus.FORBIDDEN)
+
+        records: QuerySet[Record] = user.records.all()
+        records_objects = [record.object for record in records]
+        data = {
+            "records": records_objects,
+            "isOwnProfile": self._is_own_profile(username),
+        }
+        print(data)
+        return Response(data)
+
+
+class RecordAdd(IGDBAPIView):
     """Add game to list view."""
 
     def _get_game(self, game_id: int) -> Game:

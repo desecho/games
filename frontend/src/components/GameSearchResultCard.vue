@@ -21,9 +21,8 @@
 import { defineComponent, PropType } from "vue";
 
 import { GameSearchResult } from "../types";
-import { getUrl, requireAuthenticated } from "../helpers";
 import { Lists } from "../const";
-import { useGamesStore } from "../stores/games";
+import { addToList } from "./common";
 import ActionButton from "./ActionButton.vue";
 import GameCover from "./GameCover.vue";
 
@@ -53,22 +52,7 @@ export default defineComponent({
     };
   },
   methods: {
-    addToList(gameId: number, listId: number, index: number) {
-      requireAuthenticated();
-      this.axios
-        .post(getUrl("records/add/"), { listId: listId, gameId: gameId })
-        .then(async () => {
-          // eslint-disable-next-line vue/no-mutating-props
-          this.games.splice(index, 1);
-          const { reloadGames } = useGamesStore();
-          await reloadGames().catch(() => {
-            this.$toast.error("Error reloading games");
-          });
-        })
-        .catch(() => {
-          this.$toast.error("Error adding a game");
-        });
-    },
+    addToList: addToList,
   },
 });
 </script>

@@ -10,13 +10,14 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from games.types import URL
 from games.views import (
-    AddGameToListView,
     ChangeListView,
-    GamesView,
     HealthView,
+    RecordAdd,
     RecordDeleteView,
     RecordsSaveOrderView,
+    RecordsView,
     SearchView,
+    UserRecordsView,
 )
 
 urlpatterns: List[URL] = []
@@ -37,11 +38,11 @@ urlpatterns += [
     path("search/", SearchView.as_view()),
     # Health
     path("health/", HealthView.as_view()),
-    # Games
-    path("games/", GamesView.as_view()),
     # Records
-    path("records/add/", AddGameToListView.as_view()),
+    path("records/", RecordsView.as_view()),
+    path("records/add/", RecordAdd.as_view()),
     path("records/save-order/", RecordsSaveOrderView.as_view()),
     path("records/<int:record_id>/change-list/", ChangeListView.as_view()),
     path("records/<int:record_id>/delete/", RecordDeleteView.as_view()),
+    path("records/users/<str:username>/", UserRecordsView.as_view()),
 ]
