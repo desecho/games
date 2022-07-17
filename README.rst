@@ -24,10 +24,11 @@ Development
 
 For development run:
 
-```bash
-make run
-make dev
-```
+.. code-block:: bash
+
+    make run
+    make dev
+
 
 Run ``make help`` to get a list of all available commands.
 
@@ -51,16 +52,16 @@ Used API
 -----------
 * IGDB_
 
-.. |Requirements Status| image:: https://requires.io/github/desecho/games/requirements.svg?branch=master
-   :target: https://requires.io/github/desecho/games/requirements/?branch=master
+.. |Requirements Status| image:: https://requires.io/github/desecho/games/requirements.svg?branch=main
+   :target: https://requires.io/github/desecho/games/requirements/?branch=main
 
-.. |Codecov| image:: https://codecov.io/gh/desecho/games/branch/master/graph/badge.svg
+.. |Codecov| image:: https://codecov.io/gh/desecho/games/branch/main/graph/badge.svg
    :target: https://codecov.io/gh/desecho/games
 
 .. |Deployment Status| image:: https://github.com/desecho/games/actions/workflows/deployment.yaml/badge.svg
    :target: https://github.com/desecho/games/actions/workflows/deployment.yaml
 
-.. _documentation: https://github.com/desecho/games/blob/master/doc.rst
+.. _documentation: https://github.com/desecho/games/blob/main/doc.rst
 
 .. _ubuntu-vm: https://github.com/desecho/ubuntu-vm
 .. _mysql-docker: https://github.com/desecho/mysql-docker
