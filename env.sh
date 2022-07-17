@@ -13,7 +13,7 @@ export PROJECT_DOMAIN=localhost
 export INTERNAL_IP=127.0.0.1
 export STATIC_URL=/static/
 export SENTRY_DSN=
-export FRONTEND_URL=http://localhost:3000
+export FRONTEND_URL=http://localhost:5173
 export FRONTEND_URL2=http://localhost:4173
 
 export DB_USER=root

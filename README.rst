@@ -32,7 +32,7 @@ For development run:
 
 Run ``make help`` to get a list of all available commands.
 
-| Open http://localhost:3000/ to access the web application.
+| Open http://localhost:5173/ to access the web application.
 | Open http://localhost:8000/admin to access the admin section.
 
 Run in Docker:
