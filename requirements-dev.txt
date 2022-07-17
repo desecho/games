@@ -22,6 +22,7 @@ autoflake
 black
 restructuredtext_lint
 mypy
+pygments # For syntax highlighting in code examples
 
 # Stubs
 django-stubs
