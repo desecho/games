@@ -14,7 +14,7 @@ DB_ENV_PROD_FILE := db_env_prod.sh
 
 SHELL := /bin/bash
 SOURCE_CMDS := source venv/bin/activate && source $(ENV_FILE) && source $(ENV_CUSTOM_FILE) && source $(ENV_SECRETS_FILE)
-CMD_FRONTEND := source $(ENV_FILE) && cd frontend
+CMD_FRONTEND := cd frontend && source $(ENV_FILE)
 PYTHON := python3.10
 
 #------------------------------------
