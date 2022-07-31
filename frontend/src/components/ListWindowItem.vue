@@ -18,6 +18,7 @@
                 :list-key="listKey"
                 :is-profile="isProfile"
                 :is-own-profile="isOwnProfile"
+                :are-action-buttons-active="areActionButtonsActive"
                 :class="{ draggable: !isProfile }"
               />
             </template>
@@ -59,6 +60,11 @@ export default defineComponent({
       type: Boolean,
       required: false,
       default: false,
+    },
+    areActionButtonsActive: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
   },
   computed: {
