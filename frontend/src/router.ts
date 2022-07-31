@@ -8,6 +8,7 @@ import LogoutView from "./views/LogoutView.vue";
 import GamesView from "./views/GamesView.vue";
 import UsersView from "./views/UsersView.vue";
 import UserGamesView from "./views/UserGamesView.vue";
+import UserPreferencesView from "./views/UserPreferencesView.vue";
 import SearchView from "./views/SearchView.vue";
 import AboutView from "./views/AboutView.vue";
 
@@ -22,13 +23,14 @@ export const router = createRouter({
     { path: "/users/:username", component: UserGamesView, props: true },
     { path: "/users/:username/:listKey", component: UserGamesView, props: true },
     { path: "/users", component: UsersView },
+    { path: "/preferences", component: UserPreferencesView },
     { path: "/login", component: LoginView },
     { path: "/logout", component: LogoutView },
   ],
 });
 
 router.beforeEach(async (to) => {
-  const privatePages = ["/games"];
+  const privatePages = ["/games", "/preferences"];
   const authRequired = privatePages.includes(to.path);
   const { user, refreshToken } = useAuthStore();
 

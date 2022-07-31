@@ -14,7 +14,7 @@ from django.db.models import (
     UniqueConstraint,
 )
 
-from .types import GameObject, RecordObject
+from .types import GameObject, RecordObject, UserPreferences
 from .utils import get_cover_url
 
 
@@ -26,6 +26,11 @@ class User(AbstractUser):
     def __str__(self) -> str:
         """Return string representation."""
         return str(self.username)
+
+    @property
+    def preferences(self) -> UserPreferences:
+        """Return preferences."""
+        return {"hidden": self.hidden}
 
 
 class Category(Model):

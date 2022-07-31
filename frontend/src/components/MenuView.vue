@@ -12,6 +12,7 @@
       <template #append>
         <v-list>
           <MenuItem v-if="!isLoggedIn" title="Login" icon="login" to="/login" />
+          <MenuItem v-if="isLoggedIn" title="Settings" icon="cog" to="/preferences" />
           <MenuItem v-if="isLoggedIn" title="Logout" icon="logout" to="/logout" />
         </v-list>
       </template>
