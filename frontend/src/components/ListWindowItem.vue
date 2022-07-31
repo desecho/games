@@ -8,7 +8,6 @@
             item-key="id"
             class="d-flex flex-wrap"
             :disabled="isProfile"
-            :class="{ draggable: !isProfile }"
             @sort="saveRecordsOrder"
           >
             <template #item="{ element, index }">
@@ -19,6 +18,7 @@
                 :list-key="listKey"
                 :is-profile="isProfile"
                 :is-own-profile="isOwnProfile"
+                :class="{ draggable: !isProfile }"
               />
             </template>
           </draggable>
