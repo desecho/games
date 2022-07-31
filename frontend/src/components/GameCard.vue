@@ -58,6 +58,11 @@ export default defineComponent({
       required: false,
       default: false,
     },
+    areActionButtonsActive: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   data() {
     return {
@@ -84,7 +89,7 @@ export default defineComponent({
       return this.areActionsVisible ? 275 : 224;
     },
     areActionsVisible() {
-      return this.isLoggedIn && !this.isOwnProfile;
+      return this.isLoggedIn && !this.isOwnProfile && this.areActionButtonsActive;
     },
     ...mapWritableState(useGamesStore, ["records"]),
   },
