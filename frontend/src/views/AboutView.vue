@@ -19,7 +19,7 @@
         </ul>
         <br />
         <h3>Import/Export data</h3>
-        <p>If you would like to import or export data, please <a href="mailto:desecho@gmail.com">email me</a>.</p>
+        <p>If you would like to import or export data, please <a :href="`mailto:${email}`">email me</a>.</p>
         <br />
         <h3>Source code</h3>
         <p>The source code is available <a href="https://github.com/desecho/games" target="_blank">on GitHub</a>.</p>
@@ -27,7 +27,8 @@
         <h3>Contact info</h3>
         <p>
           If you have problems with account activation or other issues, questions or feedback please email me at
-          <a href="mailto:desecho@gmail.com">desecho@gmail.com</a>.
+          <a :href="`mailto:${email}`">{{ email }}</a
+          >.
         </p>
       </v-col>
     </v-row>
@@ -36,8 +37,14 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { Email } from "../const";
 
 export default defineComponent({
   name: "AboutView",
+  data() {
+    return {
+      email: Email,
+    };
+  },
 });
 </script>

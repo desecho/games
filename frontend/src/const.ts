@@ -37,3 +37,5 @@ export const Lists = [
     icon: "pause-circle-outline",
   },
 ];
+
+export const Email = import.meta.env.VITE_ADMIN_EMAIL;

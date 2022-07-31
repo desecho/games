@@ -23,4 +23,5 @@ export DB_HOST=127.0.0.1
 export REDIS_URL=redis://localhost:6379/
 
 export VITE_BACKEND_URL=http://localhost:8000/
+export VITE_ADMIN_EMAIL=admin@example.com
 export VITE_GOOGLE_ANALYTICS_ID=
