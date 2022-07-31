@@ -48,7 +48,6 @@ class UserRecordsView(APIView):
             "records": records_objects,
             "isOwnProfile": self._is_own_profile(username),
         }
-        print(data)
         return Response(data)
 
 
