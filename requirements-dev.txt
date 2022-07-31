@@ -26,4 +26,4 @@ pygments # For syntax highlighting in code examples
 
 # Stubs
 django-stubs
-djangorestframework-stubs[compatible-mypy]==1.7.0
+djangorestframework-stubs[compatible-mypy]
