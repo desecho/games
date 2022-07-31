@@ -16,6 +16,7 @@ from games.views import (
     RecordsView,
     SearchView,
     UserRecordsView,
+    UsersView,
 )
 
 urlpatterns: list[URL] = []
@@ -27,6 +28,8 @@ if settings.DEBUG:  # pragma: no cover
 
 
 urlpatterns += [
+    # Health
+    path("health/", HealthView.as_view()),
     # Admin
     path("admin/", admin.site.urls),
     # Auth
@@ -34,8 +37,8 @@ urlpatterns += [
     path("token/refresh/", TokenRefreshView.as_view()),
     # Search
     path("search/", SearchView.as_view()),
-    # Health
-    path("health/", HealthView.as_view()),
+    # Users
+    path("users/", UsersView.as_view()),
     # Records
     path("records/", RecordsView.as_view()),
     path("records/add/", RecordAdd.as_view()),

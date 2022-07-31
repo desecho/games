@@ -64,7 +64,7 @@ export default defineComponent({
   methods: {
     getPath(listKey: string): string {
       if (this.isProfile) {
-        return `/user/${this.username}/${listKey}`;
+        return `/users/${this.username}/${listKey}`;
       }
       return `/games/${listKey}`;
     },
