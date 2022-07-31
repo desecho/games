@@ -7,9 +7,13 @@
       <v-list>
         <MenuItem title="Search" icon="magnify" to="/" />
         <MenuItem title="Games" icon="google-controller" to="/games" />
-        <MenuItem v-if="!isLoggedIn" title="Login" icon="login" to="/login" />
-        <MenuItem v-if="isLoggedIn" title="Logout" icon="logout" to="/logout" />
       </v-list>
+      <template #append>
+        <v-list>
+          <MenuItem v-if="!isLoggedIn" title="Login" icon="login" to="/login" />
+          <MenuItem v-if="isLoggedIn" title="Logout" icon="logout" to="/logout" />
+        </v-list>
+      </template>
     </v-navigation-drawer>
   </div>
 </template>
