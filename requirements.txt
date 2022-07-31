@@ -9,7 +9,7 @@ django-cors-headers==3.13.0
 django-debug-toolbar
 
 mysqlclient==2.1.1
-sentry-sdk==1.7.2
+sentry-sdk==1.9.0
 gunicorn==20.1.0
 typing-extensions==4.3.0
 igdb-api-v4==0.0.5
