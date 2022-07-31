@@ -26,6 +26,10 @@ export interface SearchViewComponentData {
   query: string;
 }
 
+export interface UsersViewComponentData {
+  users: string[];
+}
+
 export interface SortData {
   id: number;
   order: number;

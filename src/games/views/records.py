@@ -1,4 +1,4 @@
-"""Games views."""
+"""Records views."""
 from datetime import datetime
 from http import HTTPStatus
 

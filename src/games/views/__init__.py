@@ -2,6 +2,7 @@
 from .health import HealthView
 from .records import ChangeListView, RecordAdd, RecordDeleteView, RecordsSaveOrderView, RecordsView, UserRecordsView
 from .search import SearchView
+from .users import UsersView
 
 __all__ = [
     "SearchView",
@@ -12,4 +13,5 @@ __all__ = [
     "RecordsView",
     "HealthView",
     "UserRecordsView",
+    "UsersView",
 ]

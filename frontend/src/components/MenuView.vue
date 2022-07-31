@@ -7,6 +7,7 @@
       <v-list>
         <MenuItem title="Search" icon="magnify" to="/" />
         <MenuItem title="Games" icon="google-controller" to="/games" />
+        <MenuItem title="Users" icon="account-group" to="/users" />
       </v-list>
       <template #append>
         <v-list>
