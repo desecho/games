@@ -2,6 +2,7 @@ export interface UserStore {
   isLoggedIn: boolean;
   refreshToken?: string;
   accessToken?: string;
+  username?: string;
 }
 
 export interface JWTDecoded {
@@ -28,6 +29,10 @@ export interface SearchViewComponentData {
 
 export interface UsersViewComponentData {
   users: string[];
+}
+
+export interface UserPreferencesViewComponentData {
+  hidden: boolean;
 }
 
 export interface SortData {

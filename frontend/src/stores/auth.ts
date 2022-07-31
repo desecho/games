@@ -7,15 +7,17 @@ import { router } from "../router";
 import { getUrl } from "../helpers";
 import { initAxios } from "../axios";
 
+const userDefault: UserStore = {
+  isLoggedIn: false,
+};
+
 function getUser(): UserStore {
   const userLocalStorageData = localStorage.getItem("user");
   if (userLocalStorageData) {
     const user: UserStore = JSON.parse(userLocalStorageData);
     return user;
   }
-  return {
-    isLoggedIn: false,
-  };
+  return userDefault;
 }
 
 function saveUser(user: UserStore) {
@@ -34,6 +36,7 @@ export const useAuthStore = defineStore({
         refreshToken: response.data.refresh,
         accessToken: response.data.access,
         isLoggedIn: true,
+        username: username,
       };
       saveUser(this.user);
       initAxios();
@@ -53,7 +56,7 @@ export const useAuthStore = defineStore({
       initAxios();
     },
     logout() {
-      this.user = { isLoggedIn: false };
+      this.user = userDefault;
       localStorage.removeItem("user");
       initAxios();
       router.push("/").catch(() => {});

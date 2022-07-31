@@ -15,6 +15,7 @@ from games.views import (
     RecordsSaveOrderView,
     RecordsView,
     SearchView,
+    UserPreferencesView,
     UserRecordsView,
     UsersView,
 )
@@ -35,6 +36,8 @@ urlpatterns += [
     # Auth
     path("token/", TokenObtainPairView.as_view()),
     path("token/refresh/", TokenRefreshView.as_view()),
+    # User
+    path("user/preferences/", UserPreferencesView.as_view()),
     # Search
     path("search/", SearchView.as_view()),
     # Users

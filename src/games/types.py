@@ -43,5 +43,11 @@ class RecordObject(TypedDict):
     order: int
 
 
+class UserPreferences(TypedDict):
+    """User preferences."""
+
+    hidden: bool
+
+
 UntypedObject: TypeAlias = dict[str, Any]
 URL: TypeAlias = URLPattern | URLResolver
