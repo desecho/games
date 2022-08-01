@@ -15,7 +15,7 @@ from django.db.models import (
 )
 
 from .types import GameObject, RecordObject, UserPreferences
-from .utils import get_cover_url
+from .utils import get_cover_url, is_game_released
 
 
 class User(AbstractUser):
@@ -82,6 +82,11 @@ class Game(Model):
         return get_cover_url(self.cover)
 
     @property
+    def is_released(self) -> bool:
+        """Return whether game is released."""
+        return is_game_released(self.release_date)
+
+    @property
     def object(self) -> GameObject:
         """Get object."""
         return {
@@ -89,6 +94,7 @@ class Game(Model):
             "name": self.name,
             "cover": self.cover_url,
             "category": self.category.name,
+            "isReleased": self.is_released,
         }
 
 

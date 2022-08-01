@@ -1,7 +1,7 @@
 """IDGB types."""
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import date
 from typing import Optional
 
 from typing_extensions import NotRequired, TypedDict
@@ -12,15 +12,6 @@ class IGDBGameCoverRaw(TypedDict):
 
     id: int
     image_id: str
-
-
-class IGDBGamesSearchResultRaw(TypedDict):
-    """IGDB games search result raw."""
-
-    id: int
-    name: str
-    category: int
-    cover: NotRequired[IGDBGameCoverRaw]
 
 
 class IGDBGameRaw(TypedDict):
@@ -39,5 +30,5 @@ class IGDBGame(TypedDict):
     id: int
     name: str
     category_id: int
-    release_date: Optional[datetime]
+    release_date: Optional[date]
     cover: Optional[str]
