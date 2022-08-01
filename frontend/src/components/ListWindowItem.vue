@@ -7,7 +7,7 @@
             v-model="records"
             item-key="id"
             class="d-flex flex-wrap"
-            :disabled="isProfile"
+            :disabled="username"
             @sort="saveRecordsOrder"
           >
             <template #item="{ element, index }">
@@ -16,10 +16,9 @@
                 :record="element"
                 :index="index"
                 :list-key="listKey"
-                :is-profile="isProfile"
-                :is-own-profile="isOwnProfile"
+                :username="username"
                 :are-action-buttons-active="areActionButtonsActive"
-                :class="{ draggable: !isProfile }"
+                :class="{ draggable: !username }"
               />
             </template>
           </draggable>
@@ -51,15 +50,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    isProfile: {
-      type: Boolean,
+    username: {
+      type: String,
       required: false,
-      default: false,
-    },
-    isOwnProfile: {
-      type: Boolean,
-      required: false,
-      default: false,
+      default: null,
     },
     areActionButtonsActive: {
       type: Boolean,

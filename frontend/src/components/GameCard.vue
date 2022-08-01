@@ -10,7 +10,7 @@
         :icon="list.icon"
         @click="action(list.id)"
       />
-      <ActionButton v-if="!isProfile" title="Delete Game" icon="delete" @click="deleteGame(record.id, index)" />
+      <ActionButton v-if="!username" title="Delete Game" icon="delete" @click="deleteGame(record.id, index)" />
     </v-card-actions>
   </v-card>
 </template>
@@ -48,15 +48,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    isProfile: {
-      type: Boolean,
+    username: {
+      type: String,
       required: false,
-      default: false,
-    },
-    isOwnProfile: {
-      type: Boolean,
-      required: false,
-      default: false,
+      default: null,
     },
     areActionButtonsActive: {
       type: Boolean,
@@ -67,7 +62,7 @@ export default defineComponent({
   data() {
     return {
       action: (listId: number) => {
-        if (this.isProfile) {
+        if (this.username) {
           this.addToList(this.record.game.id, listId, this.index, true);
         } else {
           this.changeList(this.record.id, listId, this.index);
@@ -87,6 +82,10 @@ export default defineComponent({
     },
     height() {
       return this.areActionsVisible ? 275 : 224;
+    },
+    isOwnProfile() {
+      const { user } = useAuthStore();
+      return user.username && this.username && this.username == user.username;
     },
     areActionsVisible() {
       return this.isLoggedIn && !this.isOwnProfile && this.areActionButtonsActive;
