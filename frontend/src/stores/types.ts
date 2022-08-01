@@ -12,4 +12,5 @@ export interface GamesSettings {
 
 export interface SettingsStore {
   games: GamesSettings;
+  isGamesSettingsActive: boolean;
 }

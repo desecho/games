@@ -5,14 +5,15 @@ import { SettingsStore, GamesSettings } from "./types";
 function getSettings(): SettingsStore {
   const settingsLocalStorageData = localStorage.getItem("settings");
   if (settingsLocalStorageData) {
-    const user: SettingsStore = JSON.parse(settingsLocalStorageData);
-    return user;
+    const settings: SettingsStore = JSON.parse(settingsLocalStorageData);
+    return settings;
   }
   return {
     games: {
       areActionButtonsHidden: false,
       areUnreleasedGamesHidden: false,
     },
+    isGamesSettingsActive: false,
   };
 }
 
@@ -28,6 +29,10 @@ export const useSettingsStore = defineStore({
   actions: {
     saveGamesSettings(gamesSettings: GamesSettings) {
       this.settings.games = gamesSettings;
+      saveSettings(this.settings);
+    },
+    toggleGamesSettings() {
+      this.settings.isGamesSettingsActive = !this.settings.isGamesSettingsActive;
       saveSettings(this.settings);
     },
   },
