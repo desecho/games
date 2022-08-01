@@ -7,7 +7,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 
-import { GameSearchResult, Game } from "../types";
+import { Game } from "../types";
 import GameCategory from "./GameCategory.vue";
 
 export default defineComponent({
@@ -18,7 +18,7 @@ export default defineComponent({
   props: {
     game: {
       // eslint-disable-next-line @typescript-eslint/ban-types
-      type: Object as PropType<GameSearchResult> | Object as PropType<Game>,
+      type: Object as PropType<Game>,
       required: true,
     },
   },

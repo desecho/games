@@ -23,15 +23,6 @@ class IGDBGamesSearchResultRaw(TypedDict):
     cover: NotRequired[IGDBGameCoverRaw]
 
 
-class IGDBGamesSearchResult(TypedDict):
-    """IGDB games search result."""
-
-    id: int
-    name: str
-    category: str
-    cover: NotRequired[str]
-
-
 class IGDBGameRaw(TypedDict):
     """IGDB game raw."""
 
