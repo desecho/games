@@ -30,7 +30,9 @@ export default defineComponent({
 <style scoped>
 .game-category {
   position: absolute;
-  bottom: 0;
+  bottom: 2px;
   right: 5px;
+  background-color: #000000a6;
+  border-radius: 5px;
 }
 </style>
