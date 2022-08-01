@@ -7,7 +7,7 @@
             v-model="records"
             item-key="id"
             class="d-flex flex-wrap"
-            :disabled="username"
+            :disabled="!isDraggable"
             @sort="saveRecordsOrder"
           >
             <template #item="{ element, index }">
@@ -17,7 +17,7 @@
                 :index="index"
                 :list-key="listKey"
                 :username="username"
-                :class="{ draggable: !username }"
+                :class="{ draggable: isDraggable }"
               />
             </template>
           </draggable>
@@ -66,6 +66,13 @@ export default defineComponent({
       set(records: RecordType[]) {
         rewriteArray(this.recordsProp, records);
       },
+    },
+    isMobile() {
+      return this.$vuetify.display.xs;
+    },
+    isDraggable() {
+      // This is not working on mobile with v-window. Disabling for now.
+      return !this.username && !this.isMobile;
     },
     ...mapState(useSettingsStore, ["settings"]),
   },
