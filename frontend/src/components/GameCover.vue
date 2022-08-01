@@ -1,6 +1,6 @@
 <template>
   <v-img :src="src" :title="game.name" :alt="game.name" height="225" :class="{ 'no-img': !game.cover }">
-    <GameCategory :name="game.category" :color="game.cover ? 'white' : undefined" />
+    <GameCategory :name="game.category" />
   </v-img>
 </template>
 
@@ -34,15 +34,10 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-.no-img {
-  filter: invert(45%) sepia(0%) saturate(0) hue-rotate(0deg) brightness(69%) contrast(100%);
-}
-</style>
-
 <style>
 /* This needs to be unscoped for this to work */
 .no-img img {
+  filter: invert(45%) sepia(0%) saturate(0) hue-rotate(0deg) brightness(69%) contrast(100%);
   padding: 20px;
 }
 </style>

@@ -1,10 +1,5 @@
 <template>
-  <v-card-subtitle
-    v-if="name != 'Main Game'"
-    class="game-category font-weight-black"
-    :class="{ 'text-white': color == 'white' }"
-    :title="name"
-  >
+  <v-card-subtitle v-if="name != 'Main Game'" class="game-category font-weight-black text-white" :title="name">
     {{ name }}
   </v-card-subtitle>
 </template>
@@ -18,10 +13,6 @@ export default defineComponent({
     name: {
       type: String,
       required: true,
-    },
-    color: {
-      type: String,
-      default: "",
     },
   },
 });
