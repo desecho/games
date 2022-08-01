@@ -15,12 +15,24 @@
       </v-tab>
     </v-tabs>
     <v-sheet v-if="isSettingsActive" class="pl-5">
-      <v-switch
-        v-model="areActionButtonsHidden"
-        label="Hide action buttons"
-        hide-details
-        @change="saveSettings()"
-      ></v-switch>
+      <v-row>
+        <v-col cols="2">
+          <v-switch
+            v-model="settings.areActionButtonsHidden"
+            label="Hide action buttons"
+            hide-details
+            @change="saveSettings()"
+          ></v-switch>
+        </v-col>
+        <v-col cols="2">
+          <v-switch
+            v-model="settings.areUnreleasedGamesHidden"
+            label="Hide unreleased games"
+            hide-details
+            @change="saveSettings()"
+          ></v-switch>
+        </v-col>
+      </v-row>
     </v-sheet>
     <v-window v-model="tab">
       <ListWindowItem
@@ -57,11 +69,14 @@ export default defineComponent({
     },
   },
   data() {
+    const { settings } = useSettingsStore();
     return {
       lists: Lists,
       tab: "want-to-play",
       isSettingsActive: false,
+      settings: settings.games,
       areActionButtonsHidden: false,
+      areUnreleasedGamesHidden: false,
     };
   },
   computed: {
@@ -71,10 +86,6 @@ export default defineComponent({
       }
       return "white";
     },
-  },
-  mounted() {
-    const { settings } = useSettingsStore();
-    this.areActionButtonsHidden = settings.games.areActionButtonsHidden;
   },
   methods: {
     getPath(listKey: string): string {
@@ -88,9 +99,7 @@ export default defineComponent({
     },
     saveSettings() {
       const { saveGamesSettings } = useSettingsStore();
-      saveGamesSettings({
-        areActionButtonsHidden: this.areActionButtonsHidden,
-      });
+      saveGamesSettings(this.settings);
     },
   },
 });
