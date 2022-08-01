@@ -33,6 +33,7 @@ import Draggable from "vuedraggable";
 import { mapState } from "pinia";
 
 import { mobileMixin } from "../mixins/mobile";
+import { DLCKindCategories } from "../const";
 import { getUrl, rewriteArray, requireAuthenticated } from "../helpers";
 import { useSettingsStore } from "../stores/settings";
 import { RecordType, SortData, Game } from "../types";
@@ -94,6 +95,9 @@ export default defineComponent({
     },
     isShowGame(game: Game) {
       if (this.settings.games.areUnreleasedGamesHidden && !game.isReleased) {
+        return false;
+      }
+      if (this.settings.games.areDLCsHidden && DLCKindCategories.includes(game.category)) {
         return false;
       }
       return true;

@@ -8,6 +8,7 @@ export interface UserStore {
 export interface GamesSettings {
   areActionButtonsHidden: boolean;
   areUnreleasedGamesHidden: boolean;
+  areDLCsHidden: boolean;
 }
 
 export interface SettingsStore {
