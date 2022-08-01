@@ -15,7 +15,12 @@
       </v-tab>
     </v-tabs>
     <v-sheet v-if="isSettingsActive" class="pl-5">
-      <v-switch v-model="areActionButtonsHidden" label="Hide action buttons" hide-details></v-switch>
+      <v-switch
+        v-model="areActionButtonsHidden"
+        label="Hide action buttons"
+        hide-details
+        @change="saveSettings()"
+      ></v-switch>
     </v-sheet>
     <v-window v-model="tab">
       <ListWindowItem
@@ -24,7 +29,7 @@
         :records-prop="records"
         :list-key="list.key"
         :username="username"
-        :are-action-buttons-active="areActionButtonsActive"
+        :are-action-buttons-active="!areActionButtonsHidden"
       />
     </v-window>
   </v-card>
@@ -34,6 +39,7 @@ import { defineComponent, PropType } from "vue";
 import { Lists } from "../const";
 import ListWindowItem from "../components/ListWindowItem.vue";
 import { RecordType } from "../types";
+import { useSettingsStore } from "../stores/settings";
 
 export default defineComponent({
   name: "GamesListView",
@@ -60,15 +66,16 @@ export default defineComponent({
     };
   },
   computed: {
-    areActionButtonsActive(): boolean {
-      return !this.areActionButtonsHidden;
-    },
     settingsIconColor(): string {
       if (this.isSettingsActive) {
         return "grey";
       }
       return "white";
     },
+  },
+  mounted() {
+    const { settings } = useSettingsStore();
+    this.areActionButtonsHidden = settings.games.areActionButtonsHidden;
   },
   methods: {
     getPath(listKey: string): string {
@@ -79,6 +86,12 @@ export default defineComponent({
     },
     toggleSettings() {
       this.isSettingsActive = !this.isSettingsActive;
+    },
+    saveSettings() {
+      const { saveGamesSettings } = useSettingsStore();
+      saveGamesSettings({
+        areActionButtonsHidden: this.areActionButtonsHidden,
+      });
     },
   },
 });

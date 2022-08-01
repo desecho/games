@@ -1,10 +1,3 @@
-export interface UserStore {
-  isLoggedIn: boolean;
-  refreshToken?: string;
-  accessToken?: string;
-  username?: string;
-}
-
 export interface JWTDecoded {
   token_type: string;
   exp: number;
