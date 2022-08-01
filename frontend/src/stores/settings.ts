@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-import { SettingsStore, GamesSettings } from "./types";
+import { SettingsStore } from "./types";
 
 function getSettings(): SettingsStore {
   const settingsLocalStorageData = localStorage.getItem("settings");
@@ -18,7 +18,7 @@ function getSettings(): SettingsStore {
   };
 }
 
-function saveSettings(settings: SettingsStore) {
+function saveSettingsToLocalStorage(settings: SettingsStore) {
   localStorage.setItem("settings", JSON.stringify(settings));
 }
 
@@ -28,13 +28,12 @@ export const useSettingsStore = defineStore({
     settings: getSettings(),
   }),
   actions: {
-    saveGamesSettings(gamesSettings: GamesSettings) {
-      this.settings.games = gamesSettings;
-      saveSettings(this.settings);
+    persistSettings() {
+      saveSettingsToLocalStorage(this.settings);
     },
     toggleGamesSettings() {
       this.settings.isGamesSettingsActive = !this.settings.isGamesSettingsActive;
-      saveSettings(this.settings);
+      saveSettingsToLocalStorage(this.settings);
     },
   },
 });
