@@ -8,6 +8,7 @@
 import { defineComponent, PropType } from "vue";
 
 import { Game } from "../types";
+
 import GameCategory from "./GameCategory.vue";
 
 export default defineComponent({

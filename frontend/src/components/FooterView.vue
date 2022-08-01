@@ -15,6 +15,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { RouterLink } from "vue-router";
+
 import { Email } from "../const";
 
 export default defineComponent({

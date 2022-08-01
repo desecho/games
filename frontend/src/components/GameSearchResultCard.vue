@@ -23,6 +23,7 @@ import { defineComponent, PropType } from "vue";
 import { Game } from "../types";
 import { Lists } from "../const";
 import { addToList } from "./common";
+
 import ActionButton from "./ActionButton.vue";
 import GameCover from "./GameCover.vue";
 

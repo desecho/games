@@ -27,6 +27,7 @@ import { useSettingsStore } from "../stores/settings";
 import { useAuthStore } from "../stores/auth";
 import { requireAuthenticated } from "../helpers";
 import { addToList } from "./common";
+
 import ActionButton from "./ActionButton.vue";
 import GameCover from "./GameCover.vue";
 

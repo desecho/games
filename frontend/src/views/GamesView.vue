@@ -1,17 +1,17 @@
 <template>
-  <GamesList :records="records" />
+  <GamesLists :records="records" />
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useGamesStore } from "../stores/games";
 import { mapState } from "pinia";
-import GamesList from "../components/GamesList.vue";
+import GamesLists from "../components/GamesLists.vue";
 
 export default defineComponent({
   name: "GamesView",
   components: {
-    GamesList,
+    GamesLists,
   },
   props: {
     listKey: {
