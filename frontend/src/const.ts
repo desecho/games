@@ -22,7 +22,7 @@ export const Lists = [
     id: ListIds.Playing,
     name: "Playing",
     key: ListKeys[ListIds.Playing],
-    icon: "google-controller",
+    icon: "controller",
   },
   {
     id: ListIds.Beaten,

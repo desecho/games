@@ -6,7 +6,7 @@
     <v-navigation-drawer v-model="drawer" width="170" elevation="2" touchless>
       <v-list>
         <MenuItem title="Search" icon="magnify" to="/" />
-        <MenuItem title="Games" icon="google-controller" to="/games" />
+        <MenuItem title="Games" icon="controller" to="/games" />
         <MenuItem title="Users" icon="account-group" to="/users" />
       </v-list>
       <template #append>
