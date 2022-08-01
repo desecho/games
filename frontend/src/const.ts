@@ -1,4 +1,4 @@
-export enum ListIds {
+export enum ListIDs {
   WantToPlay = 1,
   Playing,
   Beaten,
@@ -6,34 +6,34 @@ export enum ListIds {
 }
 
 export const ListKeys: Record<number, string> = {};
-ListKeys[ListIds.WantToPlay] = "want-to-play";
-ListKeys[ListIds.Playing] = "playing";
-ListKeys[ListIds.Beaten] = "beaten";
-ListKeys[ListIds.OnHold] = "on-hold";
+ListKeys[ListIDs.WantToPlay] = "want-to-play";
+ListKeys[ListIDs.Playing] = "playing";
+ListKeys[ListIDs.Beaten] = "beaten";
+ListKeys[ListIDs.OnHold] = "on-hold";
 
 export const Lists = [
   {
-    id: ListIds.WantToPlay,
+    id: ListIDs.WantToPlay,
     name: "Want to Play",
-    key: ListKeys[ListIds.WantToPlay],
+    key: ListKeys[ListIDs.WantToPlay],
     icon: "star",
   },
   {
-    id: ListIds.Playing,
+    id: ListIDs.Playing,
     name: "Playing",
-    key: ListKeys[ListIds.Playing],
+    key: ListKeys[ListIDs.Playing],
     icon: "controller",
   },
   {
-    id: ListIds.Beaten,
+    id: ListIDs.Beaten,
     name: "Beaten",
-    key: ListKeys[ListIds.Beaten],
+    key: ListKeys[ListIDs.Beaten],
     icon: "trophy",
   },
   {
-    id: ListIds.OnHold,
+    id: ListIDs.OnHold,
     name: "On Hold",
-    key: ListKeys[ListIds.OnHold],
+    key: ListKeys[ListIDs.OnHold],
     icon: "pause-circle-outline",
   },
 ];
