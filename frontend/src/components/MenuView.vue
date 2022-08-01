@@ -25,6 +25,7 @@ import { defineComponent } from "vue";
 
 import { mobileMixin } from "../mixins/mobile";
 import { useAuthStore } from "../stores/auth";
+
 import MenuItem from "./MenuItem.vue";
 
 export default defineComponent({

@@ -1,12 +1,12 @@
 <template>
   <div v-if="isLoaded">
-    <GamesList v-if="!userNotFound && !userIsHidden" :username="username" :records="records">
+    <GamesLists v-if="!userNotFound && !userIsHidden" :username="username" :records="records">
       <v-card-title v-if="username" class="username-bar">
         <v-img src="/img/cover.png" width="100%" cover
           ><div class="username">{{ username }}</div></v-img
         >
       </v-card-title>
-    </GamesList>
+    </GamesLists>
     <v-alert v-if="userNotFound || userIsHidden" prominent type="error" variant="outlined" class="ma-5">
       <span v-if="userNotFound"> User {{ username }} not found. </span>
       <span v-if="userIsHidden"> {{ username }}'s profile is hidden. </span>
@@ -20,12 +20,12 @@ import { defineComponent } from "vue";
 import { Lists } from "../const";
 import { getUrl } from "../helpers";
 import { RecordType } from "../types";
-import GamesList from "../components/GamesList.vue";
+import GamesLists from "../components/GamesLists.vue";
 
 export default defineComponent({
   name: "UserGamesView",
   components: {
-    GamesList,
+    GamesLists,
   },
   props: {
     listKey: {
