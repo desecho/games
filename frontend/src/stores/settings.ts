@@ -12,6 +12,7 @@ function getSettings(): SettingsStore {
     games: {
       areActionButtonsHidden: false,
       areUnreleasedGamesHidden: false,
+      areDLCsHidden: false,
     },
     isGamesSettingsActive: false,
   };
