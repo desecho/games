@@ -27,11 +27,6 @@ class UserRecordsView(APIView):
 
     permission_classes: list[str] = []  # type: ignore
 
-    def _is_own_profile(self, username: str) -> bool:
-        """Return True if it is user's own profile."""
-        request_user = self.request.user
-        return request_user.is_authenticated and request_user.username == username
-
     def get(self, request: Request, username: str) -> Response:  # pylint: disable=no-self-use,unused-argument
         """Get game records."""
         try:
@@ -44,11 +39,7 @@ class UserRecordsView(APIView):
 
         records: QuerySet[Record] = user.records.all()
         records_objects = [record.object for record in records]
-        data = {
-            "records": records_objects,
-            "isOwnProfile": self._is_own_profile(username),
-        }
-        return Response(data)
+        return Response(records_objects)
 
 
 class RecordAdd(IGDBAPIView):

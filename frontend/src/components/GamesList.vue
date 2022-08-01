@@ -23,8 +23,7 @@
         :key="list.id"
         :records-prop="records"
         :list-key="list.key"
-        :is-profile="isProfile"
-        :is-own-profile="isOwnProfile"
+        :username="username"
         :are-action-buttons-active="areActionButtonsActive"
       />
     </v-window>
@@ -51,11 +50,6 @@ export default defineComponent({
       required: false,
       default: null,
     },
-    isOwnProfile: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
   },
   data() {
     return {
@@ -66,12 +60,6 @@ export default defineComponent({
     };
   },
   computed: {
-    isProfile(): boolean {
-      if (this.username) {
-        return true;
-      }
-      return false;
-    },
     areActionButtonsActive(): boolean {
       return !this.areActionButtonsHidden;
     },
@@ -84,7 +72,7 @@ export default defineComponent({
   },
   methods: {
     getPath(listKey: string): string {
-      if (this.isProfile) {
+      if (this.username) {
         return `/users/${this.username}/${listKey}`;
       }
       return `/games/${listKey}`;

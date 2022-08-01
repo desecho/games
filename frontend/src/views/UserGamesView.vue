@@ -1,11 +1,6 @@
 <template>
   <div v-if="isLoaded">
-    <GamesList
-      v-if="!userNotFound && !userIsHidden"
-      :username="username"
-      :records="records"
-      :is-own-profile="isOwnProfile"
-    >
+    <GamesList v-if="!userNotFound && !userIsHidden" :username="username" :records="records">
       <v-card-title v-if="username" class="username-bar">
         <v-img src="/img/cover.png" width="100%" cover
           ><div class="username">{{ username }}</div></v-img
@@ -52,15 +47,13 @@ export default defineComponent({
       userNotFound: false,
       userIsHidden: false,
       isLoaded: false,
-      isOwnProfile: false,
     };
   },
   mounted() {
     this.axios
       .get(getUrl(`records/users/${this.username}/`))
       .then((response) => {
-        this.records = response.data.records;
-        this.isOwnProfile = response.data.isOwnProfile;
+        this.records = response.data;
         this.isLoaded = true;
       })
       .catch((error: AxiosError) => {
