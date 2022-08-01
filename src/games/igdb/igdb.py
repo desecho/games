@@ -1,6 +1,7 @@
 """IGDB."""
 import json
-from datetime import datetime
+from datetime import date, datetime
+from typing import Optional
 
 from authlib.integrations.requests_client import OAuth2Session
 from django.conf import settings
@@ -9,8 +10,8 @@ from igdb.wrapper import IGDBWrapper
 from ..exceptions import IGDBError
 from ..models import Category
 from ..types import GameObject
-from ..utils import get_cover_url
-from .types import IGDBGame, IGDBGameRaw, IGDBGamesSearchResultRaw
+from ..utils import get_cover_url, is_game_released
+from .types import IGDBGame, IGDBGameRaw
 
 # Full list is available here: https://api-docs.igdb.com/#game-enums
 CATEGORY_MAIN_GAME = 0
@@ -69,14 +70,22 @@ class IGDB:
         self.igdb = IGDBWrapper(settings.IGDB_CLIENT_ID, token)
 
     @staticmethod
-    def _process_search_games_results(results: list[IGDBGamesSearchResultRaw]) -> list[GameObject]:
+    def _process_release_date(release_date: Optional[int]) -> Optional[date]:
+        """Process release date."""
+        if release_date is None:
+            return None
+        return datetime.fromtimestamp(release_date).date()
+
+    def _process_search_games_results(self, results: list[IGDBGameRaw]) -> list[GameObject]:
         """Process search games results."""
         results_processed: list[GameObject] = []
         for result in results:
+            release_date = self._process_release_date(result.get("first_release_date"))
             result_processed: GameObject = {
                 "id": result["id"],
                 "name": result["name"],
                 "category": GAME_CATEGORIES[result["category"]],
+                "isReleased": is_game_released(release_date),
                 "cover": get_cover_url(result["cover"]["image_id"]) if "cover" in result else None,
             }
             results_processed.append(result_processed)
@@ -85,7 +94,7 @@ class IGDB:
     def search_games(self, query: str) -> list[GameObject]:
         """Search games."""
         request = f"""
-            fields name, cover.image_id, category;
+            fields name, cover.image_id, first_release_date, category;
             search "{query}";
             where version_parent = null &
                 platforms = ({PLATFORM_PC}) &
@@ -96,19 +105,16 @@ class IGDB:
             response = self.igdb.api_request("games", request)
         except Exception as exc:
             raise IGDBError from exc
-        results: list[IGDBGamesSearchResultRaw] = json.loads(response)
+        results: list[IGDBGameRaw] = json.loads(response)
         return self._process_search_games_results(results)
 
-    @staticmethod
-    def _process_game(game: IGDBGameRaw) -> IGDBGame:
+    def _process_game(self, game: IGDBGameRaw) -> IGDBGame:
         """Process game."""
         return {
             "id": game["id"],
             "name": game["name"],
             "category_id": GAME_CATEGORIES_MAPPING[game["category"]],
-            "release_date": (
-                datetime.fromtimestamp(game["first_release_date"]) if "first_release_date" in game else None
-            ),
+            "release_date": self._process_release_date(game.get("first_release_date")),
             "cover": game["cover"]["image_id"] if "cover" in game else None,
         }
 

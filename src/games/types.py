@@ -32,6 +32,7 @@ class GameObject(TypedDict):
     name: str
     cover: Optional[str]
     category: str
+    isReleased: bool
 
 
 class RecordObject(TypedDict):
