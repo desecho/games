@@ -1,10 +1,5 @@
 TARGET_MAX_CHAR_NUM := 30
 
-# COLORS
-GREEN  := \033[0;32m
-YELLOW := \033[0;33m
-RESET  := \033[0;10m
-
 .PHONY: help
 ## Show help | Help
 help:

@@ -1,6 +1,8 @@
 .DEFAULT_GOAL := help
 
-include help.mk
+include makefiles/colors.mk
+include makefiles/help.mk
+include makefiles/macros.mk
 
 export PROJECT := games
 export APP := ${PROJECT}
@@ -23,82 +25,91 @@ PYTHON := python3.10
 BIN_DIR := /usr/local/bin
 
 SHFMT_VERSION := 3.4.3
-SHFMT_PATH := ${BIN_DIR}/shfmt
+SHFMT_PATH    := ${BIN_DIR}/shfmt
 
 .PHONY: install-shfmt
-## Install shfmt | Installation
 install-shfmt:
-	sudo curl https://github.com/mvdan/sh/releases/download/v${SHFMT_VERSION}/shfmt_v${SHFMT_VERSION}_linux_amd64 -Lo ${SHFMT_PATH}
-	sudo chmod +x ${SHFMT_PATH}
+	$(call print,Installing shfmt)
+	@sudo curl https://github.com/mvdan/sh/releases/download/v${SHFMT_VERSION}/shfmt_v${SHFMT_VERSION}_linux_amd64 -Lo ${SHFMT_PATH}
+	@sudo chmod +x ${SHFMT_PATH}
 
 HADOLINT_VERSION := 2.10.0
-HADOLINT_PATH := ${BIN_DIR}/hadolint
+HADOLINT_PATH    := ${BIN_DIR}/hadolint
 
 .PHONY: install-hadolint
-## Install hadolint
 install-hadolint:
-	sudo curl https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/hadolint-Linux-x86_64 -Lo ${HADOLINT_PATH}
-	sudo chmod +x ${HADOLINT_PATH}
+	$(call print,Installing hadolint)
+	@sudo curl https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/hadolint-Linux-x86_64 -Lo ${HADOLINT_PATH}
+	@sudo chmod +x ${HADOLINT_PATH}
 
 ACTIONLINT_VERSION := 1.6.13
-ACTIONLINT_PATH := ${BIN_DIR}/actionlint
-ACTIONLINT_URL := https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz
+ACTIONLINT_PATH    := ${BIN_DIR}/actionlint
+ACTIONLINT_URL     := https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz
 ACTIONLINT_TMP_DIR := $(shell mktemp -d)
 ACTIONLINT_ARCHIVE := actionlint.tar.gz
 
 .PHONY: install-actionlint
-## Install actionlint
 install-actionlint:
-	cd ${ACTIONLINT_TMP_DIR} && \
+	$(call print,Installing actionlint)
+	@cd ${ACTIONLINT_TMP_DIR} && \
 	curl ${ACTIONLINT_URL} -Lo ${ACTIONLINT_ARCHIVE} && \
 	tar -xvf ${ACTIONLINT_ARCHIVE} && \
 	sudo mv actionlint ${ACTIONLINT_PATH}
 
 .PHONY: install-linters-binaries
-## Install linters binaries
+## Install linters binaries | Installation
 install-linters-binaries: install-shfmt install-hadolint install-actionlint
 
 .PHONY: install-deps
-## Install dependencies
-install-deps: install-linters-binaries
-	# Install Python
-	sudo apt install ${PYTHON} ${PYTHON}-venv ${PYTHON}-dev -y
-	# Install MySQL dependencies
-	sudo apt install libmysqlclient-dev -y
+install-deps: install-linters-binaries install-python install-mysql-client
+
+.PHONY: install-python
+install-python:
+	$(call print,Installing Python)
+	@sudo apt install ${PYTHON} ${PYTHON}-venv ${PYTHON}-dev -y
+
+.PHONY: install-mysql-client
+install-mysql-client:
+	$(call print,Installing MySQL client)
+	@sudo apt install libmysqlclient-dev -y
 
 .PHONY: create-venv
 ## Create venv and install requirements
 create-venv:
-	${PYTHON} -m venv venv
-	${SOURCE_CMDS} && \
+	$(call print,Creating venv)
+	@${PYTHON} -m venv venv
+	$(call print,Installing requirements)
+	@${SOURCE_CMDS} && \
 		pip install -r requirements-dev.txt
 
 .PHONY: create-tox-venv
-## Create tox venv and install requirements
 create-tox-venv:
-	tox -e py-requirements
+	$(call print,Creating tox venv and installing requirements)
+	@tox -e py-requirements
 
 .PHONY: create-venvs
-## Create venv and tox venv and install requirements
 create-venvs: create-venv create-tox-venv
 
 .PHONY: yarn-install-locked
 ## Run yarn install using lockfile
 yarn-install-locked:
-	${CMD_FRONTEND} && \
+	$(call print,Installing yarn dependencies using lockfile)
+	@${CMD_FRONTEND} && \
 	yarn install --immutable
 
 .PHONY: create-db
-## Create db
+## Create DB
 create-db:
-	source $(ENV_FILE) && \
+	$(call print,Creating DB)
+	@source $(ENV_FILE) && \
 	scripts/create_db.sh
 
 .PHONY: load-initial-fixtures
 ## Load initial fixtures
 load-initial-fixtures:
-	$(MAKE) manage arguments="loaddata lists"
-	$(MAKE) manage arguments="loaddata categories"
+	$(call print,Loading initial fixtures)
+	@$(MAKE) manage loaddata arguments="lists"
+	@$(MAKE) manage loaddata arguments="categories"
 
 .PHONY: bootstrap
 ## Bootstrap project
@@ -109,16 +120,20 @@ bootstrap: install-deps yarn-install-locked create-env-files create-venvs create
 create-env-files: $(ENV_CUSTOM_FILE) $(ENV_SECRETS_FILE) $(DB_ENV_PROD_FILE) $(DOCKER_SECRETS_ENV_FILE)
 
 $(DOCKER_SECRETS_ENV_FILE):
-	cp "${DOCKER_SECRETS_ENV_FILE}.tpl" $(DOCKER_SECRETS_ENV_FILE)
+	$(call print,Creating docker secrets env file)
+	@cp "${DOCKER_SECRETS_ENV_FILE}.tpl" $(DOCKER_SECRETS_ENV_FILE)
 
 $(ENV_CUSTOM_FILE):
-	cp $(ENV_CUSTOM_FILE).tpl $(ENV_CUSTOM_FILE)
+	$(call print,Creating env custom file)
+	@cp $(ENV_CUSTOM_FILE).tpl $(ENV_CUSTOM_FILE)
 
 $(ENV_SECRETS_FILE):
-	cp $(ENV_SECRETS_FILE).tpl $(ENV_SECRETS_FILE)
+	$(call print,Creating env secrets file)
+	@cp $(ENV_SECRETS_FILE).tpl $(ENV_SECRETS_FILE)
 
 $(DB_ENV_PROD_FILE):
-	cp $(DB_ENV_PROD_FILE).tpl $(DB_ENV_PROD_FILE)
+	$(call print,Creating DB env prod file)
+	@cp $(DB_ENV_PROD_FILE).tpl $(DB_ENV_PROD_FILE)
 #------------------------------------
 
 #------------------------------------
@@ -126,19 +141,23 @@ $(DB_ENV_PROD_FILE):
 #------------------------------------
 .PHONY: pydiatra-script
 pydiatra-script:
-	scripts/pydiatra.sh
+	$(call print,Running pydiatra script)
+	@scripts/pydiatra.sh
 
 .PHONY: backup-db
 backup-db:
-	scripts/backup_db.sh
+	$(call print,Running backup DB script)
+	@scripts/backup_db.sh
 
 .PHONY: upload-backup
 upload-backup:
-	scripts/upload_backup.sh
+	$(call print,Running upload backup script)
+	@scripts/upload_backup.sh
 
 .PHONY: flush-cdn-cache
 flush-cdn-cache:
-	scripts/flush_cdn_cache.sh
+	$(call print,Running flush CDN cache script)
+	@scripts/flush_cdn_cache.sh
 #------------------------------------
 
 #------------------------------------
@@ -152,123 +171,146 @@ test: shellcheck hadolint shfmt actionlint tox eslint prettier-json-lint prettie
 .PHONY: tox
 ## Run tox
 tox:
-	tox
+	$(call print,Running tox)
+	@tox
 
 .PHONY: pydiatra
 ## Run pydiatra linter
 pydiatra:
+	$(call print,Running pydiatra)
 	tox -e py-pydiatra
 
 .PHONY: pylint
 ## Run pylint linter
 pylint:
+	$(call print,Running pylint)
 	tox -e py-pylint
 
 .PHONY: flake8
 ## Run flake8 linter
 flake8:
+	$(call print,Running flake8)
 	tox -e py-flake8
 
 .PHONY: isort
 ## Run isort linter
 isort:
+	$(call print,Running isort linter)
 	tox -e py-isort
 
 .PHONY: bandit
 ## Run bandit linter
 bandit:
+	$(call print,Running bandit)
 	tox -e py-bandit
 
 .PHONY: rstlint
 ## Run rstlint linter
 rstlint:
+	$(call print,Running rstlint)
 	tox -e py-rstlint
 
 .PHONY: pydocstyle
 ## Run pydocstyle linter
 pydocstyle:
+	$(call print,Running pydocstyle)
 	tox -e py-pydocstyle
 
 .PHONY: safety
 ## Run safety linter
 safety:
+	$(call print,Running safety)
 	tox -e py-safety
 
 .PHONY: pytest
 ## Run pytest
 pytest:
+	$(call print,Running pytest)
 	tox -e py-pytest
 
 .PHONY: black
 ## Run black linter
 black:
+	$(call print,Running black linter)
 	tox -e py-black
 
 .PHONY: mypy
 ## Run mypy linter
 mypy:
+	$(call print,Running mypy)
 	tox -e py-mypy
 
 .PHONY: eslint
 ## Run eslint linter
 eslint:
-	${CMD_FRONTEND} && \
+	$(call print,Running eslint linter)
+	@${CMD_FRONTEND} && \
 	yarn run eslint src/**/*.ts src/*.ts ./*.ts src/App.vue src/components/*.vue src/views/*.vue
 
 .PHONY: shfmt
 ## Run shfmt linter
 shfmt:
-	shfmt -l -d ./*.sh scripts/*.sh
+	$(call print,Running shfmt linter)
+	@shfmt -l -d ./*.sh scripts/*.sh
 
 .PHONY: shellcheck
 ## Run shellcheck linter
 shellcheck:
-	shellcheck scripts/*.sh ./*.sh
+	$(call print,Running shellcheck)
+	@shellcheck scripts/*.sh ./*.sh
 
 .PHONY: hadolint
 ## Run hadolint linter
 hadolint:
-	hadolint Dockerfile
+	$(call print,Running hadolint)
+	@hadolint Dockerfile
 
 .PHONY: actionlint
 ## Run actionlint linter
 actionlint:
-	actionlint
+	$(call print,Running actionlint)
+	@actionlint
 
 .PHONY: prettier-html-lint
 ## Run html linter.
 prettier-html-lint:
-	${CMD_FRONTEND} && \
+	$(call print,Running prettier check for html)
+	@${CMD_FRONTEND} && \
 	yarn run prettier --check ./*.html
 
 .PHONY: prettier-ts-lint
 ## Format ts files
 prettier-ts-lint:
-	${CMD_FRONTEND} && \
+	$(call print,Running prettier check for ts)
+	@${CMD_FRONTEND} && \
 	yarn run prettier --check src/**/*.ts src/*.ts ./*.ts
 
 .PHONY: prettier-scss-lint
 ## Run scss linter
 prettier-scss-lint:
-	${CMD_FRONTEND} && \
+	$(call print,Running prettier check for scss)
+	@${CMD_FRONTEND} && \
 	yarn run prettier --check ./src/styles/*.scss
 
 .PHONY: prettier-json-lint
 ## Run json linter
 prettier-json-lint:
-	${CMD_FRONTEND} && \
+	$(call print,Running prettier check for json)
+	@${CMD_FRONTEND} && \
 	yarn run prettier --check ../**/*.json
 
 .PHONY: prettier-yaml-lint
 ## Run yaml linter
 prettier-yaml-lint:
-	${CMD_FRONTEND} && \
+	$(call print,Running prettier check for yaml)
+	@${CMD_FRONTEND} && \
 	yarn run prettier --check ../deployment/*.yaml ../.github/**/*.yaml
 
 .PHONY: prettier-vue-lint
 ## Run vue linter
 prettier-vue-lint:
-	${CMD_FRONTEND} && \
+	$(call print,Running prettier check for vue)
+	@${CMD_FRONTEND} && \
 	yarn run prettier --check src/App.vue src/components/*.vue src/views/*.vue
 #------------------------------------
 
@@ -278,7 +320,8 @@ prettier-vue-lint:
 .PHONY: update-venvs
 ## Update packages in venv and tox venv with current requirements | Development
 update-venvs:
-	${SOURCE_CMDS} && \
+	$(call print,Updating venvs)
+	@${SOURCE_CMDS} && \
 	pip install -r requirements-dev.txt && \
 	deactivate && \
 	source .tox/py/bin/activate && \
@@ -286,8 +329,9 @@ update-venvs:
 
 .PHONY: delete-venvs
 delete-venvs:
-	rm -rf venv
-	rm -rf .tox
+	$(call print,Deleting venvs)
+	@rm -rf venv
+	@rm -rf .tox
 
 .PHONY: recreate-venvs
 ## Recreate venvs
@@ -296,43 +340,50 @@ recreate-venvs: delete-venvs create-venvs
 .PHONY: yarn-install
 ## Run yarn install
 yarn-install:
-	${CMD_FRONTEND} && \
+	$(call print,Running yarn install)
+	@${CMD_FRONTEND} && \
 	yarn install
 
 .PHONY: yarn-upgrade
 ## Run yarn upgrade
 yarn-upgrade:
-	${CMD_FRONTEND} && \
+	$(call print,Running yarn upgrade)
+	@${CMD_FRONTEND} && \
 	yarn upgrade-interactive
 
 .PHONY: dev
 ## Run yarn dev
 dev:
-	${CMD_FRONTEND} && \
+	$(call print,Running yarn dev)
+	@${CMD_FRONTEND} && \
 	yarn dev
 
 .PHONY: serve
 ## Run yarn serve
 serve:
-	${CMD_FRONTEND} && \
+	$(call print,Running yarn serve)
+	@${CMD_FRONTEND} && \
 	yarn serve
 
 .PHONY: build
 ## Run yarn build
 build:
-	${CMD_FRONTEND} && \
+	$(call print,Running yarn build)
+	@${CMD_FRONTEND} && \
 	yarn build
 
 .PHONY: drop-db
-## Drop db
+## Drop DB
 drop-db:
-	source $(ENV_FILE) && \
+	$(call print,Dropping DB)
+	@source $(ENV_FILE) && \
 	scripts/drop_db.sh
 
 .PHONY: load-db
-## Load db from today's backup
+## Load DB from today's backup
 load-db: drop-db create-db
-	source $(ENV_FILE) && \
+	$(call print,Loading DB)
+	@source $(ENV_FILE) && \
 	scripts/load_db.sh
 #------------------------------------
 
@@ -342,7 +393,8 @@ load-db: drop-db create-db
 .PHONY: format
 ## Format python code | Formatting backend
 format:
-	${SOURCE_CMDS} && \
+	$(call print,Formatting python code)
+	@${SOURCE_CMDS} && \
 	autoflake --remove-all-unused-imports --in-place -r src && \
 	isort src && \
 	black .
@@ -362,18 +414,21 @@ format-misc: format-sh format-json format-yaml
 .PHONY: format-sh
 ## Format sh files
 format-sh:
-	shfmt -l -w ./*.sh scripts/*.sh
+	$(call print,Formatting sh files)
+	@shfmt -l -w ./*.sh scripts/*.sh
 
 .PHONY: format-json
 ## Format json files
 format-json:
-	${CMD_FRONTEND} && \
+	$(call print,Formatting json files)
+	@${CMD_FRONTEND} && \
 	yarn run prettier --write ../**/*.json
 
 .PHONY: format-yaml
 ## Format yaml files
 format-yaml:
-	${CMD_FRONTEND} && \
+	$(call print,Formatting yaml files)
+	@${CMD_FRONTEND} && \
 	yarn run prettier --write ../deployment/*.yaml ../.github/**/*.yaml
 #------------------------------------
 
@@ -391,25 +446,29 @@ ff: format-frontend
 .PHONY: format-ts
 ## Format ts files
 format-ts:
-	${CMD_FRONTEND} && \
+	$(call print,Formatting ts files)
+	@${CMD_FRONTEND} && \
 	yarn run prettier --write src/**/*.ts src/*.ts ./*.ts
 
 .PHONY: format-scss
 ## Format scss files
 format-scss:
-	${CMD_FRONTEND} && \
+	$(call print,Formatting scss files)
+	@${CMD_FRONTEND} && \
 	yarn run prettier --write ./src/styles/*.scss
 
 .PHONY: format-vue
 ## Format vue files
 format-vue:
-	${CMD_FRONTEND} && \
+	$(call print,Formatting vue files)
+	@${CMD_FRONTEND} && \
 	yarn run prettier --write src/App.vue src/components/*.vue src/views/*.vue
 
 .PHONY: format-html
 ## Format html files
 format-html:
-	${CMD_FRONTEND} && \
+	$(call print,Formatting html files)
+	@${CMD_FRONTEND} && \
 	yarn run prettier --write ./*.html
 #------------------------------------
 
@@ -433,7 +492,8 @@ MANAGE_CMD := src/manage.py
 .PHONY: runserver
 ## Run server for development | Django
 runserver:
-	${SOURCE_CMDS} && \
+	$(call print,Running development server)
+	@${SOURCE_CMDS} && \
 	${MANAGE_CMD} runserver 0.0.0.0:8000
 
 .PHONY: run
@@ -443,32 +503,37 @@ run: runserver
 .PHONY: migrate
 ## Run data migration
 migrate:
-	${SOURCE_CMDS} && \
+	$(call print,Running data migration)
+	@${SOURCE_CMDS} && \
 	${MANAGE_CMD} migrate
 
 .PHONY: collectstatic
 ## Collect static files
 collectstatic:
-	${SOURCE_CMDS} && \
+	$(call print,Collecting static files)
+	@${SOURCE_CMDS} && \
 	export IS_DEV= && \
 	${MANAGE_CMD} collectstatic --no-input
 
 .PHONY: createsuperuser
 ## Create super user
 createsuperuser:
-	${SOURCE_CMDS} && \
+	$(call print,Creating super user)
+	@${SOURCE_CMDS} && \
 	${MANAGE_CMD} createsuperuser
 
 .PHONY: shell
-## Run shell
+## Run Django shell
 shell:
-	${SOURCE_CMDS} && \
+	$(call print,Running Django shell)
+	@${SOURCE_CMDS} && \
 	${MANAGE_CMD} shell
 
 .PHONY: makemigrations
 ## Run makemigrations command. Usage: make makemigrations arguments="[arguments]"
 makemigrations:
-	${SOURCE_CMDS} && \
+	$(call print,Running makemigrations command with arguments `${arguments}`)
+	@${SOURCE_CMDS} && \
 	${MANAGE_CMD} makemigrations $(arguments) ${APP}
 
 ifeq (manage,$(firstword $(MAKECMDGOALS)))
@@ -481,7 +546,8 @@ endif
 .PHONY: manage
 ## Run management command. Usage: make manage [command] arguments="[arguments]"
 manage:
-	${SOURCE_CMDS} && \
+	$(call print, Running management command `${MANAGE_ARGS} ${arguments}`)
+	@${SOURCE_CMDS} && \
 	${MANAGE_CMD} ${MANAGE_ARGS} $(arguments)
 #------------------------------------
 
@@ -497,50 +563,57 @@ docker-build-dev: docker-build-backend docker-build-frontend-dev
 .PHONY: docker-build-backend
 ## Build docker backend image
 docker-build-backend:
-	scripts/docker_build_backend.sh
+	$(call print,Building Docker backend image)
+	@scripts/docker_build_backend.sh
 
 .PHONY: docker-build-frontend-dev
 ## Build docker frontend image
 docker-build-frontend-dev:
-	export VITE_BACKEND_URL=http://localhost:8000/ && \
+	$(call print,Building Docker frontend image)
+	@export VITE_BACKEND_URL=http://localhost:8000/ && \
 	scripts/docker_build_frontend.sh
 
 .PHONY: docker-run
 ## Run server in docker
 docker-run: collectstatic
-	docker-compose up
+	$(call print,Running server in docker)
+	@docker-compose up
 
 .PHONY: docker-sh
 ## Run docker shell
 docker-sh:
-	docker run -ti --env-file ${DOCKER_ENV_FILE} --env-file $(DOCKER_SECRETS_ENV_FILE) ${PROJECT} sh
+	$(call print,Running docker shell)
+	@docker run -ti --env-file ${DOCKER_ENV_FILE} --env-file $(DOCKER_SECRETS_ENV_FILE) ${PROJECT} sh
 #------------------------------------
 
 #------------------------------------
 # Production commands
 #------------------------------------
 .PHONY: prod-create-db
-## Create prod db | Production
+## Create prod DB | Production
 prod-create-db:
-	source $(DB_ENV_PROD_FILE) && \
+	$(call print,Creating prod DB)
+	@source $(DB_ENV_PROD_FILE) && \
 	scripts/create_db.sh
 
 .PHONY: prod-drop-db
-## Drop prod db
 prod-drop-db:
-	source $(DB_ENV_PROD_FILE) && \
+	$(call print,Dropping prod DB)
+	@source $(DB_ENV_PROD_FILE) && \
 	scripts/drop_db.sh
 
 .PHONY: prod-load-db
-## Load db to prod from today's backup
+## Load DB to prod from today's backup
 prod-load-db: prod-drop-db prod-create-db
-	source $(DB_ENV_PROD_FILE) && \
+	$(call print,Loading prod DB)
+	@source $(DB_ENV_PROD_FILE) && \
 	scripts/load_db.sh
 
 .PHONY: prod-connect-db
-## Connect to prod db
+## Connect to prod DB
 prod-connect-db:
-	source $(DB_ENV_PROD_FILE) && \
+	$(call print,Connecting to prod DB)
+	@source $(DB_ENV_PROD_FILE) && \
 	scripts/connect_db.sh
 
 ifeq (prod-manage,$(firstword $(MAKECMDGOALS)))
@@ -553,7 +626,8 @@ endif
 .PHONY: prod-manage
 ## Run management command in prod. Usage: make prod-manage [command] arguments="[arguments]"
 prod-manage:
-	scripts/run_management_command_prod.sh ${PROD_MANAGE_ARGS} $(arguments)
+	$(call print, Running management command in prod `${PROD_MANAGE_ARGS} ${arguments}`)
+	@scripts/run_management_command_prod.sh ${PROD_MANAGE_ARGS} $(arguments)
 
 ifeq (prod-manage-interactive,$(firstword $(MAKECMDGOALS)))
   # Use the rest as arguments
@@ -565,27 +639,32 @@ endif
 .PHONY: prod-manage-interactive
 ## Run management command in prod (interactive). Usage: make prod-manage [command] arguments="[arguments]"
 prod-manage-interactive:
-	scripts/run_management_command_interactive_prod.sh ${PROD_MANAGE_INTERACTIVE_ARGS} $(arguments)
+	$(call print, Running management command in prod (interactive) `${PROD_MANAGE_INTERACTIVE_ARGS} ${arguments}`)
+	@scripts/run_management_command_interactive_prod.sh ${PROD_MANAGE_INTERACTIVE_ARGS} $(arguments)
 
 .PHONY: prod-shell
 ## Run shell in prod
 prod-shell:
-	scripts/run_shell_prod.sh
+	$(call print, Running Docker shell in prod)
+	@scripts/run_shell_prod.sh
 
 .PHONY: prod-migrate
 ## Run data migration for prod
 prod-migrate:
-	scripts/run_management_command_prod.sh migrate
+	$(call print, Running data migration for prod)
+	@scripts/run_management_command_prod.sh migrate
 
 .PHONY: prod-enable-debug
 ## Enable debug in prod. It will be reset with the next deployment
 prod-enable-debug:
-	yq eval '.data.DEBUG="True"' deployment/configmap.yaml | kubectl apply -f -
-	kubectl rollout restart "deployment/${PROJECT}"
+	$(call print, Enabling debug in prod)
+	@yq eval '.data.DEBUG="True"' deployment/configmap.yaml | kubectl apply -f -
+	@kubectl rollout restart "deployment/${PROJECT}"
 
 .PHONY: prod-load-initial-fixtures
 ## Load initial fixtures in prod
 prod-load-initial-fixtures:
-	$(MAKE) prod-manage arguments="loaddata lists"
-	$(MAKE) prod-manage arguments="loaddata categories"
+	$(call print, Loading initial fixtures in prod)
+	@$(MAKE) prod-manage arguments="loaddata lists"
+	@$(MAKE) prod-manage arguments="loaddata categories"
 #------------------------------------
