@@ -32,6 +32,7 @@ import { defineComponent, PropType } from "vue";
 import Draggable from "vuedraggable";
 import { mapState } from "pinia";
 
+import { mobileMixin } from "../mixins/mobile";
 import { getUrl, rewriteArray, requireAuthenticated } from "../helpers";
 import { useSettingsStore } from "../stores/settings";
 import { RecordType, SortData, Game } from "../types";
@@ -43,6 +44,7 @@ export default defineComponent({
     GameCard,
     Draggable,
   },
+  mixins: [mobileMixin],
   props: {
     recordsProp: {
       type: Object as PropType<RecordType[]>,
@@ -66,9 +68,6 @@ export default defineComponent({
       set(records: RecordType[]) {
         rewriteArray(this.recordsProp, records);
       },
-    },
-    isMobile() {
-      return this.$vuetify.display.xs;
     },
     isDraggable() {
       // This is not working on mobile with v-window. Disabling for now.
