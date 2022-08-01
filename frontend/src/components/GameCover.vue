@@ -38,7 +38,10 @@ export default defineComponent({
 .no-img {
   filter: invert(45%) sepia(0%) saturate(0) hue-rotate(0deg) brightness(69%) contrast(100%);
 }
+</style>
 
+<style>
+/* This needs to be unscoped for this to work */
 .no-img img {
   padding: 20px;
 }
