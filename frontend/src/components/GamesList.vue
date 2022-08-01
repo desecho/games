@@ -1,39 +1,14 @@
 <template>
   <v-card variant="flat" color="deep-purple-accent-4">
     <slot></slot>
-    <v-toolbar color="deep-purple-accent-4" height="40">
-      <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon :color="settingsIconColor" @click="toggleSettings()">mdi-cog</v-icon>
-      </v-btn>
-    </v-toolbar>
-
+    <GamesToolbar />
     <v-tabs v-model="tab" background-color="deep-purple-accent-4" centered stacked>
       <v-tab v-for="list in lists" :key="list.id" :value="list.key" :to="getPath(list.key)" :title="list.name">
         <v-icon>mdi-{{ list.icon }}</v-icon>
         <span v-if="!isPhone">{{ list.name }}</span>
       </v-tab>
     </v-tabs>
-    <v-sheet v-if="isSettingsActive" class="pl-5">
-      <v-row>
-        <v-col cols="12" sm="4" md="2" class="py-0">
-          <v-switch
-            v-model="settings.areActionButtonsHidden"
-            label="Hide action buttons"
-            hide-details
-            @change="saveSettings()"
-          ></v-switch>
-        </v-col>
-        <v-col cols="12" sm="4" md="2" class="py-0">
-          <v-switch
-            v-model="settings.areUnreleasedGamesHidden"
-            label="Hide unreleased games"
-            hide-details
-            @change="saveSettings()"
-          ></v-switch>
-        </v-col>
-      </v-row>
-    </v-sheet>
+    <GamesSettings />
     <v-window v-model="tab">
       <ListWindowItem
         v-for="list in lists"
@@ -49,16 +24,20 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 
-import { mobileMixin } from "../mixins/mobile";
 import { Lists } from "../const";
-import ListWindowItem from "../components/ListWindowItem.vue";
 import { RecordType } from "../types";
-import { useSettingsStore } from "../stores/settings";
+import { mobileMixin } from "../mixins/mobile";
+
+import ListWindowItem from "../components/ListWindowItem.vue";
+import GamesSettings from "../components/GamesSettings.vue";
+import GamesToolbar from "../components/GamesToolbar.vue";
 
 export default defineComponent({
   name: "GamesListView",
   components: {
     ListWindowItem,
+    GamesSettings,
+    GamesToolbar,
   },
   mixins: [mobileMixin],
   props: {
@@ -73,23 +52,11 @@ export default defineComponent({
     },
   },
   data() {
-    const { settings } = useSettingsStore();
     return {
       lists: Lists,
       tab: "want-to-play",
       isSettingsActive: false,
-      settings: settings.games,
-      areActionButtonsHidden: false,
-      areUnreleasedGamesHidden: false,
     };
-  },
-  computed: {
-    settingsIconColor(): string {
-      if (this.isSettingsActive) {
-        return "grey";
-      }
-      return "white";
-    },
   },
   methods: {
     getPath(listKey: string): string {
@@ -97,13 +64,6 @@ export default defineComponent({
         return `/users/${this.username}/${listKey}`;
       }
       return `/games/${listKey}`;
-    },
-    toggleSettings() {
-      this.isSettingsActive = !this.isSettingsActive;
-    },
-    saveSettings() {
-      const { saveGamesSettings } = useSettingsStore();
-      saveGamesSettings(this.settings);
     },
   },
 });
