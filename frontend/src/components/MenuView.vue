@@ -23,6 +23,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
+import { mobileMixin } from "../mixins/mobile";
 import { useAuthStore } from "../stores/auth";
 import MenuItem from "./MenuItem.vue";
 
@@ -31,6 +32,7 @@ export default defineComponent({
   components: {
     MenuItem,
   },
+  mixins: [mobileMixin],
   data() {
     return {
       drawer: false,
@@ -40,9 +42,6 @@ export default defineComponent({
     isLoggedIn() {
       const { user } = useAuthStore();
       return user.isLoggedIn;
-    },
-    isMobile() {
-      return this.$vuetify.display.xs;
     },
   },
   mounted() {
