@@ -16,7 +16,7 @@
     </v-tabs>
     <v-sheet v-if="isSettingsActive" class="pl-5">
       <v-row>
-        <v-col cols="2">
+        <v-col cols="12" sm="2">
           <v-switch
             v-model="settings.areActionButtonsHidden"
             label="Hide action buttons"
@@ -24,7 +24,7 @@
             @change="saveSettings()"
           ></v-switch>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="12" sm="2">
           <v-switch
             v-model="settings.areUnreleasedGamesHidden"
             label="Hide unreleased games"
