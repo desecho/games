@@ -431,13 +431,13 @@ fa: format-all
 MANAGE_CMD := src/manage.py
 
 .PHONY: runserver
-## Run server for development
+## Run server for development | Django
 runserver:
 	${SOURCE_CMDS} && \
 	${MANAGE_CMD} runserver 0.0.0.0:8000
 
 .PHONY: run
-## Run server for development
+## Run server for development (runserver alias)
 run: runserver
 
 .PHONY: migrate
@@ -495,12 +495,12 @@ export DOCKER_ENV_FILE := docker.env
 docker-build-dev: docker-build-backend docker-build-frontend-dev
 
 .PHONY: docker-build-backend
-## Build docker backend image | Docker
+## Build docker backend image
 docker-build-backend:
 	scripts/docker_build_backend.sh
 
 .PHONY: docker-build-frontend-dev
-## Build docker frontend image | Docker
+## Build docker frontend image
 docker-build-frontend-dev:
 	export VITE_BACKEND_URL=http://localhost:8000/ && \
 	scripts/docker_build_frontend.sh
