@@ -31,6 +31,7 @@ export interface Game {
   name: string;
   cover: string | null;
   category: string;
+  isReleased: boolean;
 }
 
 export interface RecordType {

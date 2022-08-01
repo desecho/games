@@ -12,7 +12,7 @@
           >
             <template #item="{ element, index }">
               <GameCard
-                v-if="element.listKey == listKey"
+                v-if="element.listKey == listKey && isShowGame(element.game)"
                 :record="element"
                 :index="index"
                 :list-key="listKey"
@@ -30,8 +30,11 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import Draggable from "vuedraggable";
+import { mapState } from "pinia";
+
 import { getUrl, rewriteArray, requireAuthenticated } from "../helpers";
-import { RecordType, SortData } from "../types";
+import { useSettingsStore } from "../stores/settings";
+import { RecordType, SortData, Game } from "../types";
 import GameCard from "./GameCard.vue";
 
 export default defineComponent({
@@ -64,6 +67,7 @@ export default defineComponent({
         rewriteArray(this.recordsProp, records);
       },
     },
+    ...mapState(useSettingsStore, ["settings"]),
   },
   methods: {
     saveRecordsOrder() {
@@ -80,6 +84,12 @@ export default defineComponent({
         console.log(error);
         this.$toast.error("Error saving games order");
       });
+    },
+    isShowGame(game: Game) {
+      if (this.settings.games.areUnreleasedGamesHidden && !game.isReleased) {
+        return false;
+      }
+      return true;
     },
   },
 });
