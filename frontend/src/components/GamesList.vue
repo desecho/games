@@ -29,7 +29,6 @@
         :records-prop="records"
         :list-key="list.key"
         :username="username"
-        :are-action-buttons-active="!areActionButtonsHidden"
       />
     </v-window>
   </v-card>

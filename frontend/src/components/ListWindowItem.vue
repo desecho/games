@@ -17,7 +17,6 @@
                 :index="index"
                 :list-key="listKey"
                 :username="username"
-                :are-action-buttons-active="areActionButtonsActive"
                 :class="{ draggable: !username }"
               />
             </template>
@@ -54,11 +53,6 @@ export default defineComponent({
       type: String,
       required: false,
       default: null,
-    },
-    areActionButtonsActive: {
-      type: Boolean,
-      required: false,
-      default: true,
     },
   },
   computed: {
