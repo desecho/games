@@ -1,34 +1,13 @@
 <template>
   <v-sheet v-if="settings.isGamesSettingsActive" class="pl-5 pt-1">
     <v-row>
-      <v-col cols="12" sm="4" md="2" class="py-0">
-        <v-switch
-          v-model="settings.games.areActionButtonsHidden"
-          label="Hide action buttons"
-          color="primary"
-          hide-details
-          @change="saveSettings()"
-        ></v-switch>
-      </v-col>
-      <v-col cols="12" sm="4" md="2" class="py-0">
-        <v-switch
-          v-model="settings.games.areUnreleasedGamesHidden"
-          label="Hide unreleased games"
-          color="primary"
-          hide-details
-          @change="saveSettings()"
-        ></v-switch>
-      </v-col>
-      <v-col cols="12" sm="4" md="2" class="py-0">
-        <v-switch
-          v-model="settings.games.areDLCsHidden"
-          label="Hide DLCs"
-          color="primary"
-          hide-details
-          @change="saveSettings()"
-        >
-        </v-switch>
-      </v-col>
+      <SettingsSwitch
+        v-for="settingsSwitch in switches"
+        :key="settingsSwitch.name"
+        type="games"
+        :name="settingsSwitch.name"
+        :label="settingsSwitch.label"
+      />
     </v-row>
   </v-sheet>
 </template>
@@ -39,16 +18,33 @@ import { mapState } from "pinia";
 
 import { useSettingsStore } from "../stores/settings";
 
+import SettingsSwitch from "./SettingsSwitch.vue";
+
 export default defineComponent({
   name: "GamesSettings",
+  components: {
+    SettingsSwitch,
+  },
+  data() {
+    return {
+      switches: [
+        {
+          name: "areActionButtonsHidden",
+          label: "Hide action buttons",
+        },
+        {
+          name: "areUnreleasedGamesHidden",
+          label: "Hide unreleased games",
+        },
+        {
+          name: "areDLCsHidden",
+          label: "Hide DLCs",
+        },
+      ],
+    };
+  },
   computed: {
     ...mapState(useSettingsStore, ["settings"]),
-  },
-  methods: {
-    saveSettings() {
-      const { saveGamesSettings } = useSettingsStore();
-      saveGamesSettings(this.settings.games);
-    },
   },
 });
 </script>
