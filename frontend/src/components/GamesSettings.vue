@@ -5,6 +5,7 @@
         <v-switch
           v-model="settings.games.areActionButtonsHidden"
           label="Hide action buttons"
+          color="primary"
           hide-details
           @change="saveSettings()"
         ></v-switch>
@@ -13,12 +14,19 @@
         <v-switch
           v-model="settings.games.areUnreleasedGamesHidden"
           label="Hide unreleased games"
+          color="primary"
           hide-details
           @change="saveSettings()"
         ></v-switch>
       </v-col>
       <v-col cols="12" sm="4" md="2" class="py-0">
-        <v-switch v-model="settings.games.areDLCsHidden" label="Hide DLCs" hide-details @change="saveSettings()">
+        <v-switch
+          v-model="settings.games.areDLCsHidden"
+          label="Hide DLCs"
+          color="primary"
+          hide-details
+          @change="saveSettings()"
+        >
         </v-switch>
       </v-col>
     </v-row>
