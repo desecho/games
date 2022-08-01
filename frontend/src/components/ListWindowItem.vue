@@ -1,6 +1,6 @@
 <template>
   <v-window-item :value="listKey">
-    <v-card>
+    <v-card class="wrapper">
       <v-card-text>
         <div class="d-flex align-content-space-around flex-wrap">
           <draggable
@@ -100,3 +100,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.wrapper {
+  min-height: 500px;
+}
+</style>

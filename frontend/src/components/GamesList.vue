@@ -9,9 +9,9 @@
     </v-toolbar>
 
     <v-tabs v-model="tab" background-color="deep-purple-accent-4" centered stacked>
-      <v-tab v-for="list in lists" :key="list.id" :value="list.key" :to="getPath(list.key)">
+      <v-tab v-for="list in lists" :key="list.id" :value="list.key" :to="getPath(list.key)" :title="list.name">
         <v-icon>mdi-{{ list.icon }}</v-icon>
-        {{ list.name }}
+        <span v-if="!isPhone">{{ list.name }}</span>
       </v-tab>
     </v-tabs>
     <v-sheet v-if="isSettingsActive" class="pl-5">
@@ -47,6 +47,8 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
+
+import { mobileMixin } from "../mixins/mobile";
 import { Lists } from "../const";
 import ListWindowItem from "../components/ListWindowItem.vue";
 import { RecordType } from "../types";
@@ -57,6 +59,7 @@ export default defineComponent({
   components: {
     ListWindowItem,
   },
+  mixins: [mobileMixin],
   props: {
     records: {
       type: Object as PropType<RecordType[]>,
