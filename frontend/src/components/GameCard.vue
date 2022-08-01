@@ -17,12 +17,13 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { mapWritableState } from "pinia";
+import { mapWritableState, mapState } from "pinia";
 
 import { RecordType } from "../types";
 import { getUrl } from "../helpers";
 import { ListKeys, Lists } from "../const";
 import { useGamesStore } from "../stores/games";
+import { useSettingsStore } from "../stores/settings";
 import { useAuthStore } from "../stores/auth";
 import { requireAuthenticated } from "../helpers";
 import { addToList } from "./common";
@@ -52,11 +53,6 @@ export default defineComponent({
       type: String,
       required: false,
       default: null,
-    },
-    areActionButtonsActive: {
-      type: Boolean,
-      required: false,
-      default: true,
     },
   },
   data() {
@@ -88,9 +84,10 @@ export default defineComponent({
       return user.username && this.username && this.username == user.username;
     },
     areActionsVisible() {
-      return this.isLoggedIn && !this.isOwnProfile && this.areActionButtonsActive;
+      return this.isLoggedIn && !this.isOwnProfile && !this.settings.games.areActionButtonsHidden;
     },
     ...mapWritableState(useGamesStore, ["records"]),
+    ...mapState(useSettingsStore, ["settings"]),
   },
   methods: {
     changeList(recordId: number, listId: number, index: number) {
