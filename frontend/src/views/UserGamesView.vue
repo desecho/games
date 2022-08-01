@@ -71,3 +71,17 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.username-bar {
+  padding: 0 !important;
+  height: 75px;
+}
+
+.username {
+  color: white;
+  padding-left: 15px;
+  margin-top: 15px;
+  font-size: 1.6em;
+}
+</style>

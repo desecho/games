@@ -1,7 +1,7 @@
 <template>
   <v-card-subtitle
     v-if="name != 'Main Game'"
-    class="game-subtitle font-weight-black"
+    class="game-category font-weight-black"
     :class="{ 'text-white': color == 'white' }"
     :title="name"
   >
@@ -26,3 +26,11 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.game-category {
+  position: absolute;
+  bottom: 0;
+  right: 5px;
+}
+</style>

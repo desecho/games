@@ -33,3 +33,13 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.no-img {
+  filter: invert(45%) sepia(0%) saturate(0) hue-rotate(0deg) brightness(69%) contrast(100%);
+}
+
+.no-img img {
+  padding: 20px;
+}
+</style>

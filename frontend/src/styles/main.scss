@@ -2,28 +2,6 @@ ul {
   padding-left: 30px;
 }
 
-.list-move,
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.5s ease;
-}
-
-.list-enter-from,
-.list-leave-to {
-  opacity: 0;
-}
-
-/* ensure leaving items are taken out of layout flow so that moving
-   animations can be calculated correctly. */
-.list-leave-active {
-  position: absolute;
-}
-
 .draggable {
   cursor: move;
-}
-
-.v-toolbar div {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
 }
