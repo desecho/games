@@ -1,5 +1,14 @@
 <template>
-  <v-btn size="small" color="surface-variant" variant="text" :icon="'mdi-' + icon" :title="title"> </v-btn>
+  <v-btn
+    size="default"
+    color="surface-variant"
+    density="compact"
+    variant="text"
+    :icon="'mdi-' + icon"
+    :title="title"
+    width="33"
+  >
+  </v-btn>
 </template>
 
 <script lang="ts">
