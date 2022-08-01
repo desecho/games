@@ -1,5 +1,5 @@
 <template>
-  <v-card variant="flat">
+  <v-card variant="flat" color="deep-purple-accent-4">
     <slot></slot>
     <v-toolbar color="deep-purple-accent-4" height="40">
       <v-spacer></v-spacer>
