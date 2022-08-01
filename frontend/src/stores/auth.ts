@@ -2,7 +2,8 @@ import { defineStore } from "pinia";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 
-import { UserStore, JWTDecoded } from "../types";
+import { JWTDecoded } from "../types";
+import { UserStore } from "./types";
 import { router } from "../router";
 import { getUrl } from "../helpers";
 import { initAxios } from "../axios";
