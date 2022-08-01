@@ -6,15 +6,8 @@ export interface JWTDecoded {
   user_id: number;
 }
 
-export interface GameSearchResult {
-  id: number;
-  name: string;
-  cover: string;
-  category: string;
-}
-
 export interface SearchViewComponentData {
-  games: GameSearchResult[];
+  games: Game[];
   valid: boolean;
   rules: { required: any }; // eslint-disable-line @typescript-eslint/no-explicit-any
   query: string;

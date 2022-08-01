@@ -20,7 +20,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 
-import { GameSearchResult } from "../types";
+import { Game } from "../types";
 import { Lists } from "../const";
 import { addToList } from "./common";
 import ActionButton from "./ActionButton.vue";
@@ -34,11 +34,11 @@ export default defineComponent({
   },
   props: {
     game: {
-      type: Object as PropType<GameSearchResult>,
+      type: Object as PropType<Game>,
       required: true,
     },
     games: {
-      type: Object as PropType<GameSearchResult[]>,
+      type: Object as PropType<Game[]>,
       required: true,
     },
     index: {

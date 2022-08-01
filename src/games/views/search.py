@@ -4,8 +4,8 @@ from http import HTTPStatus
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from ..igdb import IGDBGamesSearchResult
 from ..models import User
+from ..types import GameObject
 from .common import IGDBAPIView
 
 
@@ -14,7 +14,7 @@ class SearchView(IGDBAPIView):
 
     permission_classes: list[str] = []  # type: ignore
 
-    def _filter_out_users_games(self, results: list[IGDBGamesSearchResult]) -> None:
+    def _filter_out_users_games(self, results: list[GameObject]) -> None:
         """Filter out users games."""
         user: User = self.request.user  # type: ignore
         user_games_ids = user.records.values_list("game__id", flat=True)

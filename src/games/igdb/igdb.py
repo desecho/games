@@ -8,8 +8,9 @@ from igdb.wrapper import IGDBWrapper
 
 from ..exceptions import IGDBError
 from ..models import Category
+from ..types import GameObject
 from ..utils import get_cover_url
-from .types import IGDBGame, IGDBGameRaw, IGDBGamesSearchResult, IGDBGamesSearchResultRaw
+from .types import IGDBGame, IGDBGameRaw, IGDBGamesSearchResultRaw
 
 # Full list is available here: https://api-docs.igdb.com/#game-enums
 CATEGORY_MAIN_GAME = 0
@@ -68,21 +69,20 @@ class IGDB:
         self.igdb = IGDBWrapper(settings.IGDB_CLIENT_ID, token)
 
     @staticmethod
-    def _process_search_games_results(results: list[IGDBGamesSearchResultRaw]) -> list[IGDBGamesSearchResult]:
+    def _process_search_games_results(results: list[IGDBGamesSearchResultRaw]) -> list[GameObject]:
         """Process search games results."""
-        results_processed: list[IGDBGamesSearchResult] = []
+        results_processed: list[GameObject] = []
         for result in results:
-            result_processed: IGDBGamesSearchResult = {
+            result_processed: GameObject = {
                 "id": result["id"],
                 "name": result["name"],
                 "category": GAME_CATEGORIES[result["category"]],
+                "cover": get_cover_url(result["cover"]["image_id"]) if "cover" in result else None,
             }
-            if "cover" in result:
-                result_processed["cover"] = get_cover_url(result["cover"]["image_id"])
             results_processed.append(result_processed)
         return results_processed
 
-    def search_games(self, query: str) -> list[IGDBGamesSearchResult]:
+    def search_games(self, query: str) -> list[GameObject]:
         """Search games."""
         request = f"""
             fields name, cover.image_id, category;
