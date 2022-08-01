@@ -13,6 +13,11 @@
           <li>Privacy settings.</li>
         </ul>
         <br />
+        <h3>Limitations</h3>
+        <ul>
+          <li>Adding custom order for your lists is not available on mobile</li>
+        </ul>
+        <br />
         <h3>APIs used</h3>
         <ul>
           <li><a href="https://www.igdb.com/" target="_blank">IGDB</a></li>
