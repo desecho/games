@@ -28,6 +28,7 @@ function saveUser(user: UserStore) {
 export const useAuthStore = defineStore({
   id: "auth",
   state: () => ({
+    // TODO - maybe refactor this and have isLoggedIn be separate from user
     user: getUser(),
   }),
   actions: {
