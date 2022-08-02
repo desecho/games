@@ -10,7 +10,7 @@
         :icon="list.icon"
         @click="action(list.id)"
       />
-      <ActionButton v-if="!username" title="Delete Game" icon="delete" @click="deleteGame(record.id, index)" />
+      <ActionButton v-if="username" title="Delete Game" icon="delete" @click="deleteGame(record.id, index)" />
     </v-card-actions>
   </v-card>
 </template>
@@ -83,7 +83,7 @@ export default defineComponent({
     },
     isOwnProfile() {
       const { user } = useAuthStore();
-      return user.username && this.username && this.username == user.username;
+      return this.username && this.username == user.username;
     },
     areActionsVisible() {
       return this.isLoggedIn && !this.isOwnProfile && !this.settings.games.areActionButtonsHidden;

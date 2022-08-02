@@ -4,7 +4,7 @@
     color="surface-variant"
     density="compact"
     variant="text"
-    :icon="'mdi-' + icon"
+    :icon="`mdi-${icon}`"
     :title="title"
     width="33"
   >

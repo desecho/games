@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app-bar v-if="isMobile">
-      <v-app-bar-nav-icon variant="text" @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon variant="text" @click="toggleDrawer()"></v-app-bar-nav-icon>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" width="170" elevation="2" touchless>
       <v-list>
@@ -49,6 +49,11 @@ export default defineComponent({
     if (!this.isMobile) {
       this.drawer = true;
     }
+  },
+  methods: {
+    toggleDrawer() {
+      this.drawer = !this.drawer;
+    },
   },
 });
 </script>
