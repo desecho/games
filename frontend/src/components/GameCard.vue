@@ -26,7 +26,7 @@ import { useGamesStore } from "../stores/games";
 import { useSettingsStore } from "../stores/settings";
 import { useAuthStore } from "../stores/auth";
 import { requireAuthenticated } from "../helpers";
-import { addToList } from "./common";
+import { addToListMixin } from "../mixins/addToList";
 
 import ActionButton from "./ActionButton.vue";
 import GameCover from "./GameCover.vue";
@@ -37,6 +37,7 @@ export default defineComponent({
     ActionButton,
     GameCover,
   },
+  mixins: [addToListMixin],
   props: {
     record: {
       type: Object as PropType<RecordType>,
@@ -115,7 +116,6 @@ export default defineComponent({
           this.$toast.error("Error deleting game");
         });
     },
-    addToList: addToList,
   },
 });
 </script>
