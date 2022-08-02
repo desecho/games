@@ -22,7 +22,7 @@ import { defineComponent, PropType } from "vue";
 
 import { Game } from "../types";
 import { Lists } from "../const";
-import { addToList } from "./common";
+import { addToListMixin } from "../mixins/addToList";
 
 import ActionButton from "./ActionButton.vue";
 import GameCover from "./GameCover.vue";
@@ -33,6 +33,7 @@ export default defineComponent({
     ActionButton,
     GameCover,
   },
+  mixins: [addToListMixin],
   props: {
     game: {
       type: Object as PropType<Game>,
@@ -51,9 +52,6 @@ export default defineComponent({
     return {
       lists: Lists,
     };
-  },
-  methods: {
-    addToList: addToList,
   },
 });
 </script>
