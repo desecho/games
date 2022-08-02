@@ -107,6 +107,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
+/* This is needed for the swipe to work */
 .wrapper {
   min-height: 500px;
 }

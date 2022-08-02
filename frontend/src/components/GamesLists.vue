@@ -1,8 +1,8 @@
 <template>
-  <v-card variant="flat" color="deep-purple-accent-4">
+  <v-card variant="flat" color="primary">
     <slot></slot>
     <GamesToolbar />
-    <v-tabs v-model="tab" background-color="deep-purple-accent-4" centered stacked>
+    <v-tabs v-model="tab" background-color="primary" centered stacked>
       <v-tab v-for="list in lists" :key="list.id" :value="list.key" :to="getPath(list.key)" :title="list.name">
         <v-icon>mdi-{{ list.icon }}</v-icon>
         <span v-if="!isPhone">{{ list.name }}</span>

@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar color="deep-purple-accent-4" height="40">
+  <v-toolbar color="primary" height="40">
     <v-spacer></v-spacer>
     <v-btn icon>
       <v-icon :color="settingsIconColor" @click="toggleSettings()">mdi-cog</v-icon>
@@ -17,7 +17,7 @@ export default defineComponent({
   name: "GamesToolbar",
   computed: {
     settingsIconColor(): string {
-      if (this.settings!.isGamesSettingsActive) {
+      if (this.settings.isGamesSettingsActive) {
         return "grey";
       }
       return "white";
