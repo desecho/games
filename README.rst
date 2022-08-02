@@ -3,7 +3,8 @@ Games
 
 |Deployment Status| |Requirements Status| |Codecov|
 
-| The web application on Django_ 4, Vue.js_ 3, Vuetify_ 3, `Material Design Icons`_. Create game lists like "Want to Play", "Playing", "Beaten", "On Hold".
+| The web application on Django_ 4, Vue.js_ 3, Vuetify_ 3, `Material Design Icons`_ 7.
+| Create game lists like "Want to Play", "Playing", "Beaten", "On Hold".
 | See more information here - https://games.samarchyan.me/about/
 
 | Share your lists with friends.
