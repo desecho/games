@@ -13,6 +13,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+
 import { getUrl } from "../helpers";
 import { UsersViewComponentData } from "../types";
 

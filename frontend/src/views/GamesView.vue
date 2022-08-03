@@ -4,8 +4,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { useGamesStore } from "../stores/games";
 import { mapState } from "pinia";
+
+import { useGamesStore } from "../stores/games";
+
 import GamesLists from "../components/GamesLists.vue";
 
 export default defineComponent({
