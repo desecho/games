@@ -1,5 +1,5 @@
 <template>
-  <v-sheet v-if="settings.isGamesSettingsActive" class="pl-5 pt-1">
+  <v-sheet v-if="settings.isGamesSettingsActive" class="pl-5 pt-3">
     <v-row>
       <SettingsSwitch
         v-for="settingsSwitch in switches"
