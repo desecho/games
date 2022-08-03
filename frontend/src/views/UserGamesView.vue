@@ -17,9 +17,11 @@
 <script lang="ts">
 import { AxiosError } from "axios";
 import { defineComponent } from "vue";
+
 import { Lists } from "../const";
-import { getUrl } from "../helpers";
 import { RecordType } from "../types";
+import { getUrl } from "../helpers";
+
 import GamesLists from "../components/GamesLists.vue";
 
 export default defineComponent({

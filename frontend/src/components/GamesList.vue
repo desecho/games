@@ -32,11 +32,11 @@ import { defineComponent, PropType } from "vue";
 import Draggable from "vuedraggable";
 import { mapState } from "pinia";
 
-import { mobileMixin } from "../mixins/mobile";
+import { RecordType, SortData, Game } from "../types";
 import { DLCKindCategories } from "../const";
 import { getUrl, rewriteArray, requireAuthenticated } from "../helpers";
 import { useSettingsStore } from "../stores/settings";
-import { RecordType, SortData, Game } from "../types";
+import { mobileMixin } from "../mixins/mobile";
 
 import GameCard from "./GameCard.vue";
 

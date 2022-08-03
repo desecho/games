@@ -4,7 +4,6 @@ import axios from "axios";
 import { RecordType } from "../types";
 import { getUrl } from "../helpers";
 import { router } from "../router";
-
 import { useAuthStore } from "./auth";
 
 const recordsInitialState: RecordType[] = [];

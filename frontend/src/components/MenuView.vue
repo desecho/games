@@ -23,8 +23,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import { mobileMixin } from "../mixins/mobile";
 import { useAuthStore } from "../stores/auth";
+import { mobileMixin } from "../mixins/mobile";
 
 import MenuItem from "./MenuItem.vue";
 

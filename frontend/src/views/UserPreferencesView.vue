@@ -11,8 +11,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { getUrl } from "../helpers";
+
 import { UserPreferencesViewComponentData } from "../types";
+import { getUrl } from "../helpers";
 import { useAuthStore } from "../stores/auth";
 
 const url = getUrl("user/preferences/");

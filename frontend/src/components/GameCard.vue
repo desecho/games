@@ -20,12 +20,11 @@ import { defineComponent, PropType } from "vue";
 import { mapWritableState, mapState } from "pinia";
 
 import { RecordType } from "../types";
-import { getUrl } from "../helpers";
+import { getUrl, requireAuthenticated } from "../helpers";
 import { ListKeys, Lists } from "../const";
 import { useGamesStore } from "../stores/games";
 import { useSettingsStore } from "../stores/settings";
 import { useAuthStore } from "../stores/auth";
-import { requireAuthenticated } from "../helpers";
 import { addToListMixin } from "../mixins/addToList";
 
 import ActionButton from "./ActionButton.vue";

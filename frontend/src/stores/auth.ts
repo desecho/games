@@ -3,10 +3,10 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 import { JWTDecoded } from "../types";
-import { UserStore } from "./types";
 import { router } from "../router";
 import { getUrl } from "../helpers";
 import { initAxios } from "../axios";
+import { UserStore } from "./types";
 
 const userDefault: UserStore = {
   isLoggedIn: false,
