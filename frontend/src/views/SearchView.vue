@@ -33,10 +33,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { rules } from "../helpers";
-import GameSearchResultCard from "../components/GameSearchResultCard.vue";
-import { getUrl } from "../helpers";
+
 import { SearchViewComponentData } from "../types";
+import { rules, getUrl } from "../helpers";
+
+import GameSearchResultCard from "../components/GameSearchResultCard.vue";
 
 export default defineComponent({
   name: "SearchView",

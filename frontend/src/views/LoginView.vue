@@ -32,8 +32,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { useAuthStore } from "../stores/auth";
+
 import { rules } from "../helpers";
+import { useAuthStore } from "../stores/auth";
 
 export default defineComponent({
   name: "LoginView",
