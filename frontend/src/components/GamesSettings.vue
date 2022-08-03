@@ -17,6 +17,7 @@ import { defineComponent } from "vue";
 import { mapState } from "pinia";
 
 import { useSettingsStore } from "../stores/settings";
+import { useAuthStore } from "../stores/auth";
 
 import SettingsSwitch from "./SettingsSwitch.vue";
 
@@ -26,12 +27,18 @@ export default defineComponent({
     SettingsSwitch,
   },
   data() {
-    return {
-      switches: [
-        {
+    function getSwitches() {
+      const switches = [];
+      const { user } = useAuthStore();
+      // Don't show "Hide action buttons" switch for unauthenticated users because action buttons are always
+      // hidden for them.
+      if (user.isLoggedIn) {
+        switches.push({
           name: "areActionButtonsHidden",
           label: "Hide action buttons",
-        },
+        });
+      }
+      switches.push(
         {
           name: "areUnreleasedGamesHidden",
           label: "Hide unreleased games",
@@ -39,8 +46,13 @@ export default defineComponent({
         {
           name: "areDLCsHidden",
           label: "Hide DLCs",
-        },
-      ],
+        }
+      );
+      return switches;
+    }
+
+    return {
+      switches: getSwitches(),
     };
   },
   computed: {
