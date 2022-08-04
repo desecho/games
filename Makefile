@@ -61,6 +61,7 @@ install-actionlint:
 install-linters-binaries: install-shfmt install-hadolint install-actionlint
 
 .PHONY: install-deps
+## Install dependencies
 install-deps: install-linters-binaries install-python install-mysql-client
 
 .PHONY: install-python
@@ -113,7 +114,7 @@ load-initial-fixtures:
 
 .PHONY: bootstrap
 ## Bootstrap project
-bootstrap: install-deps yarn-install-locked create-env-files create-venvs create-db migrate load-initial-fixtures yarn-build
+bootstrap: yarn-install-locked create-env-files create-venvs create-db migrate load-initial-fixtures build
 
 .PHONY: create-env-files
 ## Create env files

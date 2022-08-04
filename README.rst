@@ -15,9 +15,10 @@ Development
 1. Use ubuntu-vm_ as a development VM
 2. Use mysql-docker_ to bring up MySQL in Docker
 3. Use redis-docker_ to bring up Redis in Docker
-4. Run ``make bootstrap``
-5. Run ``make createsuperuser`` to create a superadmin user
-6. Edit files ``env_custom.sh`` and ``env_secrets.sh``
+4. Run ``make install-deps`` if necessary
+5. Run ``make bootstrap``
+6. Run ``make createsuperuser`` to create a superadmin user
+7. Edit files ``env_custom.sh`` and ``env_secrets.sh``
 
 For development run:
 
