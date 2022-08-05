@@ -1,3 +1,5 @@
+import { List } from "./types";
+
 export enum ListIDs {
   WantToPlay = 1,
   Playing,
@@ -11,7 +13,7 @@ ListKeys[ListIDs.Playing] = "playing";
 ListKeys[ListIDs.Beaten] = "beaten";
 ListKeys[ListIDs.OnHold] = "on-hold";
 
-export const Lists = [
+export const Lists: List[] = [
   {
     id: ListIDs.WantToPlay,
     name: "Want to Play",
