@@ -1,9 +1,7 @@
 <template>
   <v-toolbar color="primary" height="40">
     <v-spacer></v-spacer>
-    <v-btn icon>
-      <v-icon :color="settingsIconColor" @click="toggleSettings()">mdi-cog</v-icon>
-    </v-btn>
+    <ToolbarButton icon="cog" :active="settings.isGamesSettingsActive" @click="toggleSettings()" />
   </v-toolbar>
 </template>
 
@@ -13,15 +11,14 @@ import { mapState } from "pinia";
 
 import { useSettingsStore } from "../stores/settings";
 
+import ToolbarButton from "./ToolbarButton.vue";
+
 export default defineComponent({
   name: "GamesToolbar",
+  components: {
+    ToolbarButton,
+  },
   computed: {
-    settingsIconColor(): string {
-      if (this.settings.isGamesSettingsActive) {
-        return "grey";
-      }
-      return "white";
-    },
     ...mapState(useSettingsStore, ["settings"]),
   },
   methods: {
