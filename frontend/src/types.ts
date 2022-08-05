@@ -40,3 +40,10 @@ export interface RecordType {
   listKey: string;
   order: number;
 }
+
+export interface List {
+  id: number;
+  name: string;
+  key: string;
+  icon: string;
+}

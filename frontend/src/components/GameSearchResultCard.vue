@@ -7,7 +7,7 @@
     <v-card-actions>
       <v-spacer></v-spacer>
       <ActionButton
-        v-for="list in lists"
+        v-for="list in getLists(game)"
         :key="list.id"
         :title="list.name"
         :icon="list.icon"
@@ -20,8 +20,9 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 
-import { Game } from "../types";
-import { Lists } from "../const";
+import { Game, List } from "../types";
+import { Lists, ListIDs } from "../const";
+
 import { addToListMixin } from "../mixins/addToList";
 
 import ActionButton from "./ActionButton.vue";
@@ -48,10 +49,16 @@ export default defineComponent({
       required: true,
     },
   },
-  data() {
-    return {
-      lists: Lists,
-    };
+  methods: {
+    getLists(game: Game): List[] {
+      // Don't show action buttons for lists other than "Want to Play" if the game has not been released yet.
+      return Lists.filter((list) => {
+        if (list.id == ListIDs.WantToPlay) {
+          return true;
+        }
+        return game.isReleased;
+      });
+    },
   },
 });
 </script>
