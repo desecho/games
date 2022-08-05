@@ -33,6 +33,7 @@ Cron jobs
 ------------
 Cron jobs are run with `GitHub Actions`_. Time zone is UTC.
 
+- ``Update games data`` runs at 04:00 UTC (00:00 EDT) on the first day of the month
 - ``Remove unused games`` runs at 07:00 UTC (03:00 EDT) on the first day of the month
 - ``DB backup`` runs at 09:00 UTC (05:00 EDT) daily
 

@@ -1,0 +1,28 @@
+---
+name: Update Games Data
+on:
+  schedule:
+    - cron: "0 4 1 * *" # Runs at 04:00 UTC (00:00 EDT) on the first day of the month
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+jobs:
+  update_games_data:
+    name: Update games data
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v2.1
+
+      - name: Configure kubectl
+        run: |
+          mkdir ~/.kube
+          echo "$KUBECONFIG" > ~/.kube/config
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }} # Done as a variable because it doesn't work in place.
+
+      - name: Update games data
+        run: make prod-manage update_games_data

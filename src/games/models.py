@@ -1,5 +1,5 @@
 """Models."""
-from typing import Optional
+from typing import Any, Optional
 
 from django.contrib.auth.models import AbstractUser
 from django.db.models import (
@@ -11,6 +11,7 @@ from django.db.models import (
     ForeignKey,
     Model,
     PositiveSmallIntegerField,
+    QuerySet,
     UniqueConstraint,
 )
 
@@ -96,6 +97,16 @@ class Game(Model):
             "category": self.category.name,
             "isReleased": self.is_released,
         }
+
+    @classmethod
+    def filter(cls, game_id: Optional[int], start_from_id: bool = False, **kwargs: Any) -> QuerySet["Game"]:
+        """Filter games."""
+        games = cls.objects.filter(**kwargs)
+        if game_id is not None:
+            if start_from_id:
+                return games.filter(pk__gte=game_id)
+            return games.filter(pk=game_id)
+        return games
 
 
 class List(Model):
