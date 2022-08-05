@@ -10,7 +10,7 @@
           <li>Search for games to add to your collection</li>
           <li>Add custom order your lists</li>
           <li>Share your lists online</li>
-          <li>Privacy settings.</li>
+          <li>Privacy settings</li>
         </ul>
         <br />
         <h3>Limitations</h3>
