@@ -3,6 +3,7 @@ import jwt_decode from "jwt-decode";
 
 import { useAuthStore } from "./stores/auth";
 import { JWTDecoded } from "./types";
+
 import LoginView from "./views/LoginView.vue";
 import LogoutView from "./views/LogoutView.vue";
 import GamesView from "./views/GamesView.vue";

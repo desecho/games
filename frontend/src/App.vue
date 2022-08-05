@@ -1,10 +1,10 @@
 <template>
   <v-app>
     <v-main>
-      <MenuView />
+      <MenuComponent />
       <RouterView />
     </v-main>
-    <FooterView />
+    <FooterComponent />
   </v-app>
 </template>
 
@@ -12,15 +12,15 @@
 import { defineComponent } from "vue";
 import { RouterView } from "vue-router";
 
-import MenuView from "./components/MenuView.vue";
-import FooterView from "./components/FooterView.vue";
+import MenuComponent from "./components/Menu.vue";
+import FooterComponent from "./components/Footer.vue";
 
 export default defineComponent({
   name: "App",
   components: {
     RouterView,
-    MenuView,
-    FooterView,
+    MenuComponent,
+    FooterComponent,
   },
 });
 </script>
