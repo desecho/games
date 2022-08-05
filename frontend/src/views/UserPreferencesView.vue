@@ -3,7 +3,7 @@
     <v-row>
       <v-col v-cloak cols="12">
         <v-checkbox v-model="hidden" label="Hide profile" hide-details @change="savePreferences()"></v-checkbox>
-        Profile link: <router-link :to="profileLink">{{ profileLink }}</router-link>
+        Profile link: <router-link :to="profileLink">{{ absoluteProfileLink }}</router-link>
       </v-col>
     </v-row>
   </v-container>
@@ -29,6 +29,9 @@ export default defineComponent({
     profileLink() {
       const { user } = useAuthStore();
       return `/users/${user.username!}`;
+    },
+    absoluteProfileLink() {
+      return `${location.origin}${this.profileLink}`;
     },
   },
   mounted() {
