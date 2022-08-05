@@ -10,7 +10,7 @@
         :icon="list.icon"
         @click="action(list.id)"
       />
-      <ActionButton v-if="username" title="Delete Game" icon="delete" @click="deleteGame(record.id, index)" />
+      <ActionButton v-if="!username" title="Delete Game" icon="delete" @click="deleteGame(record.id, index)" />
     </v-card-actions>
   </v-card>
 </template>
