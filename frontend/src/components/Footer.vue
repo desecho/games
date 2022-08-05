@@ -20,7 +20,7 @@ import { RouterLink } from "vue-router";
 import { Email } from "../const";
 
 export default defineComponent({
-  name: "FooterView",
+  name: "FooterComponent",
   components: {
     RouterLink,
   },

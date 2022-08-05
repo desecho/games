@@ -29,7 +29,7 @@ import { mobileMixin } from "../mixins/mobile";
 import MenuItem from "./MenuItem.vue";
 
 export default defineComponent({
-  name: "MenuView",
+  name: "MenuComponent",
   components: {
     MenuItem,
   },
