@@ -4,7 +4,7 @@
     <v-card-actions v-if="areActionsVisible">
       <v-spacer></v-spacer>
       <ActionButton
-        v-for="list in lists"
+        v-for="list in getLists(record.game)"
         :key="list.id"
         :title="list.name"
         :icon="list.icon"
@@ -19,9 +19,9 @@
 import { defineComponent, PropType } from "vue";
 import { mapWritableState, mapState } from "pinia";
 
-import { RecordType } from "../types";
+import { RecordType, Game, List } from "../types";
 import { getUrl, requireAuthenticated } from "../helpers";
-import { ListKeys, Lists } from "../const";
+import { ListKeys, Lists, ListIDs } from "../const";
 import { useGamesStore } from "../stores/games";
 import { useSettingsStore } from "../stores/settings";
 import { useAuthStore } from "../stores/auth";
@@ -68,11 +68,6 @@ export default defineComponent({
     };
   },
   computed: {
-    lists() {
-      return Lists.filter((list) => {
-        return list.key != this.listKey;
-      });
-    },
     isLoggedIn() {
       const { user } = useAuthStore();
       return user.isLoggedIn;
@@ -114,6 +109,18 @@ export default defineComponent({
           console.log(error);
           this.$toast.error("Error deleting game");
         });
+    },
+    getLists(game: Game): List[] {
+      const lists = Lists.filter((list) => {
+        return list.key != this.listKey;
+      });
+      // Don't show action buttons for lists other than "Want to Play" if the game has not been released yet.
+      return lists.filter((list) => {
+        if (list.id == ListIDs.WantToPlay) {
+          return true;
+        }
+        return game.isReleased;
+      });
     },
   },
 });
