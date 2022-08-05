@@ -8,6 +8,7 @@
             variant="outlined"
             label="Username"
             :rules="[rules.required]"
+            :autofocus="true"
             @keyup.enter="onSubmit"
           ></v-text-field>
           <v-text-field
