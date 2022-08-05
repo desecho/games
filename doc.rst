@@ -3,7 +3,7 @@ Documentation
 
 Search
 -------------
-| Search is limited to 100 results.
+| Search results are limited to 100.
 | Search results only include categories: main game, dlc, expansion, standalone expansion, remake and remaster.
 | Full list is available here: https://api-docs.igdb.com/#game-enums.
 
@@ -37,14 +37,13 @@ Cron jobs are run with `GitHub Actions`_. Time zone is UTC.
 - ``Remove unused games`` runs at 07:00 UTC (03:00 EDT) on the first day of the month
 - ``DB backup`` runs at 09:00 UTC (05:00 EDT) daily
 
-
 CI/CD
 ----------
 `GitHub Actions`_  are used for CI/CD.
 
-Tests are automatically run on pull requests and in master or dev branches.
+Tests are automatically run on pull requests and in main or dev branches.
 
-Deployment is automatically done in master branch.
+Deployment is automatically done in main branch.
 
 The following GitHub Actions are used:
 
@@ -60,6 +59,7 @@ The following GitHub Actions are used:
 * Cache_
 * `Docker Setup Buildx`_
 * `Set Timezone`_
+
 
 .. _Image Not Found icon: https://uxwing.com/image-not-found-icon/
 
