@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="12" sm="4" md="3" class="py-0">
+  <v-col cols="12" sm="4" md="3" class="py-0 settings-switches">
     <v-switch v-model="value" :label="label" color="primary" hide-details @change="saveSettings()"></v-switch>
   </v-col>
 </template>
@@ -46,3 +46,10 @@ export default defineComponent({
   },
 });
 </script>
+
+<style>
+/* This needs to be unscoped for this to work */
+.settings-switches div.v-selection-control {
+  height: 62px;
+}
+</style>
