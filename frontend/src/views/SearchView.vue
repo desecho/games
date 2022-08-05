@@ -10,6 +10,7 @@
             :hide-details="true"
             :rules="[rules.required]"
             class="mr-5"
+            :autofocus="true"
           ></v-text-field>
         </v-form>
       </v-col>
