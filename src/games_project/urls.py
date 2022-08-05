@@ -1,7 +1,4 @@
 """URL Configuration."""
-import debug_toolbar
-from django.conf import settings
-from django.conf.urls import include
 from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -20,15 +17,7 @@ from games.views import (
     UsersView,
 )
 
-urlpatterns: list[URL] = []
-
-if settings.DEBUG:  # pragma: no cover
-    urlpatterns += [
-        path("__debug__/", include(debug_toolbar.urls)),
-    ]
-
-
-urlpatterns += [
+urlpatterns: list[URL] = [
     # Health
     path("health/", HealthView.as_view()),
     # Admin
