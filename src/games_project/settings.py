@@ -81,10 +81,6 @@ INSTALLED_APPS = [
     # App
     APP,
 ]
-if DEBUG:  # pragma: no cover
-    INSTALLED_APPS += [
-        "debug_toolbar",
-    ]
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -96,8 +92,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-if DEBUG:  # pragma: no cover
-    MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
 
 ROOT_URLCONF = "games_project.urls"
 
@@ -172,14 +166,6 @@ USE_I18N = True
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # --== Modules settings ==--
-
-# django-debug-toolbar
-DEBUG_TOOLBAR_PANELS = [
-    "debug_toolbar.panels.timer.TimerPanel",
-    "debug_toolbar.panels.sql.SQLPanel",
-    "debug_toolbar.panels.signals.SignalsPanel",
-    "debug_toolbar.panels.profiling.ProfilingPanel",
-]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
