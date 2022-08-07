@@ -1,7 +1,7 @@
 Games
 ==========================================================
 
-|Deployment Status| |Requirements Status| |Codecov|
+|Deployment Status| |Codecov|
 
 | The web application on Django_ 4, Vue.js_ 3, Vuetify_ 3, `Material Design Icons`_ 7.
 | Create game lists like "Want to Play", "Playing", "Beaten", "On Hold".
@@ -51,9 +51,6 @@ To use production commands:
 Used API
 -----------
 * IGDB_
-
-.. |Requirements Status| image:: https://requires.io/github/desecho/games/requirements.svg?branch=main
-   :target: https://requires.io/github/desecho/games/requirements/?branch=main
 
 .. |Codecov| image:: https://codecov.io/gh/desecho/games/branch/main/graph/badge.svg
    :target: https://codecov.io/gh/desecho/games
