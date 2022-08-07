@@ -7,60 +7,47 @@
     <v-card-actions>
       <v-spacer></v-spacer>
       <ActionButton
-        v-for="list in getLists(game)"
+        v-for="list in lists"
         :key="list.id"
         :title="list.name"
         :icon="list.icon"
-        @click="addToList(game.id, list.id, index)"
+        @click="addToList(game.id, list.id, index, gamesRef)"
       />
     </v-card-actions>
   </v-card>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from "vue";
-
-import { Game, List } from "../types";
+<script lang="ts" setup>
+import { computed, toRef } from "vue";
+import { Game } from "../types";
 import { Lists, ListIDs } from "../const";
-
-import { addToListMixin } from "../mixins/addToList";
+import { useAddToList } from "../composables/addToList";
 
 import ActionButton from "./ActionButton.vue";
 import GameCover from "./GameCover.vue";
 
-export default defineComponent({
-  name: "GameSearchResultCard",
-  components: {
-    ActionButton,
-    GameCover,
-  },
-  mixins: [addToListMixin],
-  props: {
-    game: {
-      type: Object as PropType<Game>,
-      required: true,
-    },
-    games: {
-      type: Object as PropType<Game[]>,
-      required: true,
-    },
-    index: {
-      type: Number,
-      required: true,
-    },
-  },
-  methods: {
-    getLists(game: Game): List[] {
-      // Don't show action buttons for lists other than "Want to Play" if the game has not been released yet.
-      return Lists.filter((list) => {
-        if (list.id == ListIDs.WantToPlay) {
-          return true;
-        }
-        return game.isReleased;
-      });
-    },
-  },
+interface Props {
+  game: Game;
+  games: Game[];
+  index: number;
+}
+
+const props = defineProps<Props>();
+
+const lists = computed(() => {
+  // Don't show action buttons for lists other than "Want to Play" if the game has not been released yet.
+  return Lists.filter((list) => {
+    if (list.id == ListIDs.WantToPlay) {
+      return true;
+    }
+    return props.game.isReleased;
+  });
 });
+const gamesRef = computed(() => {
+  return toRef(props, "games");
+});
+
+const { addToList } = useAddToList();
 </script>
 
 <style scoped>

@@ -6,21 +6,6 @@ export interface JWTDecoded {
   user_id: number;
 }
 
-export interface SearchViewComponentData {
-  games: Game[];
-  valid: boolean;
-  rules: { required: any }; // eslint-disable-line @typescript-eslint/no-explicit-any
-  query: string;
-}
-
-export interface UsersViewComponentData {
-  users: string[];
-}
-
-export interface UserPreferencesViewComponentData {
-  hidden: boolean;
-}
-
 export interface SortData {
   id: number;
   order: number;
@@ -46,4 +31,9 @@ export interface List {
   name: string;
   key: string;
   icon: string;
+}
+
+export interface Switch {
+  name: string;
+  label: string;
 }

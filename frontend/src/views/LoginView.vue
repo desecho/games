@@ -31,47 +31,36 @@
   </v-container>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { ref } from "vue";
 
-import { rules } from "../helpers";
+import { rulesHelper } from "../helpers";
 import { useAuthStore } from "../stores/auth";
+import { $toast } from "../toast";
+import { useFormValidation } from "../composables/formValidation";
 
-export default defineComponent({
-  name: "LoginView",
-  data() {
-    return {
-      username: "",
-      password: "",
-      showPassword: false,
-      valid: false,
-      rules: rules,
-    };
-  },
-  computed: {
-    isLoggedIn() {
-      const { user } = useAuthStore();
-      return user.isLoggedIn;
-    },
-  },
-  methods: {
-    async isValid(): Promise<boolean> {
-      const result = await this.$refs.form.validate();
-      const valid: boolean = result.valid;
-      return valid;
-    },
-    async onSubmit() {
-      if (!(await this.isValid())) {
-        return;
-      }
-      const { login } = useAuthStore();
-      try {
-        await login(this.username, this.password);
-      } catch (error) {
-        console.log(error);
-        this.$toast.error(error.response.data.detail);
-      }
-    },
-  },
-});
+const rules = rulesHelper;
+
+const username = ref("");
+const password = ref("");
+const showPassword = ref(false);
+const valid = ref(false);
+
+const { user } = useAuthStore();
+const isLoggedIn = user.isLoggedIn;
+
+const { form, isValid } = useFormValidation();
+
+async function onSubmit() {
+  if (!(await isValid())) {
+    return;
+  }
+  const { login } = useAuthStore();
+  try {
+    await login(username.value, password.value);
+  } catch (error) {
+    console.log(error);
+    $toast.error(error.response.data.detail);
+  }
+}
 </script>

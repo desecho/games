@@ -14,63 +14,51 @@
   </div>
 </template>
 
-<script lang="ts">
-import { AxiosError } from "axios";
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { ref, Ref, inject, onMounted } from "vue";
+import { AxiosError, AxiosStatic } from "axios";
 
-import { Lists } from "../const";
+import { $toast } from "../toast";
 import { RecordType } from "../types";
 import { getUrl } from "../helpers";
 
 import GamesLists from "../components/GamesLists.vue";
 
-export default defineComponent({
-  name: "UserGamesView",
-  components: {
-    GamesLists,
-  },
-  props: {
-    listKey: {
-      type: String,
-      default: "want-to-play",
-      required: false,
-    },
-    username: {
-      type: String,
-      required: true,
-    },
-  },
-  data() {
-    const records: RecordType[] = [];
-    return {
-      tab: null,
-      lists: Lists,
-      records: records,
-      userNotFound: false,
-      userIsHidden: false,
-      isLoaded: false,
-    };
-  },
-  mounted() {
-    this.axios
-      .get(getUrl(`records/users/${this.username}/`))
-      .then((response) => {
-        this.records = response.data;
-        this.isLoaded = true;
-      })
-      .catch((error: AxiosError) => {
-        if (error.response.status == 404) {
-          this.userNotFound = true;
-          this.isLoaded = true;
-        } else if (error.response.status == 403) {
-          this.userIsHidden = true;
-          this.isLoaded = true;
-        } else {
-          console.log(error);
-          this.$toast.error("Error loading games");
-        }
-      });
-  },
+const axios: AxiosStatic = inject("axios")!;
+
+interface Props {
+  listKey?: string;
+  username: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  listKey: "want-to-play",
+});
+
+const records: Ref<RecordType[]> = ref([]);
+const userNotFound = ref(false);
+const userIsHidden = ref(false);
+const isLoaded = ref(false);
+
+onMounted(() => {
+  axios
+    .get(getUrl(`records/users/${props.username}/`))
+    .then((response) => {
+      records.value = response.data;
+      isLoaded.value = true;
+    })
+    .catch((error: AxiosError) => {
+      if (error.response.status == 404) {
+        userNotFound.value = true;
+        isLoaded.value = true;
+      } else if (error.response.status == 403) {
+        userIsHidden.value = true;
+        isLoaded.value = true;
+      } else {
+        console.log(error);
+        $toast.error("Error loading games");
+      }
+    });
 });
 </script>
 

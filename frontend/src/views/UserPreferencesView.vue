@@ -9,52 +9,45 @@
   </v-container>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { ref, inject, computed, onMounted } from "vue";
+import { AxiosError, AxiosStatic } from "axios";
 
-import { UserPreferencesViewComponentData } from "../types";
+import { $toast } from "../toast";
 import { getUrl } from "../helpers";
 import { useAuthStore } from "../stores/auth";
 
+const axios: AxiosStatic = inject("axios")!;
+
 const url = getUrl("user/preferences/");
 
-export default defineComponent({
-  name: "UserPreferencesView",
-  data(): UserPreferencesViewComponentData {
-    return {
-      hidden: false,
-    };
-  },
-  computed: {
-    profileLink() {
-      const { user } = useAuthStore();
-      return `/users/${user.username!}`;
-    },
-    absoluteProfileLink() {
-      return `${location.origin}${this.profileLink}`;
-    },
-  },
-  mounted() {
-    this.loadPreferences();
-  },
-  methods: {
-    loadPreferences() {
-      this.axios
-        .get(url)
-        .then((response) => {
-          this.hidden = response.data.hidden;
-        })
-        .catch((error) => {
-          console.log(error);
-          this.$toast.error("Error loading preferences");
-        });
-    },
-    savePreferences() {
-      this.axios.put(url, { hidden: this.hidden }).catch((error) => {
-        console.log(error);
-        this.$toast.error("Error saving preferences");
-      });
-    },
-  },
+const hidden = ref(false);
+const profileLink = computed(() => {
+  const { user } = useAuthStore();
+  return `/users/${user.username!}`;
+});
+const absoluteProfileLink = computed(() => {
+  return `${location.origin}${profileLink.value}`;
+});
+
+function loadPreferences() {
+  axios
+    .get(url)
+    .then((response) => {
+      hidden.value = response.data.hidden;
+    })
+    .catch((error: AxiosError) => {
+      console.log(error);
+      $toast.error("Error loading preferences");
+    });
+}
+function savePreferences() {
+  axios.put(url, { hidden: hidden.value }).catch((error: AxiosError) => {
+    console.log(error);
+    $toast.error("Error saving preferences");
+  });
+}
+onMounted(() => {
+  loadPreferences();
 });
 </script>

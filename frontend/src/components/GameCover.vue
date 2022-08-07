@@ -4,33 +4,23 @@
   </v-img>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from "vue";
+<script lang="ts" setup>
+import { computed } from "vue";
 
 import { Game } from "../types";
 
 import GameCategory from "./GameCategory.vue";
 
-export default defineComponent({
-  name: "GameCover",
-  components: {
-    GameCategory,
-  },
-  props: {
-    game: {
-      // eslint-disable-next-line @typescript-eslint/ban-types
-      type: Object as PropType<Game>,
-      required: true,
-    },
-  },
-  computed: {
-    src(): string {
-      if (this.game.cover) {
-        return this.game.cover;
-      }
-      return "/img/image-not-found.svg";
-    },
-  },
+interface Props {
+  game: Game;
+}
+const props = defineProps<Props>();
+
+const src = computed(() => {
+  if (props.game.cover) {
+    return props.game.cover;
+  }
+  return "/img/image-not-found.svg";
 });
 </script>
 
