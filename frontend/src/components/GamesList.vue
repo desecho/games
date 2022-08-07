@@ -27,83 +27,69 @@
   </v-window-item>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from "vue";
+<script lang="ts" setup>
 import Draggable from "vuedraggable";
-import { mapState } from "pinia";
+import { AxiosError, AxiosStatic } from "axios";
+import { inject, computed, toRef } from "vue";
 
+import { $toast } from "../toast";
 import { RecordType, SortData, Game } from "../types";
 import { DLCKindCategories } from "../const";
 import { getUrl, rewriteArray, requireAuthenticated } from "../helpers";
 import { useSettingsStore } from "../stores/settings";
-import { mobileMixin } from "../mixins/mobile";
+import { useMobile } from "../composables/mobile";
 
 import GameCard from "./GameCard.vue";
 
-export default defineComponent({
-  name: "GamesList",
-  components: {
-    GameCard,
-    Draggable,
-  },
-  mixins: [mobileMixin],
-  props: {
-    recordsProp: {
-      type: Object as PropType<RecordType[]>,
-      required: true,
-    },
-    listKey: {
-      type: String,
-      required: true,
-    },
-    username: {
-      type: String,
-      required: false,
-      default: null,
-    },
-  },
-  computed: {
-    records: {
-      get(): RecordType[] {
-        return this.recordsProp;
-      },
-      set(records: RecordType[]) {
-        rewriteArray(this.recordsProp, records);
-      },
-    },
-    isDraggable() {
-      // This is not working on mobile with v-window. Disabling for now.
-      return !this.username && !this.isMobile;
-    },
-    ...mapState(useSettingsStore, ["settings"]),
-  },
-  methods: {
-    saveRecordsOrder() {
-      requireAuthenticated();
-      const getSortData = () => {
-        const data: SortData[] = [];
-        this.records.forEach((record, index) => {
-          const sortData = { id: record.id, order: index + 1 };
-          data.push(sortData);
-        });
-        return data;
-      };
-      this.axios.put(getUrl("records/save-order/"), { records: getSortData() }).catch((error) => {
-        console.log(error);
-        this.$toast.error("Error saving games order");
-      });
-    },
-    isShowGame(game: Game) {
-      if (this.settings.games.areUnreleasedGamesHidden && !game.isReleased) {
-        return false;
-      }
-      if (this.settings.games.areDLCsHidden && DLCKindCategories.includes(game.category)) {
-        return false;
-      }
-      return true;
-    },
+const axios: AxiosStatic = inject("axios")!;
+
+interface Props {
+  recordsProp: RecordType[];
+  listKey: string;
+  username?: string;
+}
+
+const props = defineProps<Props>();
+const records = computed({
+  get: () => props.recordsProp,
+  set: (records: RecordType[]) => {
+    rewriteArray(props.recordsProp, records);
   },
 });
+const isDraggable = computed(() => {
+  // This is not working on mobile with v-window. Disabling for now.
+  return !props.username && !isMobile.value;
+});
+const settingsStore = useSettingsStore();
+const settings = toRef(settingsStore, "settings");
+
+function saveRecordsOrder() {
+  requireAuthenticated();
+  const getSortData = () => {
+    const data: SortData[] = [];
+    records.value.forEach((record, index) => {
+      const sortData = { id: record.id, order: index + 1 };
+      data.push(sortData);
+    });
+    return data;
+  };
+  axios.put(getUrl("records/save-order/"), { records: getSortData() }).catch((error: AxiosError) => {
+    console.log(error);
+    $toast.error("Error saving games order");
+  });
+}
+
+function isShowGame(game: Game) {
+  if (settings.value.games.areUnreleasedGamesHidden && !game.isReleased) {
+    return false;
+  }
+  if (settings.value.games.areDLCsHidden && DLCKindCategories.includes(game.category)) {
+    return false;
+  }
+  return true;
+}
+
+const { isMobile } = useMobile();
 </script>
 
 <style scoped>

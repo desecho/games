@@ -11,34 +11,30 @@
   </v-container>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { ref, inject, Ref, onMounted } from "vue";
+import { AxiosError, AxiosStatic } from "axios";
 
+import { $toast } from "../toast";
 import { getUrl } from "../helpers";
-import { UsersViewComponentData } from "../types";
 
-export default defineComponent({
-  name: "UsersView",
-  data(): UsersViewComponentData {
-    return {
-      users: [],
-    };
-  },
-  mounted() {
-    this.loadUsers();
-  },
-  methods: {
-    loadUsers() {
-      this.axios
-        .get(getUrl("users/"))
-        .then((response) => {
-          this.users = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-          this.$toast.error("Error loading users");
-        });
-    },
-  },
+const axios: AxiosStatic = inject("axios")!;
+
+const users: Ref<string[]> = ref([]);
+
+function loadUsers() {
+  axios
+    .get(getUrl("users/"))
+    .then((response) => {
+      users.value = response.data;
+    })
+    .catch((error: AxiosError) => {
+      console.log(error);
+      $toast.error("Error loading users");
+    });
+}
+
+onMounted(() => {
+  loadUsers();
 });
 </script>

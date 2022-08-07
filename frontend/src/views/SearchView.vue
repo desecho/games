@@ -32,47 +32,39 @@
   </v-container>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { ref, Ref, inject } from "vue";
+import { AxiosError, AxiosStatic } from "axios";
 
-import { SearchViewComponentData } from "../types";
-import { rules, getUrl } from "../helpers";
+import { Game } from "../types";
+import { rulesHelper, getUrl } from "../helpers";
+import { $toast } from "../toast";
+import { useFormValidation } from "../composables/formValidation";
 
 import GameSearchResultCard from "../components/GameSearchResultCard.vue";
 
-export default defineComponent({
-  name: "SearchView",
-  components: {
-    GameSearchResultCard,
-  },
-  data(): SearchViewComponentData {
-    return {
-      valid: false,
-      games: [],
-      rules: rules,
-      query: "",
-    };
-  },
-  methods: {
-    async isValid() {
-      const result = await this.$refs.form.validate();
-      const valid: boolean = result.valid;
-      return valid;
-    },
-    async search() {
-      if (!(await this.isValid())) {
-        return;
-      }
-      this.axios
-        .get(getUrl("search/"), { params: { query: this.query } })
-        .then((response) => {
-          this.games = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-          this.$toast.error("Search error");
-        });
-    },
-  },
-});
+const axios: AxiosStatic = inject("axios")!;
+
+const rules = rulesHelper;
+
+const valid = ref(false);
+const games: Ref<Game[]> = ref([]);
+const query = ref("");
+
+const { form, isValid } = useFormValidation();
+
+async function search() {
+  if (!(await isValid())) {
+    return;
+  }
+  axios
+    .get(getUrl("search/"), { params: { query: query.value } })
+    .then((response) => {
+      games.value = response.data;
+    })
+    .catch((error: AxiosError) => {
+      console.log(error);
+      $toast.error("Search error");
+    });
+}
 </script>

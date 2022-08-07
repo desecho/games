@@ -40,17 +40,8 @@
   </v-container>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-
+<script lang="ts" setup>
 import { Email } from "../const";
 
-export default defineComponent({
-  name: "AboutView",
-  data() {
-    return {
-      email: Email,
-    };
-  },
-});
+const email = Email;
 </script>

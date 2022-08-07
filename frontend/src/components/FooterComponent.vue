@@ -13,21 +13,8 @@
   </v-window>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import { RouterLink } from "vue-router";
-
+<script lang="ts" setup>
 import { Email } from "../const";
 
-export default defineComponent({
-  name: "FooterComponent",
-  components: {
-    RouterLink,
-  },
-  data() {
-    return {
-      email: Email,
-    };
-  },
-});
+const email = Email;
 </script>

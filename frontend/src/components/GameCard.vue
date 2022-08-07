@@ -15,113 +15,95 @@
   </v-card>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from "vue";
-import { mapWritableState, mapState } from "pinia";
+<script lang="ts" setup>
+import { inject, computed, toRef } from "vue";
+import { AxiosError, AxiosStatic } from "axios";
 
+import { $toast } from "../toast";
 import { RecordType, Game, List } from "../types";
 import { getUrl, requireAuthenticated } from "../helpers";
 import { ListKeys, Lists, ListIDs } from "../const";
 import { useGamesStore } from "../stores/games";
 import { useSettingsStore } from "../stores/settings";
 import { useAuthStore } from "../stores/auth";
-import { addToListMixin } from "../mixins/addToList";
+import { useAddToList } from "../composables/addToList";
 
 import ActionButton from "./ActionButton.vue";
 import GameCover from "./GameCover.vue";
 
-export default defineComponent({
-  name: "GameCard",
-  components: {
-    ActionButton,
-    GameCover,
-  },
-  mixins: [addToListMixin],
-  props: {
-    record: {
-      type: Object as PropType<RecordType>,
-      required: true,
-    },
-    index: {
-      type: Number,
-      required: true,
-    },
-    listKey: {
-      type: String,
-      required: true,
-    },
-    username: {
-      type: String,
-      required: false,
-      default: null,
-    },
-  },
-  data() {
-    return {
-      action: (listId: number) => {
-        if (this.username) {
-          this.addToList(this.record.game.id, listId, this.index, true);
-        } else {
-          this.changeList(this.record.id, listId, this.index);
-        }
-      },
-    };
-  },
-  computed: {
-    isLoggedIn() {
-      const { user } = useAuthStore();
-      return user.isLoggedIn;
-    },
-    height() {
-      return this.areActionsVisible ? 275 : 224;
-    },
-    isOwnProfile() {
-      const { user } = useAuthStore();
-      return this.username && this.username == user.username;
-    },
-    areActionsVisible() {
-      return this.isLoggedIn && !this.isOwnProfile && !this.settings.games.areActionButtonsHidden;
-    },
-    ...mapWritableState(useGamesStore, ["records"]),
-    ...mapState(useSettingsStore, ["settings"]),
-  },
-  methods: {
-    changeList(recordId: number, listId: number, index: number) {
-      requireAuthenticated();
-      this.axios
-        .put(getUrl(`records/${recordId}/change-list/`), { listId: listId })
-        .then(() => {
-          this.records[index].listKey = ListKeys[listId];
-        })
-        .catch((error) => {
-          console.log(error);
-          this.$toast.error("Error changing list");
-        });
-    },
-    deleteGame(recordId: number, index: number) {
-      requireAuthenticated();
-      this.axios
-        .delete(getUrl(`records/${recordId}/delete/`))
-        .then(() => {
-          this.records.splice(index, 1);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.$toast.error("Error deleting game");
-        });
-    },
-    getLists(game: Game): List[] {
-      const lists = Lists.filter((list) => {
-        return list.key != this.listKey;
-      });
-      // Don't show action buttons for lists other than "Want to Play" if the game has not been released yet.
-      return lists.filter((list) => {
-        if (list.id == ListIDs.WantToPlay) {
-          return true;
-        }
-        return game.isReleased;
-      });
-    },
-  },
+const axios: AxiosStatic = inject("axios")!;
+
+interface Props {
+  record: RecordType;
+  index: number;
+  listKey: string;
+  username?: string;
+}
+
+const props = defineProps<Props>();
+
+const action = (listId: number) => {
+  if (props.username) {
+    addToList(props.record.game.id, listId);
+  } else {
+    changeList(props.record.id, listId, props.index);
+  }
+};
+
+const { user } = useAuthStore();
+const isLoggedIn = user.isLoggedIn;
+const gamesStore = useGamesStore();
+const records = toRef(gamesStore, "records");
+const settingsStore = useSettingsStore();
+const settings = toRef(settingsStore, "settings");
+const isOwnProfile = computed(() => {
+  return props.username && props.username == user.username;
 });
+const areActionsVisible = computed(() => {
+  return isLoggedIn && !isOwnProfile.value && !settings.value.games.areActionButtonsHidden;
+});
+const height = computed(() => {
+  return areActionsVisible.value ? 275 : 224;
+});
+
+function changeList(recordId: number, listId: number, index: number) {
+  requireAuthenticated();
+  axios
+    .put(getUrl(`records/${recordId}/change-list/`), { listId: listId })
+    .then(() => {
+      records.value[index].listKey = ListKeys[listId];
+    })
+    .catch((error: AxiosError) => {
+      console.log(error);
+      $toast.error("Error changing list");
+    });
+}
+
+function deleteGame(recordId: number, index: number) {
+  requireAuthenticated();
+  axios
+    .delete(getUrl(`records/${recordId}/delete/`))
+    .then(() => {
+      records.value.splice(index, 1);
+    })
+    .catch((error) => {
+      console.log(error);
+      $toast.error("Error deleting game");
+    });
+}
+
+function getLists(game: Game): List[] {
+  const lists = Lists.filter((list) => {
+    return list.key != props.listKey;
+  });
+  // Don't show action buttons for lists other than "Want to Play" if the game has not been released yet.
+  return lists.filter((list) => {
+    if (list.id == ListIDs.WantToPlay) {
+      return true;
+    }
+    return game.isReleased;
+  });
+}
+
+const { addToList } = useAddToList();
 </script>

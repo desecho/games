@@ -8,19 +8,7 @@
   </v-app>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import { RouterView } from "vue-router";
-
-import MenuComponent from "./components/Menu.vue";
-import FooterComponent from "./components/Footer.vue";
-
-export default defineComponent({
-  name: "App",
-  components: {
-    RouterView,
-    MenuComponent,
-    FooterComponent,
-  },
-});
+<script lang="ts" setup>
+import MenuComponent from "./components/MenuComponent.vue";
+import FooterComponent from "./components/FooterComponent.vue";
 </script>

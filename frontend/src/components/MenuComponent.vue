@@ -20,40 +20,27 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { ref, onMounted } from "vue";
 
 import { useAuthStore } from "../stores/auth";
-import { mobileMixin } from "../mixins/mobile";
+import { useMobile } from "../composables/mobile";
 
 import MenuItem from "./MenuItem.vue";
 
-export default defineComponent({
-  name: "MenuComponent",
-  components: {
-    MenuItem,
-  },
-  mixins: [mobileMixin],
-  data() {
-    return {
-      drawer: false,
-    };
-  },
-  computed: {
-    isLoggedIn() {
-      const { user } = useAuthStore();
-      return user.isLoggedIn;
-    },
-  },
-  mounted() {
-    if (!this.isMobile) {
-      this.drawer = true;
-    }
-  },
-  methods: {
-    toggleDrawer() {
-      this.drawer = !this.drawer;
-    },
-  },
+const drawer = ref(false);
+const { user } = useAuthStore();
+const isLoggedIn = user.isLoggedIn;
+
+function toggleDrawer() {
+  drawer.value = !drawer.value;
+}
+
+const { isMobile } = useMobile();
+
+onMounted(() => {
+  if (!isMobile.value) {
+    drawer.value = true;
+  }
 });
 </script>
