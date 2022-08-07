@@ -4,18 +4,11 @@
   </v-card-subtitle>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "GameCategory",
-  props: {
-    name: {
-      type: String,
-      required: true,
-    },
-  },
-});
+<script lang="ts" setup>
+interface Props {
+  name: string;
+}
+defineProps<Props>();
 </script>
 
 <style scoped>

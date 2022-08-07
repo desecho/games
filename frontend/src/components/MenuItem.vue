@@ -9,28 +9,11 @@
   </router-link>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import { RouterLink } from "vue-router";
-
-export default defineComponent({
-  name: "MenuItem",
-  components: {
-    RouterLink,
-  },
-  props: {
-    title: {
-      type: String,
-      required: true,
-    },
-    icon: {
-      type: String,
-      required: true,
-    },
-    to: {
-      type: String,
-      required: true,
-    },
-  },
-});
+<script lang="ts" setup>
+interface Props {
+  title: string;
+  icon: string;
+  to: string;
+}
+defineProps<Props>();
 </script>

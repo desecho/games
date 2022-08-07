@@ -11,20 +11,10 @@
   </v-btn>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "ActionButton",
-  props: {
-    title: {
-      type: String,
-      required: true,
-    },
-    icon: {
-      type: String,
-      required: true,
-    },
-  },
-});
+<script lang="ts" setup>
+interface Props {
+  icon: string;
+  title: string;
+}
+defineProps<Props>();
 </script>

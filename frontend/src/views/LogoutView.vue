@@ -8,16 +8,13 @@
   </v-container>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { onMounted } from "vue";
 
 import { useAuthStore } from "../stores/auth";
 
-export default defineComponent({
-  name: "LogoutView",
-  mounted() {
-    const { logout } = useAuthStore();
-    logout();
-  },
+onMounted(() => {
+  const { logout } = useAuthStore();
+  logout();
 });
 </script>

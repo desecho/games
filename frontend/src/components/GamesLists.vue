@@ -21,50 +21,33 @@
   </v-card>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from "vue";
+<script lang="ts" setup>
+import { ref } from "vue";
 
 import { Lists } from "../const";
 import { RecordType } from "../types";
-import { mobileMixin } from "../mixins/mobile";
+import { useMobile } from "../composables/mobile";
 
 import GamesList from "./GamesList.vue";
 import GamesSettings from "./GamesSettings.vue";
 import GamesToolbar from "./GamesToolbar.vue";
 
-export default defineComponent({
-  name: "GamesListView",
-  components: {
-    GamesList,
-    GamesSettings,
-    GamesToolbar,
-  },
-  mixins: [mobileMixin],
-  props: {
-    records: {
-      type: Object as PropType<RecordType[]>,
-      required: true,
-    },
-    username: {
-      type: String,
-      required: false,
-      default: null,
-    },
-  },
-  data() {
-    return {
-      lists: Lists,
-      tab: "want-to-play",
-      isSettingsActive: false,
-    };
-  },
-  methods: {
-    getPath(listKey: string): string {
-      if (this.username) {
-        return `/users/${this.username}/${listKey}`;
-      }
-      return `/games/${listKey}`;
-    },
-  },
-});
+interface Props {
+  records: RecordType[];
+  username?: string;
+}
+
+const props = defineProps<Props>();
+
+const lists = Lists;
+const tab = ref("want-to-play");
+
+function getPath(listKey: string): string {
+  if (props.username) {
+    return `/users/${props.username}/${listKey}`;
+  }
+  return `/games/${listKey}`;
+}
+
+const { isPhone } = useMobile();
 </script>

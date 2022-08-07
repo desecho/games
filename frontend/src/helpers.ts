@@ -1,7 +1,7 @@
 import { router } from "./router";
 import { useAuthStore } from "./stores/auth";
 
-export const rules = {
+export const rulesHelper = {
   required: (value: string) => !!value || "Required.",
 };
 

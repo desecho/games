@@ -16,6 +16,7 @@ export const useGamesStore = defineStore({
   }),
   actions: {
     async loadGames(reload = false) {
+      console.log("Loading games...");
       const { user } = useAuthStore();
       if (!user.isLoggedIn) {
         router.push("/login").catch(() => {});
