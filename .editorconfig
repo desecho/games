@@ -28,7 +28,7 @@ indent_style = tab
 [node_modules/**]
 ignore = true
 
-[venv/**]
+[.venv/**]
 ignore = true
 
 [.tox/**]

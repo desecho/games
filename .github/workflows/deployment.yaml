@@ -75,8 +75,15 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: "3.10"
-          cache: pip
-          cache-dependency-path: "./requirements*.txt"
+
+      - name: Use pip cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: pip
+
+      - name: Install poetry
+        run: pip3 install poetry
 
       - name: Collect static files
         run: |
