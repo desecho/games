@@ -186,67 +186,67 @@ tox:
 ## Run pydiatra linter
 pydiatra:
 	$(call print,Running pydiatra)
-	tox -e py-pydiatra
+	@tox -e py-pydiatra
 
 .PHONY: pylint
 ## Run pylint linter
 pylint:
 	$(call print,Running pylint)
-	tox -e py-pylint
+	@tox -e py-pylint
 
 .PHONY: flake8
 ## Run flake8 linter
 flake8:
 	$(call print,Running flake8)
-	tox -e py-flake8
+	@tox -e py-flake8
 
 .PHONY: isort
 ## Run isort linter
 isort:
 	$(call print,Running isort linter)
-	tox -e py-isort
+	@tox -e py-isort
 
 .PHONY: bandit
 ## Run bandit linter
 bandit:
 	$(call print,Running bandit)
-	tox -e py-bandit
+	@tox -e py-bandit
 
 .PHONY: rstlint
 ## Run rstlint linter
 rstlint:
 	$(call print,Running rstlint)
-	tox -e py-rstlint
+	@tox -e py-rstlint
 
 .PHONY: pydocstyle
 ## Run pydocstyle linter
 pydocstyle:
 	$(call print,Running pydocstyle)
-	tox -e py-pydocstyle
+	@tox -e py-pydocstyle
 
 .PHONY: safety
 ## Run safety linter
 safety:
 	$(call print,Running safety)
-	tox -e py-safety
+	@tox -e py-safety
 
 .PHONY: pytest
 ## Run pytest
 pytest:
 	$(call print,Running pytest)
-	tox -e py-pytest
+	@tox -e py-pytest
 
 .PHONY: black
 ## Run black linter
 black:
 	$(call print,Running black linter)
-	tox -e py-black
+	@tox -e py-black
 
 .PHONY: mypy
 ## Run mypy linter
 mypy:
 	$(call print,Running mypy)
-	tox -e py-mypy
+	@tox -e py-mypy
 
 .PHONY: eslint
 ## Run eslint linter
