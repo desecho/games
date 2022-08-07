@@ -15,7 +15,9 @@ ENV_SECRETS_FILE := env_secrets.sh
 DB_ENV_PROD_FILE := db_env_prod.sh
 
 SHELL := /bin/bash
-SOURCE_CMDS := source venv/bin/activate && source $(ENV_FILE) && source $(ENV_CUSTOM_FILE) && source $(ENV_SECRETS_FILE)
+
+VENV_DIR := .venv
+SOURCE_CMDS := source $(VENV_DIR)/bin/activate && source $(ENV_FILE) && source $(ENV_CUSTOM_FILE) && source $(ENV_SECRETS_FILE)
 CMD_FRONTEND := cd frontend && source $(ENV_FILE)
 PYTHON := python3.10
 
@@ -74,14 +76,18 @@ install-mysql-client:
 	$(call print,Installing MySQL client)
 	@sudo apt install libmysqlclient-dev -y
 
+.PHONY: install-main-python-deps
+## Install main Python dependencies
+install-main-python-deps:
+	@pip3 install poetry
+	@pip3 install tox
+	@pip3 install tox-poetry
+
 .PHONY: create-venv
 ## Create venv and install requirements
 create-venv:
 	$(call print,Creating venv)
-	@${PYTHON} -m venv venv
-	$(call print,Installing requirements)
-	@${SOURCE_CMDS} && \
-		pip install -r requirements-dev.txt
+	@poetry install --no-root
 
 .PHONY: create-tox-venv
 create-tox-venv:
@@ -114,7 +120,8 @@ load-initial-fixtures:
 
 .PHONY: bootstrap
 ## Bootstrap project
-bootstrap: yarn-install-locked create-env-files create-venvs create-db migrate load-initial-fixtures build
+bootstrap: install-python-deps yarn-install-locked create-env-files create-venvs create-db migrate \
+	load-initial-fixtures build
 
 .PHONY: create-env-files
 ## Create env files
@@ -318,24 +325,14 @@ prettier-vue-lint:
 #------------------------------------
 # Development
 #------------------------------------
-.PHONY: update-venvs
-## Update packages in venv and tox venv with current requirements | Development
-update-venvs:
-	$(call print,Updating venvs)
-	@${SOURCE_CMDS} && \
-	pip install -r requirements-dev.txt && \
-	deactivate && \
-	source .tox/py/bin/activate && \
-	pip install -r requirements-dev.txt
-
 .PHONY: delete-venvs
 delete-venvs:
 	$(call print,Deleting venvs)
-	@rm -rf venv
+	@rm -rf $(VENV_DIR)
 	@rm -rf .tox
 
 .PHONY: recreate-venvs
-## Recreate venvs
+## Recreate venvs | Development
 recreate-venvs: delete-venvs create-venvs
 
 .PHONY: yarn-install
@@ -565,7 +562,7 @@ docker-build-dev: docker-build-backend docker-build-frontend-dev
 ## Build docker backend image
 docker-build-backend:
 	$(call print,Building Docker backend image)
-	@scripts/docker_build_backend.sh
+	@docker build -t "${PROJECT}:backend" .
 
 .PHONY: docker-build-frontend-dev
 ## Build docker frontend image
