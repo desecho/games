@@ -41,7 +41,7 @@
     "vite-plugin-vuetify": "^1.0.0-alpha.14",
     "vue-cli-plugin-vuetify": "^2.5.1",
     "vue-eslint-parser": "^9.0.3",
-    "vue-tsc": "^0.39.4"
+    "vue-tsc": "^0.39.5"
   },
   "packageManager": "yarn@3.2.1"
 }
