@@ -568,8 +568,7 @@ docker-build-backend:
 ## Build docker frontend image
 docker-build-frontend-dev:
 	$(call print,Building Docker frontend image)
-	@export VITE_BACKEND_URL=http://localhost:8000/ && \
-	scripts/docker_build_frontend.sh
+	docker build --build-arg VITE_BACKEND_URL="http://localhost:8000/" -t "${PROJECT}:frontend" ./frontend
 
 .PHONY: docker-run
 ## Run server in docker
