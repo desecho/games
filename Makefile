@@ -157,11 +157,6 @@ backup-db:
 	$(call print,Running backup DB script)
 	@scripts/backup_db.sh
 
-.PHONY: upload-backup
-upload-backup:
-	$(call print,Running upload backup script)
-	@scripts/upload_backup.sh
-
 .PHONY: flush-cdn-cache
 flush-cdn-cache:
 	$(call print,Running flush CDN cache script)
