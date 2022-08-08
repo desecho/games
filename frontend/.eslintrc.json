@@ -1,7 +1,8 @@
 {
   "extends": [
     "eslint:recommended",
-    "google",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
     "plugin:vue/vue3-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
@@ -14,14 +15,42 @@
         "code": 119
       }
     ],
+    "quotes": "error",
+    "no-tabs": "error",
+    "sort-imports": ["error", {
+      "ignoreCase": true,
+      "ignoreDeclarationSort": true
+    }],
+    "strict": ["error", "never"],
+    "max-statements-per-line": "error",
+    "lines-between-class-members": "error",
     "require-jsdoc": "off",
     "camelcase": ["error", {"allow": ["jwt_decode"]}],
-    "@typescript-eslint/unbound-method": "off"
+    "@typescript-eslint/unbound-method": "off",
+    "import/no-unresolved": "error",
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal", "unknown", "parent", "sibling", "index", "object", "type"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
   },
   "parserOptions": {
     "sourceType": "module",
     "project": ["./tsconfig.json"],
     "extraFileExtensions": [".vue"]
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "project": "./tsconfig.json"
+      }
+    }
   },
   "overrides": [
     {
