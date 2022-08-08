@@ -16,8 +16,7 @@
     ],
     "require-jsdoc": "off",
     "camelcase": ["error", {"allow": ["jwt_decode"]}],
-    "@typescript-eslint/unbound-method": "off",
-    "@typescript-eslint/no-empty-function": "off"
+    "@typescript-eslint/unbound-method": "off"
   },
   "parserOptions": {
     "sourceType": "module",
