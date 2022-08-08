@@ -9,6 +9,6 @@
 </template>
 
 <script lang="ts" setup>
-import MenuComponent from "./components/MenuComponent.vue";
 import FooterComponent from "./components/FooterComponent.vue";
+import MenuComponent from "./components/MenuComponent.vue";
 </script>

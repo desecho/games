@@ -15,14 +15,14 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, Ref, inject, onMounted } from "vue";
 import { AxiosError, AxiosStatic } from "axios";
-
-import { $toast } from "../toast";
-import { RecordType } from "../types";
-import { getUrl } from "../helpers";
+import { inject, onMounted, Ref, ref } from "vue";
 
 import GamesLists from "../components/GamesLists.vue";
+import { getUrl } from "../helpers";
+import { $toast } from "../toast";
+import { RecordType } from "../types";
+
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const axios: AxiosStatic = inject("axios")!;

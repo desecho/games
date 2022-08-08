@@ -12,11 +12,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, inject, Ref, onMounted } from "vue";
 import { AxiosError, AxiosStatic } from "axios";
+import { inject, onMounted, Ref, ref } from "vue";
 
-import { $toast } from "../toast";
 import { getUrl } from "../helpers";
+import { $toast } from "../toast";
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const axios: AxiosStatic = inject("axios")!;

@@ -1,9 +1,10 @@
-import { defineStore } from "pinia";
 import axios from "axios";
+import { defineStore } from "pinia";
 
-import { RecordType } from "../types";
 import { getUrl } from "../helpers";
 import { router } from "../router";
+import { RecordType } from "../types";
+
 import { useAuthStore } from "./auth";
 
 const recordsInitialState: RecordType[] = [];

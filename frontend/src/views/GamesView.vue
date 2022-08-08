@@ -5,11 +5,11 @@
 <script lang="ts" setup>
 import { onMounted, toRef } from "vue";
 
+import GamesLists from "../components/GamesLists.vue";
+import { useGamesStore } from "../stores/games";
 import { $toast } from "../toast";
 
-import { useGamesStore } from "../stores/games";
 
-import GamesLists from "../components/GamesLists.vue";
 
 interface Props {
   listKey?: string;
