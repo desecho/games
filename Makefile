@@ -275,14 +275,14 @@ actionlint:
 	@actionlint
 
 .PHONY: prettier-html-lint
-## Run html linter.
+## Run html linter
 prettier-html-lint:
 	$(call print,Running prettier check for html)
 	@${CMD_FRONTEND} && \
 	yarn run prettier --check ./*.html
 
 .PHONY: prettier-ts-lint
-## Format ts files
+## Run ts linter
 prettier-ts-lint:
 	$(call print,Running prettier check for ts)
 	@${CMD_FRONTEND} && \
@@ -430,7 +430,7 @@ format-yaml:
 #------------------------------------
 .PHONY: format-frontend
 ## Format files for frontend (vue, ts, scss, html) | Formatting frontend
-format-frontend: format-html format-ts format-scss format-vue
+format-frontend: format-html format-ts format-scss format-vue eslint-fix
 
 .PHONY: ff
 ## Format files for frontend (vue, ts, scss, html) (format-frontend alias)
@@ -442,6 +442,12 @@ format-ts:
 	$(call print,Formatting ts files)
 	@${CMD_FRONTEND} && \
 	yarn run prettier --write src/**/*.ts src/*.ts ./*.ts
+
+.PHONY: eslint-fix
+## Run eslint formatter
+eslint-fix:
+	@${CMD_FRONTEND} && \
+	yarn run eslint src/**/*.ts src/*.ts ./*.ts src/App.vue src/components/*.vue src/views/*.vue --fix
 
 .PHONY: format-scss
 ## Format scss files
