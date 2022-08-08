@@ -15,3 +15,12 @@ export interface SettingsStore {
   games: GamesSettings;
   isGamesSettingsActive: boolean;
 }
+
+export interface TokenData {
+  refresh: string;
+  access: string;
+}
+
+export interface TokenRefreshData {
+  access: string;
+}
