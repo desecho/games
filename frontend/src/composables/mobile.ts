@@ -1,11 +1,10 @@
 import { computed } from "vue";
 import { useDisplay } from "vuetify";
+import { displayType } from "./types";
 
 export function useMobile() {
-  const { xs, sm } = useDisplay();
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-member-access
+  const { xs, sm } = useDisplay() as displayType;
   const isPhone = computed((): boolean => xs.value);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-member-access
   const isTablet = computed((): boolean => sm.value);
   const isMobile = computed((): boolean => isPhone.value || isTablet.value);
 
