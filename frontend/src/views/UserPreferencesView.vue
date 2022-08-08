@@ -17,6 +17,7 @@ import { $toast } from "../toast";
 import { getUrl } from "../helpers";
 import { useAuthStore } from "../stores/auth";
 
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const axios: AxiosStatic = inject("axios")!;
 
 const url = getUrl("user/preferences/");
@@ -24,6 +25,8 @@ const url = getUrl("user/preferences/");
 const hidden = ref(false);
 const profileLink = computed(() => {
   const { user } = useAuthStore();
+  // username is always not null when user is logged in
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return `/users/${user.username!}`;
 });
 const absoluteProfileLink = computed(() => {

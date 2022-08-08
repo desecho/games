@@ -12,6 +12,8 @@ export function initAxios() {
 
   const { user, refreshToken } = useAuthStore();
   if (user.isLoggedIn) {
+    // Use `!` because we know that access token is not null when user is logged in
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     headers.Authorization = `Bearer ${user.accessToken!}`;
   }
 

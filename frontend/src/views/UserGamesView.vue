@@ -24,6 +24,7 @@ import { getUrl } from "../helpers";
 
 import GamesLists from "../components/GamesLists.vue";
 
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const axios: AxiosStatic = inject("axios")!;
 
 interface Props {

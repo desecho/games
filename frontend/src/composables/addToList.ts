@@ -7,6 +7,7 @@ import { getUrl, requireAuthenticated } from "../helpers";
 import { useGamesStore } from "../stores/games";
 
 export function useAddToList() {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const axios: AxiosStatic = inject("axios")!;
 
   function addToList(gameId: number, listId: number, index: number | null = null, games: Ref<Game[]> | null = null) {

@@ -18,6 +18,7 @@ import { AxiosError, AxiosStatic } from "axios";
 import { $toast } from "../toast";
 import { getUrl } from "../helpers";
 
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const axios: AxiosStatic = inject("axios")!;
 
 const users: Ref<string[]> = ref([]);
