@@ -19,7 +19,7 @@ export const useGamesStore = defineStore({
       console.log("Loading games...");
       const { user } = useAuthStore();
       if (!user.isLoggedIn) {
-        router.push("/login").catch(() => {});
+        void router.push("/login");
       }
       if (this.areLoaded && !reload) {
         return;

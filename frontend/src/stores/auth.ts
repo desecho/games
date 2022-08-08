@@ -43,7 +43,7 @@ export const useAuthStore = defineStore({
       };
       saveUser(this.user);
       initAxios();
-      router.push("/").catch(() => {});
+      void router.push("/");
     },
     // This function needs to be called only when user is logged in
     async refreshToken() {
@@ -66,7 +66,7 @@ export const useAuthStore = defineStore({
       this.user = userDefault;
       localStorage.removeItem("user");
       initAxios();
-      router.push("/").catch(() => {});
+      void router.push("/");
     },
   },
 });
