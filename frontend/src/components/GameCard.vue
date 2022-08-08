@@ -16,17 +16,17 @@
 </template>
 
 <script lang="ts" setup>
-import { inject, computed, toRef } from "vue";
 import { AxiosError, AxiosStatic } from "axios";
+import { computed, inject, toRef } from "vue";
 
-import { $toast } from "../toast";
-import { RecordType, Game, List } from "../types";
+import { useAddToList } from "../composables/addToList";
+import { ListIDs, ListKeys, Lists } from "../const";
 import { getUrl, requireAuthenticated } from "../helpers";
-import { ListKeys, Lists, ListIDs } from "../const";
+import { useAuthStore } from "../stores/auth";
 import { useGamesStore } from "../stores/games";
 import { useSettingsStore } from "../stores/settings";
-import { useAuthStore } from "../stores/auth";
-import { useAddToList } from "../composables/addToList";
+import { $toast } from "../toast";
+import { Game, List, RecordType } from "../types";
 
 import ActionButton from "./ActionButton.vue";
 import GameCover from "./GameCover.vue";

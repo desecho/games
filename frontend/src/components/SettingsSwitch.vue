@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, toRef, onMounted } from "vue";
+import { onMounted, ref, toRef } from "vue";
 
 import { useSettingsStore } from "../stores/settings";
 

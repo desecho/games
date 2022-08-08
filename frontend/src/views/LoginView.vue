@@ -32,15 +32,15 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
 import { AxiosError } from "axios";
+import { ref } from "vue";
 
+import { useFormValidation } from "../composables/formValidation";
 import { rulesHelper } from "../helpers";
 import { useAuthStore } from "../stores/auth";
 import { $toast } from "../toast";
 import { TokenErrorData } from "../types";
 
-import { useFormValidation } from "../composables/formValidation";
 
 const rules = rulesHelper;
 

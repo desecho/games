@@ -15,8 +15,8 @@
 <script lang="ts" setup>
 import { toRef } from "vue";
 
-import { useSettingsStore } from "../stores/settings";
 import { useAuthStore } from "../stores/auth";
+import { useSettingsStore } from "../stores/settings";
 import { Switch } from "../types";
 
 import SettingsSwitch from "./SettingsSwitch.vue";
