@@ -28,7 +28,7 @@ function saveSettings() {
 }
 
 onMounted(() => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
   value.value = settings.value[props.type][props.name];
 });
 </script>
