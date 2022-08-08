@@ -45,7 +45,7 @@ onMounted(() => {
   axios
     .get(getUrl(`records/users/${props.username}/`))
     .then((response) => {
-      records.value = response.data;
+      records.value = response.data as RecordType[];
       isLoaded.value = true;
     })
     .catch((error: AxiosError) => {

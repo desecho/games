@@ -15,7 +15,7 @@ const userDefault: UserStore = {
 function getUser(): UserStore {
   const userLocalStorageData = localStorage.getItem("user");
   if (userLocalStorageData) {
-    const user: UserStore = JSON.parse(userLocalStorageData);
+    const user = JSON.parse(userLocalStorageData) as UserStore;
     return user;
   }
   return userDefault;
@@ -34,7 +34,7 @@ export const useAuthStore = defineStore({
   actions: {
     async login(username: string, password: string) {
       const response = await axios.post(getUrl("token/"), { username: username, password: password });
-      const data: TokenData = response.data;
+      const data = response.data as TokenData;
       this.user = {
         refreshToken: data.refresh,
         accessToken: data.access,

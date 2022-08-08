@@ -27,7 +27,7 @@ function loadUsers() {
   axios
     .get(getUrl("users/"))
     .then((response) => {
-      users.value = response.data;
+      users.value = response.data as string[];
     })
     .catch((error: AxiosError) => {
       console.log(error);
