@@ -23,6 +23,7 @@ loadProgressBar();
 
 const app = createApp(App);
 app
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   .use(vuetify)
   .use(createPinia())
   .use(router)
