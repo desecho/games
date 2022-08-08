@@ -4,9 +4,13 @@ export function useFormValidation() {
   const form = ref<HTMLFormElement | null>(null);
 
   async function isValid(): Promise<boolean> {
-    const result = await form.value!.validate();
-    const valid: boolean = result.valid;
-    return valid;
+    const value = form.value;
+    if (value) {
+      const result = await value.validate();
+      const valid: boolean = result.valid;
+      return valid;
+    }
+    return false;
   }
 
   return {

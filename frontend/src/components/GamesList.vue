@@ -41,6 +41,7 @@ import { useMobile } from "../composables/mobile";
 
 import GameCard from "./GameCard.vue";
 
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const axios: AxiosStatic = inject("axios")!;
 
 interface Props {
