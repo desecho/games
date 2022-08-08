@@ -31,6 +31,7 @@ import { useAddToList } from "../composables/addToList";
 import ActionButton from "./ActionButton.vue";
 import GameCover from "./GameCover.vue";
 
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const axios: AxiosStatic = inject("axios")!;
 
 interface Props {

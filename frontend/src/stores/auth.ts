@@ -44,7 +44,10 @@ export const useAuthStore = defineStore({
       initAxios();
       router.push("/").catch(() => {});
     },
+    // This function needs to be called only when user is logged in
     async refreshToken() {
+      // Use `!` because we know that refresh token is not null when user is logged in
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const decodedToken: JWTDecoded = jwt_decode(this.user.refreshToken!);
       // If refresh token expired we log the user out
       if (decodedToken.exp < Date.now() / 1000) {

@@ -43,6 +43,7 @@ import { useFormValidation } from "../composables/formValidation";
 
 import GameSearchResultCard from "../components/GameSearchResultCard.vue";
 
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const axios: AxiosStatic = inject("axios")!;
 
 const rules = rulesHelper;

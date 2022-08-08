@@ -40,6 +40,8 @@ router.beforeEach(async (to) => {
   }
 
   if (user.isLoggedIn) {
+    // Use `!` because we know that access token is not null when user is logged in
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const decodedToken: JWTDecoded = jwt_decode(user.accessToken!);
     // If token expired or is about to expire (in 30 minutes) we refresh it
     if (decodedToken.exp - Date.now() / 1000 < 30 * 60) {
