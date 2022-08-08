@@ -6,7 +6,7 @@ import { JWTDecoded } from "../types";
 import { router } from "../router";
 import { getUrl } from "../helpers";
 import { initAxios } from "../axios";
-import { UserStore } from "./types";
+import { UserStore, TokenData, TokenRefreshData } from "./types";
 
 const userDefault: UserStore = {
   isLoggedIn: false,
@@ -34,9 +34,10 @@ export const useAuthStore = defineStore({
   actions: {
     async login(username: string, password: string) {
       const response = await axios.post(getUrl("token/"), { username: username, password: password });
+      const data: TokenData = response.data;
       this.user = {
-        refreshToken: response.data.refresh,
-        accessToken: response.data.access,
+        refreshToken: data.refresh,
+        accessToken: data.access,
         isLoggedIn: true,
         username: username,
       };
@@ -56,7 +57,8 @@ export const useAuthStore = defineStore({
       }
 
       const response = await axios.post(getUrl("token/refresh/"), { refresh: this.user.refreshToken });
-      this.user.accessToken = response.data.access;
+      const data = response.data as TokenRefreshData;
+      this.user.accessToken = data.access;
       saveUser(this.user);
       initAxios();
     },
