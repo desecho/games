@@ -24,9 +24,9 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 
+import { useMobile } from "../composables/mobile";
 import { Lists } from "../const";
 import { RecordType } from "../types";
-import { useMobile } from "../composables/mobile";
 
 import GamesList from "./GamesList.vue";
 import GamesSettings from "./GamesSettings.vue";

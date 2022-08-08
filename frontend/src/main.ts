@@ -3,17 +3,17 @@ import "x-axios-progress-bar/dist/nprogress.css";
 import "./styles/styles.scss";
 
 import axios from "axios";
-import VueAxios from "vue-axios";
-import { createApp } from "vue";
-import { loadProgressBar } from "x-axios-progress-bar";
 import { createPinia } from "pinia";
+import { createApp } from "vue";
+import VueAxios from "vue-axios";
 import VueGtag from "vue-gtag";
+import { loadProgressBar } from "x-axios-progress-bar";
 
+import App from "./App.vue";
+import { initAxios } from "./axios";
 import vuetify from "./plugins/vuetify";
 import { loadFonts } from "./plugins/webfontloader";
-import { initAxios } from "./axios";
 import { router } from "./router";
-import App from "./App.vue";
 
 await loadFonts().catch(() => {
   throw new Error("Failed to load fonts");

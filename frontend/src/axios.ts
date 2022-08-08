@@ -1,8 +1,7 @@
-import { AxiosRequestHeaders, AxiosError } from "axios";
-import axios from "axios";
+import axios, { AxiosError, AxiosRequestHeaders } from "axios";
 
-import { useAuthStore } from "./stores/auth";
 import { router } from "./router";
+import { useAuthStore } from "./stores/auth";
 
 export function initAxios() {
   const headers: AxiosRequestHeaders = {

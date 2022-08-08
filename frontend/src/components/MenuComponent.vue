@@ -21,10 +21,10 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, toRef } from "vue";
+import { onMounted, ref, toRef } from "vue";
 
-import { useAuthStore } from "../stores/auth";
 import { useMobile } from "../composables/mobile";
+import { useAuthStore } from "../stores/auth";
 
 import MenuItem from "./MenuItem.vue";
 

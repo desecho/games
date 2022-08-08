@@ -28,16 +28,16 @@
 </template>
 
 <script lang="ts" setup>
-import Draggable from "vuedraggable";
 import { AxiosError, AxiosStatic } from "axios";
-import { inject, computed, toRef } from "vue";
+import { computed, inject, toRef } from "vue";
+import Draggable from "vuedraggable";
 
-import { $toast } from "../toast";
-import { RecordType, SortData, Game } from "../types";
-import { DLCKindCategories } from "../const";
-import { getUrl, rewriteArray, requireAuthenticated } from "../helpers";
-import { useSettingsStore } from "../stores/settings";
 import { useMobile } from "../composables/mobile";
+import { DLCKindCategories } from "../const";
+import { getUrl, requireAuthenticated, rewriteArray } from "../helpers";
+import { useSettingsStore } from "../stores/settings";
+import { $toast } from "../toast";
+import { Game, RecordType, SortData } from "../types";
 
 import GameCard from "./GameCard.vue";
 
