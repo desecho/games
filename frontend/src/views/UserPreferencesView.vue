@@ -14,6 +14,7 @@ import { ref, inject, computed, onMounted } from "vue";
 import { AxiosError, AxiosStatic } from "axios";
 
 import { $toast } from "../toast";
+import { GetUserPreferencesData } from "../types";
 import { getUrl } from "../helpers";
 import { useAuthStore } from "../stores/auth";
 
@@ -37,7 +38,8 @@ function loadPreferences() {
   axios
     .get(url)
     .then((response) => {
-      hidden.value = response.data.hidden;
+      const data = response.data as GetUserPreferencesData;
+      hidden.value = data.hidden;
     })
     .catch((error: AxiosError) => {
       console.log(error);

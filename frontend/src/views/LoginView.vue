@@ -33,10 +33,13 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
+import { AxiosError } from "axios";
 
 import { rulesHelper } from "../helpers";
 import { useAuthStore } from "../stores/auth";
 import { $toast } from "../toast";
+import { TokenErrorData } from "../types";
+
 import { useFormValidation } from "../composables/formValidation";
 
 const rules = rulesHelper;
@@ -60,7 +63,9 @@ async function onSubmit() {
     await login(username.value, password.value);
   } catch (error) {
     console.log(error);
-    $toast.error(error.response.data.detail);
+    const errorAxios = error as AxiosError;
+    const data = errorAxios.response.data as TokenErrorData;
+    $toast.error(data.detail);
   }
 }
 </script>

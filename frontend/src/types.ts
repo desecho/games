@@ -37,3 +37,11 @@ export interface Switch {
   name: string;
   label: string;
 }
+
+export interface GetUserPreferencesData {
+  hidden: boolean;
+}
+
+export interface TokenErrorData {
+  detail: string;
+}
