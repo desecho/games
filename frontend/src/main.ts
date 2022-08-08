@@ -27,7 +27,7 @@ app
   .use(vuetify)
   .use(createPinia())
   .use(router)
-  .use(VueGtag, { config: { id: import.meta.env.VITE_GOOGLE_ANALYTICS_ID } }, router)
+  .use(VueGtag, { config: { id: import.meta.env.VITE_GOOGLE_ANALYTICS_ID as string } }, router)
   .use(VueAxios, axios);
 
 app.provide("axios", app.config.globalProperties.axios).mount("#app");

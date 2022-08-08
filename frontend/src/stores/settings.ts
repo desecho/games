@@ -5,7 +5,7 @@ import { SettingsStore } from "./types";
 function getSettings(): SettingsStore {
   const settingsLocalStorageData = localStorage.getItem("settings");
   if (settingsLocalStorageData) {
-    const settings: SettingsStore = JSON.parse(settingsLocalStorageData);
+    const settings = JSON.parse(settingsLocalStorageData) as SettingsStore;
     return settings;
   }
   return {

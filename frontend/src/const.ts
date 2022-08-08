@@ -40,6 +40,6 @@ export const Lists: List[] = [
   },
 ];
 
-export const Email = import.meta.env.VITE_ADMIN_EMAIL;
+export const Email = import.meta.env.VITE_ADMIN_EMAIL as string;
 
 export const DLCKindCategories = ["DLC", "Expansion", "Standalone Expansion"];

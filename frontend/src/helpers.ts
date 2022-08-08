@@ -6,7 +6,7 @@ export const rulesHelper = {
 };
 
 export function getUrl(path: string): string {
-  const baseUrl: string = import.meta.env.VITE_BACKEND_URL;
+  const baseUrl = import.meta.env.VITE_BACKEND_URL as string;
   return `${baseUrl}${path}`;
 }
 
