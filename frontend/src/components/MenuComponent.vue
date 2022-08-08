@@ -11,9 +11,9 @@
       </v-list>
       <template #append>
         <v-list>
-          <MenuItem v-if="!isLoggedIn" title="Login" icon="login" to="/login" />
-          <MenuItem v-if="isLoggedIn" title="Settings" icon="cog" to="/preferences" />
-          <MenuItem v-if="isLoggedIn" title="Logout" icon="logout" to="/logout" />
+          <MenuItem v-if="!user.isLoggedIn" title="Login" icon="login" to="/login" />
+          <MenuItem v-if="user.isLoggedIn" title="Settings" icon="cog" to="/preferences" />
+          <MenuItem v-if="user.isLoggedIn" title="Logout" icon="logout" to="/logout" />
         </v-list>
       </template>
     </v-navigation-drawer>
@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, toRef } from "vue";
 
 import { useAuthStore } from "../stores/auth";
 import { useMobile } from "../composables/mobile";
@@ -29,8 +29,8 @@ import { useMobile } from "../composables/mobile";
 import MenuItem from "./MenuItem.vue";
 
 const drawer = ref(false);
-const { user } = useAuthStore();
-const isLoggedIn = user.isLoggedIn;
+const userStore = useAuthStore();
+const user = toRef(userStore, "user");
 
 function toggleDrawer() {
   drawer.value = !drawer.value;
