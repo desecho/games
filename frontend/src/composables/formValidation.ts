@@ -10,9 +10,8 @@ export function useFormValidation() {
     const value = form.value;
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (value) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       const result = (await value.validate()) as FormValidationResult;
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       const valid: boolean = result.valid;
       return valid;
     }
