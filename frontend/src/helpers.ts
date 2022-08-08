@@ -13,7 +13,7 @@ export function getUrl(path: string): string {
 export function requireAuthenticated() {
   const { user } = useAuthStore();
   if (!user.isLoggedIn) {
-    router.push("/login").catch(() => {});
+    void router.push("/login");
     return;
   }
 }

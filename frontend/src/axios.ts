@@ -34,7 +34,7 @@ export function initAxios() {
           }
           return Promise.reject(error);
         } else {
-          router.push("/login").catch(() => {});
+          void router.push("/login");
         }
         return Promise.reject(error);
       }
