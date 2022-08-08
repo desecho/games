@@ -27,7 +27,7 @@ export const useGamesStore = defineStore({
 
       const response = await axios.get(getUrl("records/"));
       this.areLoaded = true;
-      this.records = response.data;
+      this.records = response.data as RecordType[];
     },
     async reloadGames() {
       await this.loadGames(true);

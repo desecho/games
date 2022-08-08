@@ -1,6 +1,10 @@
-import { Ref } from "vue";
+/* Copied from vuetify. It looks like these are local types. */
+interface FieldValidationResult {
+  id: number | string;
+  errorMessages: string[];
+}
 
-export interface displayType {
-  xs: Ref<boolean>;
-  sm: Ref<boolean>;
+export interface FormValidationResult {
+  valid: boolean;
+  errors: FieldValidationResult[];
 }

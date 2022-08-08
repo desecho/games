@@ -61,7 +61,7 @@ async function search() {
   axios
     .get(getUrl("search/"), { params: { query: query.value } })
     .then((response) => {
-      games.value = response.data;
+      games.value = response.data as Game[];
     })
     .catch((error: AxiosError) => {
       console.log(error);
