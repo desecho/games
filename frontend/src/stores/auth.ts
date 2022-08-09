@@ -2,12 +2,13 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { defineStore } from "pinia";
 
+import type { JWTDecoded } from "../types";
+import type { TokenData, TokenRefreshData, UserStore } from "./types";
+
 import { initAxios } from "../axios";
 import { getUrl } from "../helpers";
 import { router } from "../router";
-import { JWTDecoded } from "../types";
 
-import { TokenData, TokenRefreshData, UserStore } from "./types";
 
 const userDefault: UserStore = {
   isLoggedIn: false,

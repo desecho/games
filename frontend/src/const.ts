@@ -1,4 +1,4 @@
-import { List } from "./types";
+import type { List } from "./types";
 
 // eslint-disable-next-line no-shadow
 export enum ListIDs {

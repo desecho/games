@@ -7,9 +7,11 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 
-import { Game } from "../types";
+import type { Game } from "../types";
 
 import GameCategory from "./GameCategory.vue";
+
+
 
 interface Props {
   game: Game;
