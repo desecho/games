@@ -7,25 +7,56 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:@typescript-eslint/strict",
-    "prettier"],
+    "prettier"
+  ],
   "rules": {
+    "object-shorthand": "error",
+    "operator-assignment": "error",
+    "prefer-arrow-callback": "error",
+    "prefer-exponentiation-operator": "error",
+    "prefer-const": "error",
+    "prefer-named-capture-group": "error",
+    "prefer-numeric-literals": "error",
+    "prefer-object-has-own": "error",
+    "prefer-object-spread": "error",
+    "prefer-promise-reject-errors": "error",
+    "prefer-regex-literals": "error",
+    "prefer-rest-params": "error",
+    "prefer-spread": "error",
+    "prefer-template": "error",
+    "radix": "error",
+    "require-unicode-regexp": "error",
+    "quote-props": [
+      "error",
+      "consistent-as-needed"
+    ],
+    "spaced-comment": "error",
+    "symbol-description": "error",
+    "yoda" : "error",
+    "no-useless-rename": "error",
+    "no-useless-return": "error",
+    "no-var": "error",
+    "no-useless-computed-key": "error",
+    "no-useless-concat": "error",
+    "no-useless-call": "error",
     "max-len": [
       "error",
       {
         "code": 119
       }
     ],
-    "quotes": "error",
-    "no-tabs": "error",
-    "sort-imports": ["error", {
-      "ignoreCase": true,
-      "ignoreDeclarationSort": true
-    }],
+    "sort-imports": [
+      "error",
+      {
+        "ignoreCase": true,
+        "ignoreDeclarationSort": true
+      }
+    ],
     "strict": ["error", "never"],
     "max-statements-per-line": "error",
     "lines-between-class-members": "error",
     "require-jsdoc": "off",
-    "camelcase": ["error", {"allow": ["jwt_decode"]}],
+    "camelcase": ["error", { "allow": ["jwt_decode"] }],
     "@typescript-eslint/unbound-method": "off",
     "import/no-unresolved": "error",
     "import/newline-after-import": "error",
@@ -42,13 +73,21 @@
       }
     ],
     "import/first": "error",
-    "import/no-useless-path-segments": ["error", {
-      "noUselessIndex": true
-    }],
+    "import/no-useless-path-segments": [
+      "error",
+      {
+        "noUselessIndex": true
+      }
+    ],
     "import/no-deprecated": "error",
     "import/no-extraneous-dependencies": [
-      "error", {"devDependencies": false, "optionalDependencies": false, "peerDependencies": false,
-      "bundledDependencies": false}
+      "error",
+      {
+        "devDependencies": false,
+        "optionalDependencies": false,
+        "peerDependencies": false,
+        "bundledDependencies": false
+      }
     ]
   },
   "parserOptions": {
@@ -76,5 +115,5 @@
         "sourceType": "module"
       }
     }
-]
+  ]
 }
