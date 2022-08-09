@@ -23,7 +23,6 @@ import { getUrl } from "../helpers";
 import { $toast } from "../toast";
 import { RecordType } from "../types";
 
-
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const axios: AxiosStatic = inject("axios")!;
 
