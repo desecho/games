@@ -53,11 +53,12 @@ interface Props {
 const props = defineProps<Props>();
 const records = computed({
   get: () => props.recordsProp,
-  set: (records: RecordType[]) => {
-    rewriteArray(props.recordsProp, records);
+  set: (recordsNew: RecordType[]) => {
+    rewriteArray(props.recordsProp, recordsNew);
   },
 });
 const isDraggable = computed(() => {
+  const { isMobile } = useMobile();
   // This is not working on mobile with v-window. Disabling for now.
   return !props.username && !isMobile.value;
 });
@@ -65,15 +66,16 @@ const settingsStore = useSettingsStore();
 const settings = toRef(settingsStore, "settings");
 
 function saveRecordsOrder() {
-  requireAuthenticated();
-  const getSortData = () => {
+  function getSortData() {
     const data: SortData[] = [];
     records.value.forEach((record, index) => {
       const sortData = { id: record.id, order: index + 1 };
       data.push(sortData);
     });
     return data;
-  };
+  }
+
+  requireAuthenticated();
   axios.put(getUrl("records/save-order/"), { records: getSortData() }).catch((error: AxiosError) => {
     console.log(error);
     $toast.error("Error saving games order");
@@ -89,8 +91,6 @@ function isShowGame(game: Game) {
   }
   return true;
 }
-
-const { isMobile } = useMobile();
 </script>
 
 <style scoped>

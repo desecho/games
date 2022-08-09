@@ -48,10 +48,10 @@ onMounted(() => {
       isLoaded.value = true;
     })
     .catch((error: AxiosError) => {
-      if (error.response.status == 404) {
+      if (error.response.status === 404) {
         userNotFound.value = true;
         isLoaded.value = true;
-      } else if (error.response.status == 403) {
+      } else if (error.response.status === 403) {
         userIsHidden.value = true;
         isLoaded.value = true;
       } else {

@@ -38,7 +38,7 @@ const props = defineProps<Props>();
 const lists = computed(() => {
   // Don't show action buttons for lists other than "Want to Play" if the game has not been released yet.
   return Lists.filter((list) => {
-    if (list.id == ListIDs.WantToPlay) {
+    if (list.id === ListIDs.WantToPlay) {
       return true;
     }
     return props.game.isReleased;
