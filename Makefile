@@ -300,7 +300,7 @@ prettier-scss-lint:
 prettier-json-lint:
 	$(call print,Running prettier check for json)
 	@${CMD_FRONTEND} && \
-	yarn run prettier --check ../**/*.json
+	yarn run prettier --check ../**/*.json ../**/.*.json
 
 .PHONY: prettier-yaml-lint
 ## Run yaml linter
@@ -415,7 +415,7 @@ format-sh:
 format-json:
 	$(call print,Formatting json files)
 	@${CMD_FRONTEND} && \
-	yarn run prettier --write ../**/*.json
+	yarn run prettier --write ../**/*.json ../**/.*.json
 
 .PHONY: format-yaml
 ## Format yaml files
