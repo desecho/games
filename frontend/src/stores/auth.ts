@@ -34,13 +34,13 @@ export const useAuthStore = defineStore({
   }),
   actions: {
     async login(username: string, password: string) {
-      const response = await axios.post(getUrl("token/"), { username: username, password: password });
+      const response = await axios.post(getUrl("token/"), { username, password });
       const data = response.data as TokenData;
       this.user = {
         refreshToken: data.refresh,
         accessToken: data.access,
         isLoggedIn: true,
-        username: username,
+        username,
       };
       saveUser(this.user);
       initAxios();

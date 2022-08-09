@@ -41,7 +41,6 @@ import { useAuthStore } from "../stores/auth";
 import { $toast } from "../toast";
 import { TokenErrorData } from "../types";
 
-
 const rules = rulesHelper;
 
 const username = ref("");

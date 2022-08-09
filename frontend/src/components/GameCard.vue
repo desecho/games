@@ -70,7 +70,7 @@ const height = computed(() => {
 function changeList(recordId: number, listId: number, index: number) {
   requireAuthenticated();
   axios
-    .put(getUrl(`records/${recordId}/change-list/`), { listId: listId })
+    .put(getUrl(`records/${recordId}/change-list/`), { listId })
     .then(() => {
       records.value[index].listKey = ListKeys[listId];
     })
