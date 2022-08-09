@@ -1,10 +1,13 @@
-import { AxiosError, AxiosStatic } from "axios";
-import { inject, Ref } from "vue";
+import { inject } from "vue";
+
+import type { Game } from "../types";
+import type { AxiosError, AxiosStatic } from "axios";
+import type { Ref } from "vue";
 
 import { getUrl, requireAuthenticated } from "../helpers";
 import { useGamesStore } from "../stores/games";
 import { $toast } from "../toast";
-import { Game } from "../types";
+
 
 export function useAddToList() {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

@@ -33,14 +33,17 @@
 </template>
 
 <script lang="ts" setup>
-import { AxiosError, AxiosStatic } from "axios";
-import { inject, Ref, ref } from "vue";
+import { inject, ref } from "vue";
+
+import type { Game } from "../types";
+import type { AxiosError, AxiosStatic } from "axios";
+import type { Ref} from "vue";
 
 import GameSearchResultCard from "../components/GameSearchResultCard.vue";
 import { useFormValidation } from "../composables/formValidation";
 import { getUrl, rulesHelper } from "../helpers";
 import { $toast } from "../toast";
-import { Game } from "../types";
+
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const axios: AxiosStatic = inject("axios")!;

@@ -1,6 +1,6 @@
 import { ref } from "vue";
 
-import { FormValidationResult } from "./types";
+import type { FormValidationResult } from "./types";
 
 export function useFormValidation() {
   // Not sure how to type this

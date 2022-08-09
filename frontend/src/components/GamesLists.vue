@@ -24,13 +24,16 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 
+import type { RecordType } from "../types";
+
 import { useMobile } from "../composables/mobile";
 import { Lists } from "../const";
-import { RecordType } from "../types";
+
 
 import GamesList from "./GamesList.vue";
 import GamesSettings from "./GamesSettings.vue";
 import GamesToolbar from "./GamesToolbar.vue";
+
 
 interface Props {
   records: RecordType[];
