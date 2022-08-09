@@ -13,7 +13,7 @@ export function useAddToList() {
   function addToList(gameId: number, listId: number, index: number | null = null, games: Ref<Game[]> | null = null) {
     requireAuthenticated();
     axios
-      .post(getUrl("records/add/"), { listId: listId, gameId: gameId })
+      .post(getUrl("records/add/"), { listId, gameId })
       .then(async () => {
         if (index !== null && games !== null) {
           games.value.splice(index, 1);

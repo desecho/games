@@ -14,7 +14,6 @@ export function requireAuthenticated() {
   const { user } = useAuthStore();
   if (!user.isLoggedIn) {
     void router.push("/login");
-    return;
   }
 }
 

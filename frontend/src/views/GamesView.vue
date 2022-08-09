@@ -9,8 +9,6 @@ import GamesLists from "../components/GamesLists.vue";
 import { useGamesStore } from "../stores/games";
 import { $toast } from "../toast";
 
-
-
 interface Props {
   listKey?: string;
 }

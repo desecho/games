@@ -1,7 +1,7 @@
 // Styles
-//eslint-disable-next-line import/no-unassigned-import
+// eslint-disable-next-line import/no-unassigned-import
 import "x-axios-progress-bar/dist/nprogress.css";
-//eslint-disable-next-line import/no-unassigned-import
+// eslint-disable-next-line import/no-unassigned-import
 import "./styles/styles.scss";
 
 import axios from "axios";
