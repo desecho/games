@@ -28,6 +28,8 @@
     "camelcase": ["error", {"allow": ["jwt_decode"]}],
     "@typescript-eslint/unbound-method": "off",
     "import/no-unresolved": "error",
+    "import/newline-after-import": "error",
+    "import/no-unassigned-import": "error",
     "import/order": [
       "error",
       {
@@ -38,6 +40,15 @@
           "caseInsensitive": true
         }
       }
+    ],
+    "import/first": "error",
+    "import/no-useless-path-segments": ["error", {
+      "noUselessIndex": true
+    }],
+    "import/no-deprecated": "error",
+    "import/no-extraneous-dependencies": [
+      "error", {"devDependencies": false, "optionalDependencies": false, "peerDependencies": false,
+      "bundledDependencies": false}
     ]
   },
   "parserOptions": {
