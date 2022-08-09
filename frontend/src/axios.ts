@@ -27,15 +27,13 @@ export function initAxios() {
           if (error.response.code === "token_not_valid") {
             try {
               await refreshToken();
-            } catch (error) {
-              return Promise.reject(error);
+            } catch (err) {
+              return Promise.reject(err);
             }
           }
           return Promise.reject(error);
-        } else {
-          void router.push("/login");
         }
-        return Promise.reject(error);
+        void router.push("/login");
       }
       return Promise.reject(error);
     }
