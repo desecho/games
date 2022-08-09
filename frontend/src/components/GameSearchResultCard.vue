@@ -20,12 +20,15 @@
 <script lang="ts" setup>
 import { computed, toRef } from "vue";
 
+import type { Game } from "../types";
+
 import { useAddToList } from "../composables/addToList";
 import { ListIDs, Lists } from "../const";
-import { Game } from "../types";
+
 
 import ActionButton from "./ActionButton.vue";
 import GameCover from "./GameCover.vue";
+
 
 interface Props {
   game: Game;

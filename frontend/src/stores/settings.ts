@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-import { SettingsStore } from "./types";
+import type { SettingsStore } from "./types";
 
 function getSettings(): SettingsStore {
   const settingsLocalStorageData = localStorage.getItem("settings");

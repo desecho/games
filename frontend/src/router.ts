@@ -1,8 +1,9 @@
 import jwt_decode from "jwt-decode";
 import { createRouter, createWebHistory } from "vue-router";
 
+import type { JWTDecoded } from "./types";
+
 import { useAuthStore } from "./stores/auth";
-import { JWTDecoded } from "./types";
 import AboutView from "./views/AboutView.vue";
 import GamesView from "./views/GamesView.vue";
 import LoginView from "./views/LoginView.vue";
@@ -11,6 +12,7 @@ import SearchView from "./views/SearchView.vue";
 import UserGamesView from "./views/UserGamesView.vue";
 import UserPreferencesView from "./views/UserPreferencesView.vue";
 import UsersView from "./views/UsersView.vue";
+
 
 export const router = createRouter({
   history: createWebHistory(),

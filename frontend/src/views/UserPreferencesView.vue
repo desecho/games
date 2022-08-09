@@ -10,13 +10,15 @@
 </template>
 
 <script lang="ts" setup>
-import { AxiosError, AxiosStatic } from "axios";
 import { computed, inject, onMounted, ref } from "vue";
+
+import type { GetUserPreferencesData } from "../types";
+import type { AxiosError, AxiosStatic } from "axios";
 
 import { getUrl } from "../helpers";
 import { useAuthStore } from "../stores/auth";
 import { $toast } from "../toast";
-import { GetUserPreferencesData } from "../types";
+
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const axios: AxiosStatic = inject("axios")!;
