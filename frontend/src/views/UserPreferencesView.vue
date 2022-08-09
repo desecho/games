@@ -26,7 +26,7 @@ const url = getUrl("user/preferences/");
 const hidden = ref(false);
 const profileLink = computed(() => {
   const { user } = useAuthStore();
-  // username is always not null when user is logged in
+  // `username` is always not null when user is logged in
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return `/users/${user.username!}`;
 });

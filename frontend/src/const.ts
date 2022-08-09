@@ -1,5 +1,6 @@
 import { List } from "./types";
 
+// eslint-disable-next-line no-shadow
 export enum ListIDs {
   WantToPlay = 1,
   Playing,

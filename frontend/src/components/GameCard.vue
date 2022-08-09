@@ -43,14 +43,6 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const action = (listId: number) => {
-  if (props.username) {
-    addToList(props.record.game.id, listId);
-  } else {
-    changeList(props.record.id, listId, props.index);
-  }
-};
-
 const { user } = useAuthStore();
 const isLoggedIn = user.isLoggedIn;
 const gamesStore = useGamesStore();
@@ -58,7 +50,7 @@ const records = toRef(gamesStore, "records");
 const settingsStore = useSettingsStore();
 const settings = toRef(settingsStore, "settings");
 const isOwnProfile = computed(() => {
-  return props.username && props.username == user.username;
+  return props.username && props.username === user.username;
 });
 const areActionsVisible = computed(() => {
   return isLoggedIn && !isOwnProfile.value && !settings.value.games.areActionButtonsHidden;
@@ -95,11 +87,11 @@ function deleteGame(recordId: number, index: number) {
 
 function getLists(game: Game): List[] {
   const lists = Lists.filter((list) => {
-    return list.key != props.listKey;
+    return list.key !== props.listKey;
   });
   // Don't show action buttons for lists other than "Want to Play" if the game has not been released yet.
   return lists.filter((list) => {
-    if (list.id == ListIDs.WantToPlay) {
+    if (list.id === ListIDs.WantToPlay) {
       return true;
     }
     return game.isReleased;
@@ -107,4 +99,12 @@ function getLists(game: Game): List[] {
 }
 
 const { addToList } = useAddToList();
+
+function action(listId: number) {
+  if (props.username) {
+    addToList(props.record.game.id, listId);
+  } else {
+    changeList(props.record.id, listId, props.index);
+  }
+}
 </script>
