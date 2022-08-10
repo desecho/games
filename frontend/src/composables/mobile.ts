@@ -1,7 +1,7 @@
 import { computed } from "vue";
 import { useDisplay } from "vuetify";
 
-import type {ComputedRef } from "vue";
+import type { ComputedRef } from "vue";
 
 export function useMobile(): {
   isPhone: ComputedRef<boolean>;

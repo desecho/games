@@ -17,7 +17,7 @@ interface Props {
 const props = defineProps<Props>();
 
 const src = computed(() => {
-  if (props.game.cover) {
+  if (props.game.cover !== null) {
     return props.game.cover;
   }
   return "/img/image-not-found.svg";

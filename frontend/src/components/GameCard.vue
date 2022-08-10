@@ -51,7 +51,7 @@ const records = toRef(gamesStore, "records");
 const settingsStore = useSettingsStore();
 const settings = toRef(settingsStore, "settings");
 const isOwnProfile = computed(() => {
-  return props.username && props.username === user.username;
+  return props.username !== undefined && props.username === user.username;
 });
 const areActionsVisible = computed(() => {
   return isLoggedIn && !isOwnProfile.value && !settings.value.games.areActionButtonsHidden;
@@ -102,10 +102,10 @@ function getLists(game: Game): List[] {
 const { addToList } = useAddToList();
 
 function action(listId: number): void {
-  if (props.username) {
-    addToList(props.record.game.id, listId);
-  } else {
+  if (props.username === undefined) {
     changeList(props.record.id, listId, props.index);
+  } else {
+    addToList(props.record.game.id, listId);
   }
 }
 </script>

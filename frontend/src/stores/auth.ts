@@ -15,7 +15,7 @@ const userDefault: UserStore = {
 
 function getUser(): UserStore {
   const userLocalStorageData = localStorage.getItem("user");
-  if (userLocalStorageData) {
+  if (userLocalStorageData !== null) {
     const user = JSON.parse(userLocalStorageData) as UserStore;
     return user;
   }

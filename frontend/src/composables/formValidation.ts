@@ -13,7 +13,7 @@ export function useFormValidation(): {
   async function isValid(): Promise<boolean> {
     const value = form.value;
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (value) {
+    if (value !== null) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       const result = (await value.validate()) as FormValidationResult;
       const valid: boolean = result.valid;
