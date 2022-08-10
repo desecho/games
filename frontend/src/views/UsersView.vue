@@ -15,18 +15,17 @@
 import { inject, onMounted, ref } from "vue";
 
 import type { AxiosError, AxiosStatic } from "axios";
-import type { Ref} from "vue";
+import type { Ref } from "vue";
 
 import { getUrl } from "../helpers";
 import { $toast } from "../toast";
-
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const axios: AxiosStatic = inject("axios")!;
 
 const users: Ref<string[]> = ref([]);
 
-function loadUsers() {
+function loadUsers(): void {
   axios
     .get(getUrl("users/"))
     .then((response) => {

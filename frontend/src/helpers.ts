@@ -2,7 +2,7 @@ import { router } from "./router";
 import { useAuthStore } from "./stores/auth";
 
 export const rulesHelper = {
-  required: (value: string) => Boolean(value) || "Required.",
+  required: (value: string): true | "Required" => Boolean(value) || "Required",
 };
 
 export function getUrl(path: string): string {
@@ -10,7 +10,7 @@ export function getUrl(path: string): string {
   return `${baseUrl}${path}`;
 }
 
-export function requireAuthenticated() {
+export function requireAuthenticated(): void {
   const { user } = useAuthStore();
   if (!user.isLoggedIn) {
     void router.push("/login");
@@ -18,7 +18,7 @@ export function requireAuthenticated() {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function rewriteArray(arrayToRewrite: any[], newArray: any[]) {
+export function rewriteArray(arrayToRewrite: any[], newArray: any[]): void {
   while (arrayToRewrite.length > 0) {
     arrayToRewrite.pop();
   }

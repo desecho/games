@@ -21,7 +21,7 @@ const value = ref(false);
 const settingsStore = useSettingsStore();
 const settings = toRef(settingsStore, "settings");
 
-function saveSettings() {
+function saveSettings(): void {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   settings.value[props.type][props.name] = value.value;
   settingsStore.persistSettings();

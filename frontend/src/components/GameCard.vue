@@ -29,10 +29,8 @@ import { useGamesStore } from "../stores/games";
 import { useSettingsStore } from "../stores/settings";
 import { $toast } from "../toast";
 
-
 import ActionButton from "./ActionButton.vue";
 import GameCover from "./GameCover.vue";
-
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const axios: AxiosStatic = inject("axios")!;
@@ -62,7 +60,7 @@ const height = computed(() => {
   return areActionsVisible.value ? 275 : 224;
 });
 
-function changeList(recordId: number, listId: number, index: number) {
+function changeList(recordId: number, listId: number, index: number): void {
   requireAuthenticated();
   axios
     .put(getUrl(`records/${recordId}/change-list/`), { listId })
@@ -75,7 +73,7 @@ function changeList(recordId: number, listId: number, index: number) {
     });
 }
 
-function deleteGame(recordId: number, index: number) {
+function deleteGame(recordId: number, index: number): void {
   requireAuthenticated();
   axios
     .delete(getUrl(`records/${recordId}/delete/`))
@@ -103,7 +101,7 @@ function getLists(game: Game): List[] {
 
 const { addToList } = useAddToList();
 
-function action(listId: number) {
+function action(listId: number): void {
   if (props.username) {
     addToList(props.record.game.id, listId);
   } else {

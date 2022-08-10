@@ -9,7 +9,6 @@ import { initAxios } from "../axios";
 import { getUrl } from "../helpers";
 import { router } from "../router";
 
-
 const userDefault: UserStore = {
   isLoggedIn: false,
 };
@@ -23,7 +22,7 @@ function getUser(): UserStore {
   return userDefault;
 }
 
-function saveUser(user: UserStore) {
+function saveUser(user: UserStore): void {
   localStorage.setItem("user", JSON.stringify(user));
 }
 

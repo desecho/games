@@ -19,7 +19,6 @@ import { getUrl } from "../helpers";
 import { useAuthStore } from "../stores/auth";
 import { $toast } from "../toast";
 
-
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const axios: AxiosStatic = inject("axios")!;
 
@@ -36,7 +35,7 @@ const absoluteProfileLink = computed(() => {
   return `${location.origin}${profileLink.value}`;
 });
 
-function loadPreferences() {
+function loadPreferences(): void {
   axios
     .get(url)
     .then((response) => {
@@ -48,7 +47,7 @@ function loadPreferences() {
       $toast.error("Error loading preferences");
     });
 }
-function savePreferences() {
+function savePreferences(): void {
   axios.put(url, { hidden: hidden.value }).catch((error: AxiosError) => {
     console.log(error);
     $toast.error("Error saving preferences");
