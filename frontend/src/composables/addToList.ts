@@ -1,41 +1,26 @@
-import { inject } from "vue";
+import axios from "axios";
 
-import type { Game } from "../types";
-import type { AxiosError, AxiosStatic } from "axios";
-import type { Ref } from "vue";
+import type { AxiosError } from "axios";
 
 import { getUrl, requireAuthenticated } from "../helpers";
 import { useGamesStore } from "../stores/games";
 import { $toast } from "../toast";
 
 export function useAddToList(): {
-  addToList: (gameId: number, listId: number, index?: number | null, games?: Ref<Game[]> | null) => void;
+  addToList: (gameId: number, listId: number) => Promise<void>;
 } {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const axios: AxiosStatic = inject("axios")!;
-
-  function addToList(
-    gameId: number,
-    listId: number,
-    index: number | null = null,
-    games: Ref<Game[]> | null = null
-  ): void {
+  async function addToList(gameId: number, listId: number): Promise<void> {
+    console.log("Adding to list");
     requireAuthenticated();
-    axios
-      .post(getUrl("records/add/"), { listId, gameId })
-      .then(async () => {
-        if (index !== null && games !== null) {
-          games.value.splice(index, 1);
-        }
-        const { reloadGames } = useGamesStore();
-        await reloadGames().catch((error: AxiosError) => {
-          console.log(error);
-          $toast.error("Error loading games");
-        });
+    await axios.post(getUrl("records/add/"), { listId, gameId });
+    const { reloadGames } = useGamesStore();
+    reloadGames()
+      .then(() => {
+        console.log("Games reloaded");
       })
       .catch((error: AxiosError) => {
         console.log(error);
-        $toast.error("Error adding a game");
+        $toast.error("Error reloading games");
       });
   }
 

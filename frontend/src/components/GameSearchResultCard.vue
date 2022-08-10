@@ -11,30 +11,27 @@
         :key="list.id"
         :title="list.name"
         :icon="list.icon"
-        @click="addToList(game.id, list.id, index, gamesRef)"
+        @click="$emit('addToList', list.id)"
       />
     </v-card-actions>
   </v-card>
 </template>
 
 <script lang="ts" setup>
-import { computed, toRef } from "vue";
+import { computed } from "vue";
 
 import type { Game } from "../types";
 
-import { useAddToList } from "../composables/addToList";
 import { ListIDs, Lists } from "../const";
 
 import ActionButton from "./ActionButton.vue";
 import GameCover from "./GameCover.vue";
 
-interface Props {
+const props = defineProps<{
   game: Game;
-  games: Game[];
-  index: number;
-}
+}>();
 
-const props = defineProps<Props>();
+defineEmits<(e: "addToList", listId: number) => void>();
 
 const lists = computed(() => {
   // Don't show action buttons for lists other than "Want to Play" if the game has not been released yet.
@@ -45,11 +42,6 @@ const lists = computed(() => {
     return props.game.isReleased;
   });
 });
-const gamesRef = computed(() => {
-  return toRef(props, "games");
-});
-
-const { addToList } = useAddToList();
 </script>
 
 <style scoped>
