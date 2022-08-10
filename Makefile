@@ -378,6 +378,18 @@ load-db: drop-db create-db
 	$(call print,Loading DB)
 	@source $(ENV_FILE) && \
 	scripts/load_db.sh
+
+.PHONY: poetry-update
+## Update python packages
+poetry-update:
+	$(call print,Updating python packages)
+	@poetry update
+
+.PHONY: poetry-show-outdated
+## Show outdated python packages (outside of ranges)
+poetry-show-outdated:
+	$(call print,Showing outdated python packages)
+	@poetry show --outdated | grep --file=<(poetry show --tree | grep '^\w' | cut -d' ' -f1 | sed 's/.*/^&\\s/')
 #------------------------------------
 
 #------------------------------------
