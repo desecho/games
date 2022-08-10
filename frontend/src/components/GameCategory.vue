@@ -5,10 +5,9 @@
 </template>
 
 <script lang="ts" setup>
-interface Props {
+defineProps<{
   name: string;
-}
-defineProps<Props>();
+}>();
 </script>
 
 <style scoped>

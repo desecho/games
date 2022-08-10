@@ -11,10 +11,9 @@ import type { Game } from "../types";
 
 import GameCategory from "./GameCategory.vue";
 
-interface Props {
+const props = defineProps<{
   game: Game;
-}
-const props = defineProps<Props>();
+}>();
 
 const src = computed(() => {
   if (props.game.cover !== null) {

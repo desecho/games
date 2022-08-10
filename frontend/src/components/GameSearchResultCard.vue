@@ -18,8 +18,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
-
 import type { Game } from "../types";
 
 import { ListIDs, Lists } from "../const";
@@ -33,14 +31,12 @@ const props = defineProps<{
 
 defineEmits<(e: "addToList", listId: number) => void>();
 
-const lists = computed(() => {
-  // Don't show action buttons for lists other than "Want to Play" if the game has not been released yet.
-  return Lists.filter((list) => {
-    if (list.id === ListIDs.WantToPlay) {
-      return true;
-    }
-    return props.game.isReleased;
-  });
+// Don't show action buttons for lists other than "Want to Play" if the game has not been released yet.
+const lists = Lists.filter((list) => {
+  if (list.id === ListIDs.WantToPlay) {
+    return true;
+  }
+  return props.game.isReleased;
 });
 </script>
 

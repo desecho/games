@@ -7,13 +7,15 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 
-interface Props {
-  active?: boolean;
-  icon: string;
-}
-const props = withDefaults(defineProps<Props>(), {
-  active: false,
-});
+const props = withDefaults(
+  defineProps<{
+    active?: boolean;
+    icon: string;
+  }>(),
+  {
+    active: false,
+  }
+);
 
 const color = computed(() => (props.active ? "grey" : "white"));
 </script>

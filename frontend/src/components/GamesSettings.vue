@@ -22,11 +22,9 @@ import { useSettingsStore } from "../stores/settings";
 
 import SettingsSwitch from "./SettingsSwitch.vue";
 
-interface Props {
+const props = defineProps<{
   username?: string;
-}
-
-const props = defineProps<Props>();
+}>();
 
 const { user } = useAuthStore();
 
