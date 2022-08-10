@@ -8,3 +8,7 @@ export interface FormValidationResult {
   valid: boolean;
   errors: FieldValidationResult[];
 }
+
+export interface Form {
+  validate: () => Promise<FormValidationResult>;
+}
