@@ -11,8 +11,6 @@ import type { Game } from "../types";
 
 import GameCategory from "./GameCategory.vue";
 
-
-
 interface Props {
   game: Game;
 }

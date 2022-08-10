@@ -8,12 +8,18 @@ import { getUrl, requireAuthenticated } from "../helpers";
 import { useGamesStore } from "../stores/games";
 import { $toast } from "../toast";
 
-
-export function useAddToList() {
+export function useAddToList(): {
+  addToList: (gameId: number, listId: number, index?: number | null, games?: Ref<Game[]> | null) => void;
+} {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const axios: AxiosStatic = inject("axios")!;
 
-  function addToList(gameId: number, listId: number, index: number | null = null, games: Ref<Game[]> | null = null) {
+  function addToList(
+    gameId: number,
+    listId: number,
+    index: number | null = null,
+    games: Ref<Game[]> | null = null
+  ): void {
     requireAuthenticated();
     axios
       .post(getUrl("records/add/"), { listId, gameId })

@@ -37,13 +37,12 @@ import { inject, ref } from "vue";
 
 import type { Game } from "../types";
 import type { AxiosError, AxiosStatic } from "axios";
-import type { Ref} from "vue";
+import type { Ref } from "vue";
 
 import GameSearchResultCard from "../components/GameSearchResultCard.vue";
 import { useFormValidation } from "../composables/formValidation";
 import { getUrl, rulesHelper } from "../helpers";
 import { $toast } from "../toast";
-
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const axios: AxiosStatic = inject("axios")!;
@@ -56,7 +55,7 @@ const query = ref("");
 
 const { form, isValid } = useFormValidation();
 
-async function search() {
+async function search(): Promise<void> {
   if (!(await isValid())) {
     return;
   }

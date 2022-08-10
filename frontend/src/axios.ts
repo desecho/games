@@ -5,8 +5,7 @@ import type { AxiosError, AxiosRequestHeaders } from "axios";
 import { router } from "./router";
 import { useAuthStore } from "./stores/auth";
 
-
-export function initAxios() {
+export function initAxios(): void {
   const headers: AxiosRequestHeaders = {
     "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
     "X-Requested-With": "XMLHttpRequest",

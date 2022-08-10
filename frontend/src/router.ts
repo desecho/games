@@ -13,7 +13,6 @@ import UserGamesView from "./views/UserGamesView.vue";
 import UserPreferencesView from "./views/UserPreferencesView.vue";
 import UsersView from "./views/UsersView.vue";
 
-
 export const router = createRouter({
   history: createWebHistory(),
   linkActiveClass: "active",

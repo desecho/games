@@ -18,7 +18,7 @@ function getSettings(): SettingsStore {
   };
 }
 
-function saveSettingsToLocalStorage(settings: SettingsStore) {
+function saveSettingsToLocalStorage(settings: SettingsStore): void {
   localStorage.setItem("settings", JSON.stringify(settings));
 }
 

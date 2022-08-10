@@ -42,7 +42,6 @@ import { rulesHelper } from "../helpers";
 import { useAuthStore } from "../stores/auth";
 import { $toast } from "../toast";
 
-
 const rules = rulesHelper;
 
 const username = ref("");
@@ -55,7 +54,7 @@ const isLoggedIn = user.isLoggedIn;
 
 const { form, isValid } = useFormValidation();
 
-async function onSubmit() {
+async function onSubmit(): Promise<void> {
   if (!(await isValid())) {
     return;
   }
