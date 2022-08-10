@@ -8,7 +8,7 @@
         <span v-if="!isPhone">{{ list.name }}</span>
       </v-tab>
     </v-tabs>
-    <GamesSettings />
+    <GamesSettings :username="username" />
     <v-window v-model="tab">
       <GamesList
         v-for="list in lists"
