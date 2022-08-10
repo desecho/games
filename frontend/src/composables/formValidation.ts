@@ -1,8 +1,12 @@
 import { ref } from "vue";
 
 import type { FormValidationResult } from "./types";
+import type { Ref } from "vue";
 
-export function useFormValidation() {
+export function useFormValidation(): {
+  form: Ref<null>;
+  isValid: () => Promise<boolean>;
+} {
   // Not sure how to type this
   const form = ref(null);
 

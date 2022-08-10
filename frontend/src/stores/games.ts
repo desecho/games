@@ -8,8 +8,6 @@ import { router } from "../router";
 
 import { useAuthStore } from "./auth";
 
-
-
 const recordsInitialState: RecordType[] = [];
 
 export const useGamesStore = defineStore({

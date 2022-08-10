@@ -22,9 +22,7 @@ import { useSettingsStore } from "../stores/settings";
 
 import SettingsSwitch from "./SettingsSwitch.vue";
 
-
-
-function getSwitches() {
+function getSwitches(): Switch[] {
   const switches: Switch[] = [];
   const { user } = useAuthStore();
   /* Don't show "Hide action buttons" switch for unauthenticated users because action buttons are always

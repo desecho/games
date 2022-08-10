@@ -42,7 +42,6 @@ import { $toast } from "../toast";
 
 import GameCard from "./GameCard.vue";
 
-
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const axios: AxiosStatic = inject("axios")!;
 
@@ -67,8 +66,8 @@ const isDraggable = computed(() => {
 const settingsStore = useSettingsStore();
 const settings = toRef(settingsStore, "settings");
 
-function saveRecordsOrder() {
-  function getSortData() {
+function saveRecordsOrder(): void {
+  function getSortData(): SortData[] {
     const data: SortData[] = [];
     records.value.forEach((record, index) => {
       const sortData = { id: record.id, order: index + 1 };
@@ -84,7 +83,7 @@ function saveRecordsOrder() {
   });
 }
 
-function isShowGame(game: Game) {
+function isShowGame(game: Game): boolean {
   if (settings.value.games.areUnreleasedGamesHidden && !game.isReleased) {
     return false;
   }

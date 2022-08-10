@@ -32,7 +32,7 @@ const drawer = ref(false);
 const userStore = useAuthStore();
 const user = toRef(userStore, "user");
 
-function toggleDrawer() {
+function toggleDrawer(): void {
   drawer.value = !drawer.value;
 }
 

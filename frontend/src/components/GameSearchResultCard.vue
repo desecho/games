@@ -25,10 +25,8 @@ import type { Game } from "../types";
 import { useAddToList } from "../composables/addToList";
 import { ListIDs, Lists } from "../const";
 
-
 import ActionButton from "./ActionButton.vue";
 import GameCover from "./GameCover.vue";
-
 
 interface Props {
   game: Game;
