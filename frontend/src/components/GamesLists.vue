@@ -44,7 +44,7 @@ const lists = Lists;
 const tab = ref("want-to-play");
 
 function getPath(listKey: string): string {
-  if (props.username) {
+  if (props.username !== undefined) {
     return `/users/${props.username}/${listKey}`;
   }
   return `/games/${listKey}`;
