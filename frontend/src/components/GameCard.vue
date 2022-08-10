@@ -33,14 +33,12 @@ import { $toast } from "../toast";
 import ActionButton from "./ActionButton.vue";
 import GameCover from "./GameCover.vue";
 
-interface Props {
+const props = defineProps<{
   record: RecordType;
   index: number;
   listKey: string;
   username?: string;
-}
-
-const props = defineProps<Props>();
+}>();
 
 const { user } = useAuthStore();
 const isLoggedIn = user.isLoggedIn;
@@ -48,11 +46,10 @@ const gamesStore = useGamesStore();
 const records = toRef(gamesStore, "records");
 const settingsStore = useSettingsStore();
 const settings = toRef(settingsStore, "settings");
-const isOwnProfile = computed(() => {
-  return props.username !== undefined && props.username === user.username;
-});
+const isProfile = props.username !== undefined;
+const isOwnProfile = isProfile && props.username === user.username;
 const areActionsVisible = computed(() => {
-  return isLoggedIn && !isOwnProfile.value && !settings.value.games.areActionButtonsHidden;
+  return isLoggedIn && !isOwnProfile && !settings.value.games.areActionButtonsHidden;
 });
 const height = computed(() => {
   return areActionsVisible.value ? 275 : 224;
@@ -100,13 +97,13 @@ function getLists(game: Game): List[] {
 const { addToList } = useAddToList();
 
 function action(listId: number): void {
-  if (props.username === undefined) {
-    changeList(props.record.id, listId, props.index);
-  } else {
+  if (isProfile) {
     addToList(props.record.game.id, listId).catch((error: AxiosError) => {
       console.log(error);
       $toast.error("Error adding a game");
     });
+  } else {
+    changeList(props.record.id, listId, props.index);
   }
 }
 </script>

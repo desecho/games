@@ -9,13 +9,11 @@ import { onMounted, ref, toRef } from "vue";
 
 import { useSettingsStore } from "../stores/settings";
 
-interface Props {
+const props = defineProps<{
   type: string;
   name: string;
   label: string;
-}
-
-const props = defineProps<Props>();
+}>();
 
 const value = ref(false);
 const settingsStore = useSettingsStore();

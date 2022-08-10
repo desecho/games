@@ -29,6 +29,6 @@ createApp(App)
   .use(VueGtag, { config: { id: import.meta.env.VITE_GOOGLE_ANALYTICS_ID as string } }, router)
   .mount("#app");
 
-// Not entirely sure I need to init axios here.
-// This has to be after creating an app because of pinia
+/* Not entirely sure I need to init axios here.
+   This has to be after creating an app because of pinia */
 initAxios();

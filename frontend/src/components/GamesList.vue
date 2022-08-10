@@ -43,13 +43,12 @@ import { $toast } from "../toast";
 
 import GameCard from "./GameCard.vue";
 
-interface Props {
+const props = defineProps<{
   recordsProp: RecordType[];
   listKey: string;
   username?: string;
-}
+}>();
 
-const props = defineProps<Props>();
 const records = computed({
   get: () => props.recordsProp,
   set: (recordsNew: RecordType[]) => {

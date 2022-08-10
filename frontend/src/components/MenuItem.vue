@@ -10,10 +10,9 @@
 </template>
 
 <script lang="ts" setup>
-interface Props {
+defineProps<{
   title: string;
   icon: string;
   to: string;
-}
-defineProps<Props>();
+}>();
 </script>
