@@ -16,10 +16,11 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, inject, toRef } from "vue";
+import axios from "axios";
+import { computed, toRef } from "vue";
 
 import type { Game, List, RecordType } from "../types";
-import type { AxiosError, AxiosStatic } from "axios";
+import type { AxiosError } from "axios";
 
 import { useAddToList } from "../composables/addToList";
 import { ListIDs, ListKeys, Lists } from "../const";
@@ -31,9 +32,6 @@ import { $toast } from "../toast";
 
 import ActionButton from "./ActionButton.vue";
 import GameCover from "./GameCover.vue";
-
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const axios: AxiosStatic = inject("axios")!;
 
 interface Props {
   record: RecordType;

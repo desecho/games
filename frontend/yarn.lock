@@ -1831,7 +1831,6 @@ __metadata:
     vite: ^3.0.5
     vite-plugin-vuetify: ^1.0.0-alpha.14
     vue: ^3.2.37
-    vue-axios: ^3.4.1
     vue-cli-plugin-vuetify: ^2.5.1
     vue-eslint-parser: ^9.0.3
     vue-gtag: ^2.0.1
@@ -3764,16 +3763,6 @@ __metadata:
   bin:
     vite: bin/vite.js
   checksum: c00ec43356469032fa261872b028740526d5a5726132cb306741e2d9dca241dcb7b0b5d39181d5ebc39c5e82396511080640fa302c66e713a622e8bfa1f14a8d
-  languageName: node
-  linkType: hard
-
-"vue-axios@npm:^3.4.1":
-  version: 3.4.1
-  resolution: "vue-axios@npm:3.4.1"
-  peerDependencies:
-    axios: ">= 0.20.0"
-    vue: ^3.0.0 || ^2.0.0
-  checksum: 9b2d639863f85fba88b4f9fb2505b6b9e4b2ab978a7eeddc9562bd568331504336585cfa2c4d04bb051c3c758f57ed57e9f0d0563b4be19fc0a4c67095f706b2
   languageName: node
   linkType: hard
 
