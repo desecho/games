@@ -28,11 +28,12 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, inject, toRef } from "vue";
+import axios from "axios";
+import { computed, toRef } from "vue";
 import Draggable from "vuedraggable";
 
 import type { Game, RecordType, SortData } from "../types";
-import type { AxiosError, AxiosStatic } from "axios";
+import type { AxiosError } from "axios";
 
 import { useMobile } from "../composables/mobile";
 import { DLCKindCategories } from "../const";
@@ -41,9 +42,6 @@ import { useSettingsStore } from "../stores/settings";
 import { $toast } from "../toast";
 
 import GameCard from "./GameCard.vue";
-
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const axios: AxiosStatic = inject("axios")!;
 
 interface Props {
   recordsProp: RecordType[];

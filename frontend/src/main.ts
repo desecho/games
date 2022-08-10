@@ -4,10 +4,8 @@ import "x-axios-progress-bar/dist/nprogress.css";
 // eslint-disable-next-line import/no-unassigned-import
 import "./styles/styles.scss";
 
-import axios from "axios";
 import { createPinia } from "pinia";
 import { createApp } from "vue";
-import VueAxios from "vue-axios";
 import VueGtag from "vue-gtag";
 import { loadProgressBar } from "x-axios-progress-bar";
 
@@ -23,15 +21,14 @@ await loadFonts().catch(() => {
 
 loadProgressBar();
 
-const app = createApp(App);
-app
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+createApp(App)
   .use(vuetify)
   .use(createPinia())
   .use(router)
   .use(VueGtag, { config: { id: import.meta.env.VITE_GOOGLE_ANALYTICS_ID as string } }, router)
-  .use(VueAxios, axios);
+  .mount("#app");
 
-app.provide("axios", app.config.globalProperties.axios).mount("#app");
-
+// Not entirely sure I need to init axios here.
+// This has to be after creating an app because of pinia
 initAxios();
