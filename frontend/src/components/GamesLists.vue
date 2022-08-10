@@ -33,12 +33,10 @@ import GamesList from "./GamesList.vue";
 import GamesSettings from "./GamesSettings.vue";
 import GamesToolbar from "./GamesToolbar.vue";
 
-interface Props {
+const props = defineProps<{
   records: RecordType[];
   username?: string;
-}
-
-const props = defineProps<Props>();
+}>();
 
 const lists = Lists;
 const tab = ref("want-to-play");
