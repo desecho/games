@@ -1,6 +1,7 @@
 {
   "extends": [
     "eslint:recommended",
+    "plugin:eslint-comments/recommended",
     "plugin:import/recommended",
     "plugin:import/typescript",
     "plugin:vue/vue3-recommended",
@@ -157,6 +158,7 @@
         "bundledDependencies": false
       }
     ],
+    "eslint-comments/no-unused-disable": "error",
     "vue/block-lang": [
       "error",
       {
