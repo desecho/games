@@ -2,7 +2,7 @@ import { router } from "./router";
 import { useAuthStore } from "./stores/auth";
 
 export const rulesHelper = {
-  required: (value: string): true | "Required" => Boolean(value) || "Required",
+  required: (value: string): "Required" | true => Boolean(value) || "Required",
 };
 
 export function getUrl(path: string): string {
