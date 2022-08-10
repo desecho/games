@@ -119,6 +119,7 @@
     "@typescript-eslint/no-require-imports": "error",
     "@typescript-eslint/no-unnecessary-qualifier": "error",
     "@typescript-eslint/no-useless-empty-export": "error",
+    "@typescript-eslint/sort-type-union-intersection-members": "error",
     "import/no-unresolved": "error",
     "import/newline-after-import": "error",
     "import/no-unassigned-import": "error",
