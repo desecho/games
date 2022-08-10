@@ -120,6 +120,12 @@
     "@typescript-eslint/no-unnecessary-qualifier": "error",
     "@typescript-eslint/no-useless-empty-export": "error",
     "@typescript-eslint/sort-type-union-intersection-members": "error",
+    "@typescript-eslint/strict-boolean-expressions": "error",
+    "@typescript-eslint/prefer-readonly": "error",
+    "@typescript-eslint/prefer-regexp-exec": "error",
+    "@typescript-eslint/promise-function-async": "error",
+    "@typescript-eslint/require-array-sort-compare": "error",
+    "@typescript-eslint/switch-exhaustiveness-check": "error",
     "import/no-unresolved": "error",
     "import/newline-after-import": "error",
     "import/no-unassigned-import": "error",
@@ -149,6 +155,15 @@
         "optionalDependencies": false,
         "peerDependencies": false,
         "bundledDependencies": false
+      }
+    ],
+    "vue/block-lang": [
+      "error",
+      {
+        "script": {
+          "lang": "ts",
+          "allowNoLang": false
+        }
       }
     ]
   },
