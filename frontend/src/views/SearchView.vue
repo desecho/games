@@ -23,7 +23,7 @@
         <v-sheet class="d-flex align-content-space-around flex-wrap">
           <TransitionGroup name="list" tag="div" class="d-flex flex-wrap">
             <v-sheet v-for="(game, index) in games" :key="game.id">
-              <GameSearchResultCard :game="game" :index="index" :games="games" />
+              <GameSearchResultCard :game="game" @add-to-list="(listId) => addGame(game.id, listId, index)" />
             </v-sheet>
           </TransitionGroup>
         </v-sheet>
@@ -40,6 +40,7 @@ import type { AxiosError, AxiosStatic } from "axios";
 import type { Ref } from "vue";
 
 import GameSearchResultCard from "../components/GameSearchResultCard.vue";
+import { useAddToList } from "../composables/addToList";
 import { useFormValidation } from "../composables/formValidation";
 import { getUrl, rulesHelper } from "../helpers";
 import { $toast } from "../toast";
@@ -67,6 +68,19 @@ async function search(): Promise<void> {
     .catch((error: AxiosError) => {
       console.log(error);
       $toast.error("Search error");
+    });
+}
+const { addToList } = useAddToList();
+
+function addGame(gameId: number, listId: number, index: number): void {
+  addToList(gameId, listId)
+    .then(() => {
+      console.log("Game added");
+      games.value.splice(index, 1);
+    })
+    .catch((error: AxiosError) => {
+      console.log(error);
+      $toast.error("Error adding a game");
     });
 }
 </script>

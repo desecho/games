@@ -105,7 +105,10 @@ function action(listId: number): void {
   if (props.username === undefined) {
     changeList(props.record.id, listId, props.index);
   } else {
-    addToList(props.record.game.id, listId);
+    addToList(props.record.game.id, listId).catch((error: AxiosError) => {
+      console.log(error);
+      $toast.error("Error adding a game");
+    });
   }
 }
 </script>
