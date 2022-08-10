@@ -21,7 +21,6 @@ await loadFonts().catch(() => {
 
 loadProgressBar();
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 createApp(App)
   .use(vuetify)
   .use(createPinia())
