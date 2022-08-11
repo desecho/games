@@ -4,13 +4,13 @@
     <v-card-actions v-if="areActionsVisible">
       <v-spacer></v-spacer>
       <ActionButton
-        v-for="list in getLists(record.game)"
+        v-for="list in getListsForActions(record.game)"
         :key="list.id"
         :title="list.name"
         :icon="list.icon"
         @click="action(list.id)"
       />
-      <ActionButton v-if="!username" title="Delete Game" icon="delete" @click="deleteGame(record.id, index)" />
+      <ActionButton v-if="!isProfile" title="Delete Game" icon="delete" @click="deleteGame(record.id)" />
     </v-card-actions>
   </v-card>
 </template>
@@ -55,12 +55,13 @@ const height = computed(() => {
   return areActionsVisible.value ? 275 : 224;
 });
 
-function changeList(recordId: number, listId: number, index: number): void {
+function changeList(recordId: number, listId: number): void {
   requireAuthenticated();
   axios
     .put(getUrl(`records/${recordId}/change-list/`), { listId })
     .then(() => {
-      records.value[index].listKey = ListKeys[listId];
+      console.log("Game list changed");
+      records.value[props.index].listKey = ListKeys[listId];
     })
     .catch((error: AxiosError) => {
       console.log(error);
@@ -68,12 +69,13 @@ function changeList(recordId: number, listId: number, index: number): void {
     });
 }
 
-function deleteGame(recordId: number, index: number): void {
+function deleteGame(recordId: number): void {
   requireAuthenticated();
   axios
     .delete(getUrl(`records/${recordId}/delete/`))
     .then(() => {
-      records.value.splice(index, 1);
+      console.log("Game deleted");
+      records.value.splice(props.index, 1);
     })
     .catch((error) => {
       console.log(error);
@@ -81,11 +83,12 @@ function deleteGame(recordId: number, index: number): void {
     });
 }
 
-function getLists(game: Game): List[] {
+function getListsForActions(game: Game): List[] {
+  // Don't show action buttons for current list
   const lists = Lists.filter((list) => {
     return list.key !== props.listKey;
   });
-  // Don't show action buttons for lists other than "Want to Play" if the game has not been released yet.
+  // Don't show action buttons for lists other than "Want to Play" if the game has not been released yet
   return lists.filter((list) => {
     if (list.id === ListIDs.WantToPlay) {
       return true;
@@ -103,7 +106,7 @@ function action(listId: number): void {
       $toast.error("Error adding a game");
     });
   } else {
-    changeList(props.record.id, listId, props.index);
+    changeList(props.record.id, listId);
   }
 }
 </script>
