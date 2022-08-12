@@ -37,7 +37,6 @@ import Draggable from "vuedraggable";
 import type { Game, RecordType, SortData } from "../types";
 import type { AxiosError } from "axios";
 
-
 import { useMobile } from "../composables/mobile";
 import { DLCKindCategories } from "../const";
 import { getUrl, requireAuthenticated, rewriteArray } from "../helpers";

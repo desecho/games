@@ -17,6 +17,7 @@ import type { AxiosError } from "axios";
 import type { Ref } from "vue";
 
 import GamesLists from "../components/GamesLists.vue";
+import { DefaultList } from "../const";
 import { getUrl } from "../helpers";
 import { $toast } from "../toast";
 
@@ -26,7 +27,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  listKey: "want-to-play",
+  listKey: DefaultList,
 });
 
 const records: Ref<RecordType[]> = ref([]);
