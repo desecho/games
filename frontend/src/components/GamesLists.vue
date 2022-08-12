@@ -1,12 +1,9 @@
 <template>
   <v-card variant="flat" color="primary">
-    <slot></slot>
+    <GamesUserBar v-if="username" :username="username" />
     <GamesToolbar />
     <v-tabs v-model="tab" background-color="primary" centered stacked>
-      <v-tab v-for="list in lists" :key="list.id" :value="list.key" :to="getPath(list.key)" :title="list.name">
-        <v-icon>mdi-{{ list.icon }}</v-icon>
-        <span v-if="!isPhone">{{ list.name }}</span>
-      </v-tab>
+      <GamesTabs :username="username" />
     </v-tabs>
     <GamesSettings :username="username" />
     <v-window v-model="tab">
@@ -26,27 +23,19 @@ import { ref } from "vue";
 
 import type { RecordType } from "../types";
 
-import { useMobile } from "../composables/mobile";
 import { Lists } from "../const";
 
 import GamesList from "./GamesList.vue";
 import GamesSettings from "./GamesSettings.vue";
+import GamesTabs from "./GamesTabs.vue";
 import GamesToolbar from "./GamesToolbar.vue";
+import GamesUserBar from "./GamesUserBar.vue";
 
-const props = defineProps<{
+defineProps<{
   records: RecordType[];
   username?: string;
 }>();
 
 const lists = Lists;
 const tab = ref("want-to-play");
-
-function getPath(listKey: string): string {
-  if (props.username !== undefined) {
-    return `/users/${props.username}/${listKey}`;
-  }
-  return `/games/${listKey}`;
-}
-
-const { isPhone } = useMobile();
 </script>
