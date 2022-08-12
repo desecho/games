@@ -27,9 +27,9 @@ const props = defineProps<{
 }>();
 
 const { user } = useAuthStore();
-
+const isProfile = props.username !== undefined;
 const isOwnProfile = computed(() => {
-  return props.username !== undefined && props.username === user.username;
+  return isProfile && props.username === user.username;
 });
 
 function getSwitches(): Switch[] {

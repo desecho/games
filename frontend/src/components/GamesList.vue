@@ -60,10 +60,11 @@ const records = computed({
     rewriteArray(props.recordsProp, recordsNew);
   },
 });
+const isProfile = props.username !== undefined;
 const isDraggable = computed(() => {
   const { isMobile } = useMobile();
   // This is not working on mobile with v-window. Disabling for now
-  return props.username === undefined && !isMobile.value;
+  return !isProfile && !isMobile.value;
 });
 const settingsStore = useSettingsStore();
 const settings = toRef(settingsStore, "settings");
