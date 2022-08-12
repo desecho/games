@@ -57,7 +57,7 @@ const records = computed({
 });
 const isDraggable = computed(() => {
   const { isMobile } = useMobile();
-  // This is not working on mobile with v-window. Disabling for now.
+  // This is not working on mobile with v-window. Disabling for now
   return props.username === undefined && !isMobile.value;
 });
 const settingsStore = useSettingsStore();
