@@ -1,30 +1,32 @@
 <template>
-  <v-window-item :value="listKey">
-    <v-card class="wrapper">
-      <v-card-text>
-        <div class="d-flex align-content-space-around flex-wrap">
-          <draggable
-            v-model="records"
-            item-key="id"
-            class="d-flex flex-wrap"
-            :disabled="!isDraggable"
-            @sort="saveRecordsOrder"
-          >
-            <template #item="{ element, index }">
-              <GameCard
-                v-if="element.listKey == listKey && isShowGame(element.game)"
-                :record="element"
-                :index="index"
-                :list-key="listKey"
-                :username="username"
-                :class="{ draggable: isDraggable }"
-              />
-            </template>
-          </draggable>
-        </div>
-      </v-card-text>
-    </v-card>
-  </v-window-item>
+  <v-window v-model="tab">
+    <v-window-item :value="listKey">
+      <v-card class="wrapper">
+        <v-card-text>
+          <div class="d-flex align-content-space-around flex-wrap">
+            <draggable
+              v-model="records"
+              item-key="id"
+              class="d-flex flex-wrap"
+              :disabled="!isDraggable"
+              @sort="saveRecordsOrder"
+            >
+              <template #item="{ element, index }">
+                <GameCard
+                  v-if="element.listKey == listKey && isShowGame(element.game)"
+                  :record="element"
+                  :index="index"
+                  :list-key="listKey"
+                  :username="username"
+                  :class="{ draggable: isDraggable }"
+                />
+              </template>
+            </draggable>
+          </div>
+        </v-card-text>
+      </v-card>
+    </v-window-item>
+  </v-window>
 </template>
 
 <script lang="ts" setup>
@@ -35,9 +37,11 @@ import Draggable from "vuedraggable";
 import type { Game, RecordType, SortData } from "../types";
 import type { AxiosError } from "axios";
 
+
 import { useMobile } from "../composables/mobile";
 import { DLCKindCategories } from "../const";
 import { getUrl, requireAuthenticated, rewriteArray } from "../helpers";
+import { useGamesStore } from "../stores/games";
 import { useSettingsStore } from "../stores/settings";
 import { $toast } from "../toast";
 
@@ -48,6 +52,8 @@ const props = defineProps<{
   listKey: string;
   username?: string;
 }>();
+const gamesStore = useGamesStore();
+const tab = toRef(gamesStore, "tab");
 
 const records = computed({
   get: () => props.recordsProp,

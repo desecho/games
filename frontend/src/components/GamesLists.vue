@@ -1,26 +1,20 @@
 <template>
-  <v-card variant="flat" color="primary">
+  <v-card variant="flat">
     <GamesUserBar v-if="username" :username="username" />
     <GamesToolbar />
-    <v-tabs v-model="tab" background-color="primary" centered stacked>
-      <GamesTabs :username="username" />
-    </v-tabs>
+    <GamesTabs :username="username" />
     <GamesSettings :username="username" />
-    <v-window v-model="tab">
-      <GamesList
-        v-for="list in lists"
-        :key="list.id"
-        :records-prop="records"
-        :list-key="list.key"
-        :username="username"
-      />
-    </v-window>
+    <GamesList
+      v-for="list in lists"
+      :key="list.id"
+      :records-prop="records"
+      :list-key="list.key"
+      :username="username"
+    />
   </v-card>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
-
 import type { RecordType } from "../types";
 
 import { Lists } from "../const";
@@ -37,5 +31,4 @@ defineProps<{
 }>();
 
 const lists = Lists;
-const tab = ref("want-to-play");
 </script>
