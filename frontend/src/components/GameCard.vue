@@ -84,10 +84,14 @@ function deleteGame(recordId: number): void {
 }
 
 function getListsForActions(game: Game): List[] {
-  // Don't show action buttons for current list
-  const lists = Lists.filter((list) => {
-    return list.key !== props.listKey;
-  });
+  let lists = Lists;
+
+  if (!isProfile) {
+    // Don't show action buttons for current list
+    lists = lists.filter((list) => {
+      return list.key !== props.listKey;
+    });
+  }
   // Don't show action buttons for lists other than "Want to Play" if the game has not been released yet
   return lists.filter((list) => {
     if (list.id === ListIDs.WantToPlay) {
