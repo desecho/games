@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, toRef } from "vue";
+import { toRef } from "vue";
 
 import type { Switch } from "../types";
 
@@ -28,15 +28,13 @@ const props = defineProps<{
 
 const { user } = useAuthStore();
 const isProfile = props.username !== undefined;
-const isOwnProfile = computed(() => {
-  return isProfile && props.username === user.username;
-});
+const isOwnProfile = isProfile && props.username === user.username;
 
 function getSwitches(): Switch[] {
   const switches: Switch[] = [];
   /* Don't show "Hide action buttons" switch for unauthenticated users because action buttons are always
      hidden for them. Same if the user is on their own profile page. */
-  if (user.isLoggedIn && !isOwnProfile.value) {
+  if (user.isLoggedIn && !isOwnProfile) {
     switches.push({
       name: "areActionButtonsHidden",
       label: "Hide action buttons",
