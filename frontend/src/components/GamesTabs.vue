@@ -21,13 +21,13 @@ const props = defineProps<{
 const lists = Lists;
 const gamesStore = useGamesStore();
 const tab = toRef(gamesStore, "tab");
+const isProfile = props.username !== undefined;
+const { isPhone } = useMobile();
 
 function getPath(listKey: string): string {
-  if (props.username !== undefined) {
+  if (isProfile) {
     return `/users/${props.username}/${listKey}`;
   }
   return `/games/${listKey}`;
 }
-
-const { isPhone } = useMobile();
 </script>
