@@ -43,3 +43,5 @@ export const Lists: List[] = [
 export const Email = import.meta.env.VITE_ADMIN_EMAIL as string;
 
 export const DLCKindCategories = ["DLC", "Expansion", "Standalone Expansion"];
+
+export const DefaultList = ListKeys[ListIDs.WantToPlay];

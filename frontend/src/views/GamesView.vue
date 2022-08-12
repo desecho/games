@@ -6,6 +6,7 @@
 import { onMounted, toRef } from "vue";
 
 import GamesLists from "../components/GamesLists.vue";
+import { DefaultList } from "../const";
 import { useGamesStore } from "../stores/games";
 import { $toast } from "../toast";
 
@@ -13,7 +14,7 @@ interface Props {
   listKey?: string;
 }
 withDefaults(defineProps<Props>(), {
-  listKey: "want-to-play",
+  listKey: DefaultList,
 });
 
 const gamesStore = useGamesStore();
