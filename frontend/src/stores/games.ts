@@ -15,6 +15,7 @@ export const useGamesStore = defineStore({
   state: () => ({
     records: recordsInitialState,
     areLoaded: false,
+    tab: "want-to-play",
   }),
   actions: {
     async loadGames(reload = false) {
