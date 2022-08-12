@@ -9,6 +9,7 @@ export interface FormValidationResult {
   errors: FieldValidationResult[];
 }
 
+/* --------------------------------------------------------- */
 export interface Form {
   validate: () => Promise<FormValidationResult>;
 }
