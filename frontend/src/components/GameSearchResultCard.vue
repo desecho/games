@@ -1,9 +1,7 @@
 <template>
   <v-card class="mb-5 mr-5" width="168" height="310">
     <GameCover :game="game" />
-    <v-card-title class="game-title" :title="game.name">
-      {{ game.name }}
-    </v-card-title>
+    <GameTitle :game="game.name" />
     <v-card-actions>
       <v-spacer></v-spacer>
       <ActionButton
@@ -24,6 +22,7 @@ import { ListIDs, Lists } from "../const";
 
 import ActionButton from "./ActionButton.vue";
 import GameCover from "./GameCover.vue";
+import GameTitle from "./GameTitle.vue";
 
 const props = defineProps<{
   game: Game;
@@ -31,7 +30,7 @@ const props = defineProps<{
 
 defineEmits<(e: "addToList", listId: number) => void>();
 
-// Don't show action buttons for lists other than "Want to Play" if the game has not been released yet.
+// Don't show action buttons for lists other than "Want to Play" if the game has not been released yet
 const lists = Lists.filter((list) => {
   if (list.id === ListIDs.WantToPlay) {
     return true;
@@ -39,10 +38,3 @@ const lists = Lists.filter((list) => {
   return props.game.isReleased;
 });
 </script>
-
-<style scoped>
-.game-title {
-  font-size: 1rem;
-  padding-bottom: 0;
-}
-</style>
