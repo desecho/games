@@ -1,4 +1,4 @@
-import type { List } from "./types";
+import type { List, ListKey } from "./types";
 
 export enum ListIDs {
   WantToPlay = 1,
@@ -7,7 +7,7 @@ export enum ListIDs {
   OnHold,
 }
 
-export const ListKeys: Record<number, string> = {};
+export const ListKeys: Record<number, ListKey> = {};
 ListKeys[ListIDs.WantToPlay] = "want-to-play";
 ListKeys[ListIDs.Playing] = "playing";
 ListKeys[ListIDs.Beaten] = "beaten";
