@@ -6,14 +6,24 @@
     variant="text"
     :icon="`mdi-${icon}`"
     :title="title"
+    :disabled="disabled"
+    :active="active"
     width="33"
   >
   </v-btn>
 </template>
 
 <script lang="ts" setup>
-defineProps<{
-  icon: string;
-  title: string;
-}>();
+withDefaults(
+  defineProps<{
+    icon: string;
+    title: string;
+    disabled?: boolean;
+    active?: boolean;
+  }>(),
+  {
+    disabled: false,
+    active: false,
+  }
+);
 </script>

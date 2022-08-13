@@ -10,6 +10,8 @@
 <script lang="ts" setup>
 import { toRef } from "vue";
 
+import type { ListKey } from "../types";
+
 import { useMobile } from "../composables/mobile";
 import { Lists } from "../const";
 import { useGamesStore } from "../stores/games";
@@ -24,7 +26,7 @@ const tab = toRef(gamesStore, "tab");
 const isProfile = props.username !== undefined;
 const { isPhone } = useMobile();
 
-function getPath(listKey: string): string {
+function getPath(listKey: ListKey): string {
   if (isProfile) {
     return `/users/${props.username}/${listKey}`;
   }

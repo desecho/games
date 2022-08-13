@@ -5,13 +5,15 @@
 <script lang="ts" setup>
 import { onMounted, toRef } from "vue";
 
+import type { ListKey } from "../types";
+
 import GamesLists from "../components/GamesLists.vue";
 import { DefaultList } from "../const";
 import { useGamesStore } from "../stores/games";
 import { $toast } from "../toast";
 
 interface Props {
-  listKey?: string;
+  listKey?: ListKey;
 }
 withDefaults(defineProps<Props>(), {
   listKey: DefaultList,

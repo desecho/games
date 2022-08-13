@@ -1,3 +1,5 @@
+export type ListKey = "beaten" | "on-hold" | "playing" | "want-to-play";
+
 export interface JWTDecoded {
   token_type: string;
   exp: number;
@@ -22,7 +24,7 @@ export interface Game {
 export interface RecordType {
   id: number;
   game: Game;
-  listKey: string;
+  listKey: ListKey;
   order: number;
 }
 

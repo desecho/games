@@ -34,7 +34,7 @@ import axios from "axios";
 import { computed, toRef } from "vue";
 import Draggable from "vuedraggable";
 
-import type { Game, RecordType, SortData } from "../types";
+import type { Game, ListKey, RecordType, SortData } from "../types";
 import type { AxiosError } from "axios";
 
 import { useMobile } from "../composables/mobile";
@@ -48,7 +48,7 @@ import GameCard from "./GameCard.vue";
 
 const props = defineProps<{
   recordsProp: RecordType[];
-  listKey: string;
+  listKey: ListKey;
   username?: string;
 }>();
 const gamesStore = useGamesStore();

@@ -12,7 +12,7 @@
 import axios from "axios";
 import { onMounted, ref } from "vue";
 
-import type { RecordType } from "../types";
+import type { ListKey, RecordType } from "../types";
 import type { AxiosError } from "axios";
 import type { Ref } from "vue";
 
@@ -22,7 +22,7 @@ import { getUrl } from "../helpers";
 import { $toast } from "../toast";
 
 interface Props {
-  listKey?: string;
+  listKey?: ListKey;
   username: string;
 }
 

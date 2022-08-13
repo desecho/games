@@ -8,6 +8,8 @@
         :key="list.id"
         :title="list.name"
         :icon="list.icon"
+        :disabled="isGameinGames(record.game)"
+        :active="isGameinGames(record.game)"
         @click="action(list.id)"
       />
       <ActionButton v-if="!isProfile" title="Delete Game" icon="delete" @click="deleteGame(record.id)" />
@@ -19,7 +21,8 @@
 import axios from "axios";
 import { computed, toRef } from "vue";
 
-import type { Game, List, RecordType } from "../types";
+import type { Game, List, ListKey, RecordType } from "../types";
+import type { GameIdsWithListKeys } from "./types";
 import type { AxiosError } from "axios";
 
 import { useAddToList } from "../composables/addToList";
@@ -36,7 +39,7 @@ import GameCover from "./GameCover.vue";
 const props = defineProps<{
   record: RecordType;
   index: number;
-  listKey: string;
+  listKey: ListKey;
   username?: string;
 }>();
 
@@ -44,6 +47,13 @@ const { user } = useAuthStore();
 const isLoggedIn = user.isLoggedIn;
 const gamesStore = useGamesStore();
 const records = toRef(gamesStore, "records");
+const gameIdsWithListKeys = computed(() => {
+  const games: GameIdsWithListKeys = {};
+  for (const record of records.value) {
+    games[record.game.id] = record.listKey;
+  }
+  return games;
+});
 const settingsStore = useSettingsStore();
 const settings = toRef(settingsStore, "settings");
 const isProfile = props.username !== undefined;
@@ -85,8 +95,11 @@ function deleteGame(recordId: number): void {
 
 function getListsForActions(game: Game): List[] {
   let lists = Lists;
-
-  if (!isProfile) {
+  if (isProfile) {
+    if (game.id in gameIdsWithListKeys.value) {
+      lists = lists.filter((list) => list.key === gameIdsWithListKeys.value[game.id]);
+    }
+  } else {
     // Don't show action buttons for current list
     lists = lists.filter((list) => {
       return list.key !== props.listKey;
@@ -99,6 +112,13 @@ function getListsForActions(game: Game): List[] {
     }
     return game.isReleased;
   });
+}
+
+function isGameinGames(game: Game): boolean {
+  if (isProfile) {
+    return game.id in gameIdsWithListKeys.value;
+  }
+  return false;
 }
 
 const { addToList } = useAddToList();
