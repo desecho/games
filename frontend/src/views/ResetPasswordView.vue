@@ -4,14 +4,6 @@
       <v-col class="mb-4" cols="12">
         <v-form v-if="!isLoggedIn" ref="form" v-model="valid" lazy-validation @submit.prevent="onSubmit">
           <v-text-field
-            v-model="username"
-            variant="outlined"
-            label="Username"
-            :rules="[rules.required]"
-            :autofocus="true"
-            @keyup.enter="onSubmit"
-          ></v-text-field>
-          <v-text-field
             v-model="password"
             variant="outlined"
             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -22,19 +14,9 @@
             @keyup.enter="onSubmit"
           ></v-text-field>
           <div class="d-flex justify-space-around align-center flex-column flex-md-row">
-            <v-btn color="primary" :disabled="!valid" @click="onSubmit">Login</v-btn>
+            <v-btn color="primary" :disabled="!valid" @click="onSubmit">Reset password</v-btn>
           </div>
         </v-form>
-        <br />
-        <div v-if="!isLoggedIn">
-          <div class="d-flex justify-space-around align-center flex-column flex-md-row">
-            <v-btn color="primary" to="/register">Register</v-btn>
-          </div>
-          <br />
-          <div class="d-flex justify-space-around align-center flex-column flex-md-row">
-            <v-btn color="primary" to="/reset-password-request">Reset password</v-btn>
-          </div>
-        </div>
         <p v-if="isLoggedIn">You are already logged in.</p>
       </v-col>
     </v-row>
@@ -42,19 +24,25 @@
 </template>
 
 <script lang="ts" setup>
+import axios from "axios";
 import { ref } from "vue";
 
-import type { TokenErrorData } from "./types";
 import type { AxiosError } from "axios";
 
 import { useFormValidation } from "../composables/formValidation";
-import { rulesHelper } from "../helpers";
+import { getUrl, rulesHelper } from "../helpers";
+import { router } from "../router";
 import { useAuthStore } from "../stores/auth";
 import { $toast } from "../toast";
 
 const rules = rulesHelper;
 
-const username = ref("");
+const props = defineProps<{
+  userId: number;
+  timestamp: number;
+  signature: string;
+}>();
+
 const password = ref("");
 const showPassword = ref(false);
 const valid = ref(false);
@@ -68,14 +56,21 @@ async function onSubmit(): Promise<void> {
   if (!(await isValid())) {
     return;
   }
-  const { login } = useAuthStore();
-  try {
-    await login(username.value, password.value);
-  } catch (error) {
-    console.log(error);
-    const errorAxios = error as AxiosError;
-    const data = errorAxios.response.data as TokenErrorData;
-    $toast.error(data.detail);
-  }
+  axios
+    .post(getUrl("user/reset-password/"), {
+      // eslint-disable-next-line camelcase
+      user_id: props.userId,
+      timestamp: props.timestamp,
+      signature: props.signature,
+      password: password.value,
+    })
+    .then(() => {
+      $toast.info("Password reset is successful");
+      void router.push("/login");
+    })
+    .catch((error: AxiosError) => {
+      console.log(error);
+      $toast.error("Error resetting password");
+    });
 }
 </script>

@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     # Custom
     "rest_framework",
     "corsheaders",
+    "rest_registration",
     # App
     APP,
 ]
@@ -165,6 +166,14 @@ USE_I18N = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Email
+EMAIL_USE_SSL = bool(getenv("EMAIL_USE_SSL", "True"))
+EMAIL_HOST = getenv("EMAIL_HOST")
+EMAIL_HOST_USER = getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = getenv("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = int(getenv("EMAIL_PORT", "465"))
+DEFAULT_FROM_EMAIL = ADMIN_EMAIL
+
 # --== Modules settings ==--
 
 REST_FRAMEWORK = {
@@ -182,16 +191,24 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=24),
-    # 'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=365),
 }
 
-CORS_ALLOWED_ORIGINS = [getenv("FRONTEND_URL")]
+FRONTEND_URL = getenv("FRONTEND_URL")
+CORS_ALLOWED_ORIGINS = [FRONTEND_URL]
 
 FRONTEND_URL2 = getenv("FRONTEND_URL2")
 if FRONTEND_URL2:
     CORS_ALLOWED_ORIGINS.append(FRONTEND_URL2)
 
+REST_REGISTRATION = {
+    "VERIFICATION_FROM_EMAIL": ADMIN_EMAIL,
+    "REGISTER_EMAIL_VERIFICATION_ENABLED": False,
+    "RESET_PASSWORD_VERIFICATION_URL": f"{FRONTEND_URL}/reset-password/",
+    "REGISTER_VERIFICATION_URL": f"{FRONTEND_URL}/verify-user/",
+    "REGISTER_SERIALIZER_PASSWORD_CONFIRM": False,
+}
+# -------------------------------------------------------------------------------
 IGDB_CLIENT_ID = getenv("IGDB_CLIENT_ID")
 IGDB_CLIENT_SECRET = getenv("IGDB_CLIENT_SECRET")
 IGDB_TOKEN_ENDPOINT = "https://id.twitch.tv/oauth2/token"  # nosec B105

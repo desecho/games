@@ -44,6 +44,8 @@ gunicorn = "^20.1.0"
 typing-extensions = "^4.3.0"
 igdb-api-v4 = "^0.0.5"
 Authlib = "^1.0.1"
+pip = "^22.2.2"
+django-rest-registration = "^0.7.2"
 
 [tool.poetry.dev-dependencies]
 # Pytest

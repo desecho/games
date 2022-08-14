@@ -1,17 +1,21 @@
 import jwt_decode from "jwt-decode";
 import { createRouter, createWebHistory } from "vue-router";
 
-import type { JWTDecoded } from "./types";
+import type { AuthProps, JWTDecoded } from "./types";
 
 import { useAuthStore } from "./stores/auth";
 import AboutView from "./views/AboutView.vue";
 import GamesView from "./views/GamesView.vue";
 import LoginView from "./views/LoginView.vue";
 import LogoutView from "./views/LogoutView.vue";
+import RegistrationView from "./views/RegistrationView.vue";
+import ResetPasswordRequestView from "./views/ResetPasswordRequestView.vue";
+import ResetPasswordView from "./views/ResetPasswordView.vue";
 import SearchView from "./views/SearchView.vue";
 import UserGamesView from "./views/UserGamesView.vue";
 import UserPreferencesView from "./views/UserPreferencesView.vue";
 import UsersView from "./views/UsersView.vue";
+import VerifyUserView from "./views/VerifyUserView.vue";
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -27,6 +31,26 @@ export const router = createRouter({
     { path: "/preferences", component: UserPreferencesView },
     { path: "/login", component: LoginView },
     { path: "/logout", component: LogoutView },
+    { path: "/register", component: RegistrationView },
+    {
+      path: "/verify-user",
+      component: VerifyUserView,
+      props: (route): AuthProps => ({
+        userId: route.query.user_id as unknown as number,
+        timestamp: route.query.timestamp as unknown as number,
+        signature: route.query.signature as unknown as string,
+      }),
+    },
+    {
+      path: "/reset-password",
+      component: ResetPasswordView,
+      props: (route): AuthProps => ({
+        userId: route.query.user_id as unknown as number,
+        timestamp: route.query.timestamp as unknown as number,
+        signature: route.query.signature as unknown as string,
+      }),
+    },
+    { path: "/reset-password-request", component: ResetPasswordRequestView },
   ],
 });
 
