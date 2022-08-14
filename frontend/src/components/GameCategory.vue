@@ -1,5 +1,5 @@
 <template>
-  <v-card-subtitle v-if="name != 'Main Game'" class="game-category font-weight-black text-white text-caption">
+  <v-card-subtitle class="game-category font-weight-black text-white text-caption">
     {{ name }}
   </v-card-subtitle>
 </template>

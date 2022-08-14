@@ -4,12 +4,12 @@
     <v-card-actions v-if="areActionsVisible">
       <v-spacer></v-spacer>
       <ActionButton
-        v-for="list in getListsForActions(record.game)"
+        v-for="list in lists"
         :key="list.id"
         :title="list.name"
         :icon="list.icon"
-        :disabled="isGameinGames(record.game)"
-        :active="isGameinGames(record.game)"
+        :disabled="isGameinGames"
+        :active="isGameinGames"
         @click="action(list.id)"
       />
       <ActionButton v-if="!isProfile" title="Delete Game" icon="delete" @click="deleteGame(record.id)" />
@@ -21,7 +21,7 @@
 import axios from "axios";
 import { computed, toRef } from "vue";
 
-import type { Game, List, ListKey, RecordType } from "../types";
+import type { List, ListKey, RecordType } from "../types";
 import type { GameIdsWithListKeys } from "./types";
 import type { AxiosError } from "axios";
 
@@ -93,13 +93,22 @@ function deleteGame(recordId: number): void {
     });
 }
 
-function getListsForActions(game: Game): List[] {
-  let lists = Lists;
+function getIsGameinGames(): boolean {
   if (isProfile) {
-    if (game.id in gameIdsWithListKeys.value) {
-      lists = lists.filter((list) => list.key === gameIdsWithListKeys.value[game.id]);
-    }
-  } else {
+    return props.record.game.id in gameIdsWithListKeys.value;
+  }
+  return false;
+}
+
+const isGameinGames = getIsGameinGames();
+
+function getListsForActions(): List[] {
+  let lists = Lists;
+  const game = props.record.game;
+  if (isGameinGames) {
+    lists = lists.filter((list) => list.key === gameIdsWithListKeys.value[game.id]);
+  }
+  if (!isProfile) {
     // Don't show action buttons for current list
     lists = lists.filter((list) => {
       return list.key !== props.listKey;
@@ -114,14 +123,8 @@ function getListsForActions(game: Game): List[] {
   });
 }
 
-function isGameinGames(game: Game): boolean {
-  if (isProfile) {
-    return game.id in gameIdsWithListKeys.value;
-  }
-  return false;
-}
-
 const { addToList } = useAddToList();
+const lists = getListsForActions();
 
 function action(listId: number): void {
   if (isProfile) {

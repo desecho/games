@@ -1,6 +1,6 @@
 <template>
   <v-img :src="src" :title="game.name" :alt="game.name" height="225" :class="{ 'no-img': !game.cover }">
-    <GameCategory :name="game.category" />
+    <GameCategory v-if="game.category != 'Main Game'" :name="game.category" />
   </v-img>
 </template>
 
