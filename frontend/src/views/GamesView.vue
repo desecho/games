@@ -12,12 +12,14 @@ import { DefaultList } from "../const";
 import { useGamesStore } from "../stores/games";
 import { $toast } from "../toast";
 
-interface Props {
-  listKey?: ListKey;
-}
-withDefaults(defineProps<Props>(), {
-  listKey: DefaultList,
-});
+withDefaults(
+  defineProps<{
+    listKey?: ListKey;
+  }>(),
+  {
+    listKey: DefaultList,
+  }
+);
 
 const gamesStore = useGamesStore();
 const records = toRef(gamesStore, "records");
