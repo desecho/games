@@ -21,14 +21,15 @@ import { DefaultList } from "../const";
 import { getUrl } from "../helpers";
 import { $toast } from "../toast";
 
-interface Props {
-  listKey?: ListKey;
-  username: string;
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  listKey: DefaultList,
-});
+const props = withDefaults(
+  defineProps<{
+    listKey?: ListKey;
+    username: string;
+  }>(),
+  {
+    listKey: DefaultList,
+  }
+);
 
 const records: Ref<RecordType[]> = ref([]);
 const userNotFound = ref(false);

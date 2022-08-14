@@ -13,7 +13,7 @@
 import axios from "axios";
 import { computed, onMounted, ref } from "vue";
 
-import type { GetUserPreferencesData } from "../types";
+import type { GetUserPreferencesData } from "./types";
 import type { AxiosError } from "axios";
 
 import { getUrl } from "../helpers";

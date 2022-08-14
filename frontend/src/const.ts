@@ -1,6 +1,6 @@
 import type { List, ListKey } from "./types";
 
-export enum ListIDs {
+export enum ListIds {
   WantToPlay = 1,
   Playing,
   Beaten,
@@ -8,40 +8,40 @@ export enum ListIDs {
 }
 
 export const ListKeys: Record<number, ListKey> = {};
-ListKeys[ListIDs.WantToPlay] = "want-to-play";
-ListKeys[ListIDs.Playing] = "playing";
-ListKeys[ListIDs.Beaten] = "beaten";
-ListKeys[ListIDs.OnHold] = "on-hold";
+ListKeys[ListIds.WantToPlay] = "want-to-play";
+ListKeys[ListIds.Playing] = "playing";
+ListKeys[ListIds.Beaten] = "beaten";
+ListKeys[ListIds.OnHold] = "on-hold";
 
 export const Lists: List[] = [
   {
-    id: ListIDs.WantToPlay,
+    id: ListIds.WantToPlay,
     name: "Want to Play",
-    key: ListKeys[ListIDs.WantToPlay],
+    key: ListKeys[ListIds.WantToPlay],
     icon: "star",
   },
   {
-    id: ListIDs.Playing,
+    id: ListIds.Playing,
     name: "Playing",
-    key: ListKeys[ListIDs.Playing],
+    key: ListKeys[ListIds.Playing],
     icon: "controller",
   },
   {
-    id: ListIDs.Beaten,
+    id: ListIds.Beaten,
     name: "Beaten",
-    key: ListKeys[ListIDs.Beaten],
+    key: ListKeys[ListIds.Beaten],
     icon: "trophy",
   },
   {
-    id: ListIDs.OnHold,
+    id: ListIds.OnHold,
     name: "On Hold",
-    key: ListKeys[ListIDs.OnHold],
+    key: ListKeys[ListIds.OnHold],
     icon: "pause-circle-outline",
   },
 ];
 
 export const Email = import.meta.env.VITE_ADMIN_EMAIL as string;
 
-export const DLCKindCategories = ["DLC", "Expansion", "Standalone Expansion"];
+export const DlcKindCategories = ["DLC", "Expansion", "Standalone Expansion"];
 
-export const DefaultList = ListKeys[ListIDs.WantToPlay];
+export const DefaultList = ListKeys[ListIds.WantToPlay];
