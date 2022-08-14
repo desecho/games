@@ -8,11 +8,6 @@ export interface JWTDecoded {
   user_id: number;
 }
 
-export interface SortData {
-  id: number;
-  order: number;
-}
-
 export interface Game {
   id: number;
   name: string;
@@ -31,19 +26,6 @@ export interface RecordType {
 export interface List {
   id: number;
   name: string;
-  key: string;
+  key: ListKey;
   icon: string;
-}
-
-export interface Switch {
-  name: string;
-  label: string;
-}
-
-export interface GetUserPreferencesData {
-  hidden: boolean;
-}
-
-export interface TokenErrorData {
-  detail: string;
 }

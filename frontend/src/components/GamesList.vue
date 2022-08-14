@@ -34,11 +34,12 @@ import axios from "axios";
 import { computed, toRef } from "vue";
 import Draggable from "vuedraggable";
 
-import type { Game, ListKey, RecordType, SortData } from "../types";
+import type { Game, ListKey, RecordType } from "../types";
+import type { SortData } from "./types";
 import type { AxiosError } from "axios";
 
 import { useMobile } from "../composables/mobile";
-import { DLCKindCategories } from "../const";
+import { DlcKindCategories } from "../const";
 import { getUrl, requireAuthenticated, rewriteArray } from "../helpers";
 import { useGamesStore } from "../stores/games";
 import { useSettingsStore } from "../stores/settings";
@@ -90,7 +91,7 @@ function isShowGame(game: Game): boolean {
   if (settings.value.games.areUnreleasedGamesHidden && !game.isReleased) {
     return false;
   }
-  if (settings.value.games.areDLCsHidden && DLCKindCategories.includes(game.category)) {
+  if (settings.value.games.areDLCsHidden && DlcKindCategories.includes(game.category)) {
     return false;
   }
   return true;

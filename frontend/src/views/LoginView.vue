@@ -34,7 +34,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 
-import type { TokenErrorData } from "../types";
+import type { TokenErrorData } from "./types";
 import type { AxiosError } from "axios";
 
 import { useFormValidation } from "../composables/formValidation";

@@ -15,7 +15,7 @@
 <script lang="ts" setup>
 import { toRef } from "vue";
 
-import type { Switch } from "../types";
+import type { Switch } from "./types";
 
 import { useAuthStore } from "../stores/auth";
 import { useSettingsStore } from "../stores/settings";

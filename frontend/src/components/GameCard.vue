@@ -26,7 +26,7 @@ import type { GameIdsWithListKeys } from "./types";
 import type { AxiosError } from "axios";
 
 import { useAddToList } from "../composables/addToList";
-import { ListIDs, ListKeys, Lists } from "../const";
+import { ListIds, ListKeys, Lists } from "../const";
 import { getUrl, requireAuthenticated } from "../helpers";
 import { useAuthStore } from "../stores/auth";
 import { useGamesStore } from "../stores/games";
@@ -107,7 +107,7 @@ function getListsForActions(game: Game): List[] {
   }
   // Don't show action buttons for lists other than "Want to Play" if the game has not been released yet
   return lists.filter((list) => {
-    if (list.id === ListIDs.WantToPlay) {
+    if (list.id === ListIds.WantToPlay) {
       return true;
     }
     return game.isReleased;

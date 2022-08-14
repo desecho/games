@@ -15,12 +15,13 @@
 </template>
 
 <script lang="ts" setup>
-import {onMounted} from "vue";
+import { onMounted } from "vue";
+
 import type { RecordType } from "../types";
 
 import { Lists } from "../const";
-
 import { useGamesStore } from "../stores/games";
+
 import GamesList from "./GamesList.vue";
 import GamesSettings from "./GamesSettings.vue";
 import GamesTabs from "./GamesTabs.vue";
@@ -33,10 +34,9 @@ defineProps<{
 }>();
 
 const lists = Lists;
-const {loadGames} = useGamesStore();
 
 onMounted(async () => {
+  const { loadGames } = useGamesStore();
   await loadGames();
 });
-
 </script>
