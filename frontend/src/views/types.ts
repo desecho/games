@@ -11,9 +11,9 @@ export interface RegistrationErrorData {
 }
 
 export interface CheckEmailAvailabilityErrorData {
-  password?: string;
-  email?: string;
-  username?: string;
+  password?: string[];
+  email?: string[];
+  username?: string[];
 }
 
 export interface ChangePasswordErrorData {
