@@ -38,8 +38,6 @@ jobs:
         with:
           path: .tox
           key: tox-${{ hashFiles('poetry.lock') }}
-          restore-keys: |
-            tox-
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path

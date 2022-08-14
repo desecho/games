@@ -29,3 +29,9 @@ export interface List {
   key: ListKey;
   icon: string;
 }
+
+export interface AuthProps {
+  userId: number;
+  timestamp: number;
+  signature: string;
+}
