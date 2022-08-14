@@ -79,17 +79,26 @@ async function onSubmit(): Promise<void> {
             $toast.success("You should receive an email to confirm registration");
           })
           .catch((error: AxiosError) => {
-            const data = error.response?.data as CheckEmailAvailabilityErrorData;
-            console.log(data);
-            if (data.password !== undefined) {
-              $toast.error(data.password);
-            } else if (data.email !== undefined) {
-              $toast.error(data.email);
-              // eslint-disable-next-line no-negated-condition
-            } else if (data.username !== undefined) {
-              $toast.error(data.username);
-            } else {
+            console.log(error);
+            if (error.response?.data === undefined) {
               $toast.error("Registration error");
+            } else {
+              const data = error.response.data as CheckEmailAvailabilityErrorData;
+              if (data.password !== undefined) {
+                data.password.forEach((err) => {
+                  $toast.error(err);
+                });
+              }
+              if (data.email !== undefined) {
+                data.email.forEach((err) => {
+                  $toast.error(err);
+                });
+              }
+              if (data.username !== undefined) {
+                data.username.forEach((err) => {
+                  $toast.error(err);
+                });
+              }
             }
           });
       } else {
