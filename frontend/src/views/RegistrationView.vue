@@ -1,0 +1,104 @@
+<template>
+  <v-container>
+    <v-row class="text-center">
+      <v-col class="mb-4" cols="12">
+        <v-form v-if="!isLoggedIn" ref="form" v-model="valid" lazy-validation @submit.prevent="onSubmit">
+          <v-text-field
+            v-model="username"
+            variant="outlined"
+            label="Username"
+            :rules="[rules.required]"
+            :autofocus="true"
+            @keyup.enter="onSubmit"
+          ></v-text-field>
+          <v-text-field
+            v-model="email"
+            variant="outlined"
+            :rules="[rules.required]"
+            type="email"
+            label="Email"
+            @keyup.enter="onSubmit"
+          ></v-text-field>
+          <v-text-field
+            v-model="password"
+            variant="outlined"
+            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.required]"
+            :type="showPassword ? 'text' : 'password'"
+            label="Password"
+            @click:append="showPassword = !showPassword"
+            @keyup.enter="onSubmit"
+          ></v-text-field>
+          <div class="d-flex justify-space-around align-center flex-column flex-md-row">
+            <v-btn color="primary" :disabled="!valid" @click="onSubmit">Register</v-btn>
+          </div>
+        </v-form>
+        <p v-if="isLoggedIn">You are already logged in.</p>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+<script lang="ts" setup>
+import axios from "axios";
+import { ref } from "vue";
+
+import type { CheckEmailAvailabilityErrorData } from "./types";
+import type { AxiosError } from "axios";
+
+import { useFormValidation } from "../composables/formValidation";
+import { getUrl, rulesHelper } from "../helpers";
+import { useAuthStore } from "../stores/auth";
+import { $toast } from "../toast";
+
+const rules = rulesHelper;
+
+const username = ref("");
+const email = ref("");
+const password = ref("");
+const showPassword = ref(false);
+const valid = ref(false);
+
+const { user } = useAuthStore();
+const isLoggedIn = user.isLoggedIn;
+
+const { form, isValid } = useFormValidation();
+
+async function onSubmit(): Promise<void> {
+  if (!(await isValid())) {
+    return;
+  }
+  axios
+    .post(getUrl("user/check-email-availability/"), { email: email.value })
+    .then((response) => {
+      const isEmailAvailable = response.data as boolean;
+      if (isEmailAvailable) {
+        axios
+          .post(getUrl("user/register/"), { username: username.value, email: email.value, password: password.value })
+          .then(() => {
+            $toast.success("You should receive an email to confirm registration");
+          })
+          .catch((error: AxiosError) => {
+            const data = error.response?.data as CheckEmailAvailabilityErrorData;
+            console.log(data);
+            if (data.password !== undefined) {
+              $toast.error(data.password);
+            } else if (data.email !== undefined) {
+              $toast.error(data.email);
+              // eslint-disable-next-line no-negated-condition
+            } else if (data.username !== undefined) {
+              $toast.error(data.username);
+            } else {
+              $toast.error("Registration error");
+            }
+          });
+      } else {
+        $toast.error("A user with this email is already registered");
+      }
+    })
+    .catch((error: AxiosError) => {
+      console.log(error);
+      $toast.error("Error checking email availability");
+    });
+}
+</script>

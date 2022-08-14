@@ -38,6 +38,7 @@ defineProps<{
 
 const lists = Lists;
 
+// We are loading games here because games need to be loaded even if it is the profile page
 onMounted(async () => {
   if (user.isLoggedIn) {
     const { loadGames } = useGamesStore();

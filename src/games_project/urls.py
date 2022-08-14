@@ -1,6 +1,6 @@
 """URL Configuration."""
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from games.types import URL
@@ -12,6 +12,7 @@ from games.views import (
     RecordsSaveOrderView,
     RecordsView,
     SearchView,
+    UserCheckEmailAvailabilityView,
     UserPreferencesView,
     UserRecordsView,
     UsersView,
@@ -26,7 +27,9 @@ urlpatterns: list[URL] = [
     path("token/", TokenObtainPairView.as_view()),
     path("token/refresh/", TokenRefreshView.as_view()),
     # User
+    path("user/", include("rest_registration.api.urls")),
     path("user/preferences/", UserPreferencesView.as_view()),
+    path("user/check-email-availability/", UserCheckEmailAvailabilityView.as_view()),
     # Search
     path("search/", SearchView.as_view()),
     # Users
