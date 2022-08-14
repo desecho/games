@@ -3,7 +3,9 @@
     <v-row>
       <v-col v-cloak cols="12">
         <v-checkbox v-model="hidden" label="Hide profile" hide-details @change="savePreferences()"></v-checkbox>
-        Profile link: <router-link :to="profileLink">{{ absoluteProfileLink }}</router-link>
+        Profile link: <router-link :to="profileLink">{{ absoluteProfileLink }}</router-link
+        ><br /><br />
+        <router-link to="/change-password">Change password</router-link>
       </v-col>
     </v-row>
   </v-container>
