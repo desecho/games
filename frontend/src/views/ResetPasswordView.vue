@@ -65,7 +65,7 @@ async function onSubmit(): Promise<void> {
       password: password.value,
     })
     .then(() => {
-      $toast.info("Password reset is successful");
+      $toast.success("Password reset is successful");
       void router.push("/login");
     })
     .catch((error: AxiosError) => {

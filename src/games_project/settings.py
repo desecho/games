@@ -207,6 +207,7 @@ REST_REGISTRATION = {
     "RESET_PASSWORD_VERIFICATION_URL": f"{FRONTEND_URL}/reset-password/",
     "REGISTER_VERIFICATION_URL": f"{FRONTEND_URL}/verify-user/",
     "REGISTER_SERIALIZER_PASSWORD_CONFIRM": False,
+    "CHANGE_PASSWORD_SERIALIZER_PASSWORD_CONFIRM": False,
 }
 # -------------------------------------------------------------------------------
 IGDB_CLIENT_ID = getenv("IGDB_CLIENT_ID")

@@ -5,6 +5,7 @@ import type { AuthProps, JWTDecoded } from "./types";
 
 import { useAuthStore } from "./stores/auth";
 import AboutView from "./views/AboutView.vue";
+import ChangePasswordView from "./views/ChangePasswordView.vue";
 import GamesView from "./views/GamesView.vue";
 import LoginView from "./views/LoginView.vue";
 import LogoutView from "./views/LogoutView.vue";
@@ -51,11 +52,12 @@ export const router = createRouter({
       }),
     },
     { path: "/reset-password-request", component: ResetPasswordRequestView },
+    { path: "/change-password", component: ChangePasswordView },
   ],
 });
 
 router.beforeEach(async (to) => {
-  const privatePages = ["/games", "/preferences"];
+  const privatePages = ["/games", "/preferences", "/change-password"];
   const authRequired = privatePages.includes(to.path);
   const { user, refreshToken } = useAuthStore();
 
