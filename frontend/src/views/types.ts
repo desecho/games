@@ -15,3 +15,8 @@ export interface CheckEmailAvailabilityErrorData {
   email?: string;
   username?: string;
 }
+
+export interface ChangePasswordErrorData {
+  old_password?: string[];
+  password?: string[];
+}
