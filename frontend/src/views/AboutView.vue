@@ -3,12 +3,11 @@
     <v-row>
       <v-col cols="9">
         <p>Create game lists like "Want to Play", "Playing", "Beaten", "On Hold".</p>
-        <p>Currently only the "PC (Microsoft Windows)" platform is supported.</p>
         <br />
         <h3>Features</h3>
         <ul>
           <li>Search for games to add to your collection</li>
-          <li>Add custom order your lists</li>
+          <li>Add custom order to your lists</li>
           <li>Share your lists online</li>
           <li>Privacy settings</li>
         </ul>
@@ -16,6 +15,7 @@
         <h3>Limitations</h3>
         <ul>
           <li>Adding custom order for your lists is not available on mobile</li>
+          <li>Currently only the "PC (Microsoft Windows)" platform is supported.</li>
         </ul>
         <br />
         <h3>APIs used</h3>
