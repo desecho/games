@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-import type { SettingsStore } from "./types";
+import type { SettingsStore, GamesMode } from "./types";
 
 function getSettings(): SettingsStore {
   const settingsLocalStorageData = localStorage.getItem("settings");
@@ -13,6 +13,7 @@ function getSettings(): SettingsStore {
       areActionButtonsHidden: false,
       areUnreleasedGamesHidden: false,
       areDLCsHidden: false,
+      mode: "gallery",
     },
     isGamesSettingsActive: false,
   };
@@ -33,7 +34,11 @@ export const useSettingsStore = defineStore({
     },
     toggleGamesSettings() {
       this.settings.isGamesSettingsActive = !this.settings.isGamesSettingsActive;
-      saveSettingsToLocalStorage(this.settings);
+      this.persistSettings();
+    },
+    selectGamesMode(mode: GamesMode) {
+      this.settings.games.mode = mode;
+      this.persistSettings();
     },
   },
 });

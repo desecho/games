@@ -5,10 +5,13 @@ export interface UserStore {
   username?: string;
 }
 
+export type GamesMode = "list" | "gallery";
+
 export interface GamesSettings {
   areActionButtonsHidden: boolean;
   areUnreleasedGamesHidden: boolean;
   areDLCsHidden: boolean;
+  mode: GamesMode;
 }
 
 export interface SettingsStore {
