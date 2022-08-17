@@ -8,7 +8,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from ..models import Game, List, Record, User
+from ..types import RecordObject
 from .common import IGDBAPIView
+
+
+def get_records_objects(user: User) -> list[RecordObject]:
+    """Get records for user."""
+    records: QuerySet[Record] = user.records.all()
+    return [record.object for record in records]
 
 
 class RecordsView(APIView):
@@ -17,9 +24,7 @@ class RecordsView(APIView):
     def get(self, request: Request) -> Response:  # pylint: disable=no-self-use
         """Get game records."""
         user: User = request.user  # type: ignore
-        records: QuerySet[Record] = user.records.all()
-        records_objects = [record.object for record in records]
-        return Response(records_objects)
+        return Response(get_records_objects(user))
 
 
 class UserRecordsView(APIView):
@@ -37,9 +42,7 @@ class UserRecordsView(APIView):
         if user.hidden:
             return Response(status=HTTPStatus.FORBIDDEN)
 
-        records: QuerySet[Record] = user.records.all()
-        records_objects = [record.object for record in records]
-        return Response(records_objects)
+        return Response(get_records_objects(user))
 
 
 class RecordAdd(IGDBAPIView):
