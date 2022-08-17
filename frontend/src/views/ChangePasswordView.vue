@@ -5,7 +5,7 @@
         <v-form ref="form" v-model="isFormValid" lazy-validation @submit.prevent="onSubmit">
           <v-text-field
             v-model="oldPassword"
-            variant="outlined"
+            variant="solo"
             :append-icon="showOldPassword ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required]"
             :type="showOldPassword ? 'text' : 'password'"
@@ -15,7 +15,7 @@
           ></v-text-field>
           <v-text-field
             v-model="password"
-            variant="outlined"
+            variant="solo"
             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required]"
             :type="showPassword ? 'text' : 'password'"
