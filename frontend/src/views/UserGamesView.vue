@@ -1,7 +1,7 @@
 <template>
   <div v-if="isLoaded">
     <GamesLists v-if="!userNotFound && !userIsHidden" :username="username" :records="records" />
-    <v-alert v-if="userNotFound || userIsHidden" prominent type="error" variant="outlined" class="ma-5">
+    <v-alert v-if="userNotFound || userIsHidden" prominent type="error" variant="text" class="ma-5">
       <span v-if="userNotFound"> User {{ username }} not found. </span>
       <span v-if="userIsHidden"> {{ username }}'s profile is hidden. </span>
     </v-alert>

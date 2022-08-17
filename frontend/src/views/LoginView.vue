@@ -5,7 +5,7 @@
         <v-form v-if="!isLoggedIn" ref="form" v-model="isFormValid" lazy-validation @submit.prevent="onSubmit">
           <v-text-field
             v-model="username"
-            variant="outlined"
+            variant="solo"
             label="Username"
             :rules="[rules.required]"
             :autofocus="true"
@@ -13,7 +13,7 @@
           ></v-text-field>
           <v-text-field
             v-model="password"
-            variant="outlined"
+            variant="solo"
             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required]"
             :type="showPassword ? 'text' : 'password'"
