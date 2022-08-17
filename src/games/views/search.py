@@ -15,7 +15,7 @@ class SearchView(IGDBAPIView):
     permission_classes: list[str] = []  # type: ignore
 
     def _filter_out_users_games(self, results: list[GameObject]) -> None:
-        """Filter out users games."""
+        """Filter out user's games."""
         user: User = self.request.user  # type: ignore
         user_games_ids = user.records.values_list("game__id", flat=True)
         for result in list(results):
