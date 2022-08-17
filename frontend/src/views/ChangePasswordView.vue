@@ -2,7 +2,7 @@
   <v-container>
     <v-row class="text-center">
       <v-col class="mb-4" cols="12">
-        <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="onSubmit">
+        <v-form ref="form" v-model="isFormValid" lazy-validation @submit.prevent="onSubmit">
           <v-text-field
             v-model="oldPassword"
             variant="outlined"
@@ -24,7 +24,7 @@
             @keyup.enter="onSubmit"
           ></v-text-field>
           <div class="d-flex justify-space-around align-center flex-column flex-md-row">
-            <v-btn color="primary" :disabled="!valid" @click="onSubmit">Change password</v-btn>
+            <v-btn color="primary" :disabled="!isFormValid" @click="onSubmit">Change password</v-btn>
           </div>
         </v-form>
       </v-col>
@@ -50,7 +50,7 @@ const password = ref("");
 const showPassword = ref(false);
 const oldPassword = ref("");
 const showOldPassword = ref(false);
-const valid = ref(false);
+const isFormValid = ref(false);
 
 const { form, isValid } = useFormValidation();
 
