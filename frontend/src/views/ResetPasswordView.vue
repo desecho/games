@@ -5,7 +5,7 @@
         <v-form v-if="!isLoggedIn" ref="form" v-model="isFormValid" lazy-validation @submit.prevent="onSubmit">
           <v-text-field
             v-model="password"
-            variant="outlined"
+            variant="solo"
             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required]"
             :type="showPassword ? 'text' : 'password'"
