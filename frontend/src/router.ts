@@ -2,6 +2,7 @@ import jwt_decode from "jwt-decode";
 import { createRouter, createWebHistory } from "vue-router";
 
 import type { AuthProps, JWTDecoded } from "./types";
+import type { RouteLocationNormalized } from "vue-router";
 
 import { useAuthStore } from "./stores/auth";
 import AboutView from "./views/AboutView.vue";
@@ -17,6 +18,14 @@ import UserGamesView from "./views/UserGamesView.vue";
 import UserPreferencesView from "./views/UserPreferencesView.vue";
 import UsersView from "./views/UsersView.vue";
 import VerifyUserView from "./views/VerifyUserView.vue";
+
+function authProps(route: RouteLocationNormalized): AuthProps {
+  return {
+    userId: route.query.user_id as unknown as number,
+    timestamp: route.query.timestamp as unknown as number,
+    signature: route.query.signature as unknown as string,
+  };
+}
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -36,20 +45,12 @@ export const router = createRouter({
     {
       path: "/verify-user",
       component: VerifyUserView,
-      props: (route): AuthProps => ({
-        userId: route.query.user_id as unknown as number,
-        timestamp: route.query.timestamp as unknown as number,
-        signature: route.query.signature as unknown as string,
-      }),
+      props: authProps,
     },
     {
       path: "/reset-password",
       component: ResetPasswordView,
-      props: (route): AuthProps => ({
-        userId: route.query.user_id as unknown as number,
-        timestamp: route.query.timestamp as unknown as number,
-        signature: route.query.signature as unknown as string,
-      }),
+      props: authProps,
     },
     { path: "/reset-password-request", component: ResetPasswordRequestView },
     { path: "/change-password", component: ChangePasswordView },
