@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="9">
-        <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="search">
+        <v-form ref="form" v-model="isFormValid" lazy-validation @submit.prevent="search">
           <v-text-field
             v-model="query"
             label="Search"
@@ -15,7 +15,7 @@
         </v-form>
       </v-col>
       <v-col cols="3" class="mt-2">
-        <v-btn color="primary" :disabled="!valid" @click="search"> Search </v-btn>
+        <v-btn color="primary" :disabled="!isFormValid" @click="search"> Search </v-btn>
       </v-col>
     </v-row>
     <v-row>
@@ -48,7 +48,7 @@ import { $toast } from "../toast";
 
 const rules = rulesHelper;
 
-const valid = ref(false);
+const isFormValid = ref(false);
 const games: Ref<Game[]> = ref([]);
 const query = ref("");
 
