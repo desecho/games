@@ -18,6 +18,12 @@ defineProps<{
   height: 75px;
 }
 
+@media (max-width: 600px) {
+  .username-bar {
+    height: 69px;
+  }
+}
+
 .username {
   color: white;
   padding-left: 15px;
