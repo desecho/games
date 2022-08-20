@@ -64,6 +64,12 @@ const areActionsVisible = computed(() => {
 const height = computed(() => {
   return areActionsVisible.value ? 275 : 224;
 });
+const isGameinGames = computed(() => {
+  if (isProfile) {
+    return props.record.game.id in gameIdsWithListKeys.value;
+  }
+  return false;
+});
 
 function changeList(recordId: number, listId: number): void {
   requireAuthenticated();
@@ -93,19 +99,10 @@ function deleteGame(recordId: number): void {
     });
 }
 
-function getIsGameinGames(): boolean {
-  if (isProfile) {
-    return props.record.game.id in gameIdsWithListKeys.value;
-  }
-  return false;
-}
-
-const isGameinGames = getIsGameinGames();
-
 function getListsForActions(): List[] {
   let lists = Lists;
   const game = props.record.game;
-  if (isGameinGames) {
+  if (isGameinGames.value) {
     lists = lists.filter((list) => list.key === gameIdsWithListKeys.value[game.id]);
   }
   if (!isProfile) {
