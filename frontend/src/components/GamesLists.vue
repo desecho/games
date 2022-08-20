@@ -4,18 +4,20 @@
     <GamesToolbar />
     <GamesTabs :username="username" />
     <GamesSettings :username="username" />
-    <GamesList
-      v-for="list in lists"
-      :key="list.id"
-      :records-prop="records"
-      :list-key="list.key"
-      :username="username"
-    />
+    <v-window v-model="tab">
+      <GamesList
+        v-for="list in lists"
+        :key="list.id"
+        :records-prop="records"
+        :list-key="list.key"
+        :username="username"
+      />
+    </v-window>
   </v-card>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from "vue";
+import { onMounted, toRef } from "vue";
 
 import type { RecordType } from "../types";
 
@@ -37,6 +39,8 @@ defineProps<{
 }>();
 
 const lists = Lists;
+const gamesStore = useGamesStore();
+const tab = toRef(gamesStore, "tab");
 
 // We are loading games here because games need to be loaded even if it is the profile page
 onMounted(async () => {
