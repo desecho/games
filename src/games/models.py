@@ -33,6 +33,11 @@ class User(AbstractUser):
         """Return preferences."""
         return {"hidden": self.hidden}
 
+    class Meta:
+        """Meta."""
+
+        ordering = ["username"]
+
 
 class Category(Model):
     """Category."""
