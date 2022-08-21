@@ -21,7 +21,7 @@
 import axios from "axios";
 import { computed, toRef } from "vue";
 
-import type { List, ListKey, RecordType } from "../types";
+import type { ListKey, RecordType } from "../types";
 import type { GameIdsWithListKeys } from "./types";
 import type { AxiosError } from "axios";
 
@@ -70,6 +70,26 @@ const isGameinGames = computed(() => {
   }
   return false;
 });
+const lists = computed(() => {
+  let listsFiltered = LISTS;
+  const game = props.record.game;
+  if (isGameinGames.value) {
+    listsFiltered = listsFiltered.filter((list) => list.key === gameIdsWithListKeys.value[game.id]);
+  }
+  if (!isProfile) {
+    // Don't show action buttons for current list
+    listsFiltered = listsFiltered.filter((list) => {
+      return list.key !== props.listKey;
+    });
+  }
+  // Don't show action buttons for lists other than "Want to Play" if the game has not been released yet
+  return listsFiltered.filter((list) => {
+    if (list.id === LIST_IDS.WantToPlay) {
+      return true;
+    }
+    return game.isReleased;
+  });
+});
 
 function changeList(recordId: number, listId: number): void {
   requireAuthenticated();
@@ -107,29 +127,7 @@ function deleteGame(recordId: number): void {
     });
 }
 
-function getListsForActions(): List[] {
-  let lists = LISTS;
-  const game = props.record.game;
-  if (isGameinGames.value) {
-    lists = lists.filter((list) => list.key === gameIdsWithListKeys.value[game.id]);
-  }
-  if (!isProfile) {
-    // Don't show action buttons for current list
-    lists = lists.filter((list) => {
-      return list.key !== props.listKey;
-    });
-  }
-  // Don't show action buttons for lists other than "Want to Play" if the game has not been released yet
-  return lists.filter((list) => {
-    if (list.id === LIST_IDS.WantToPlay) {
-      return true;
-    }
-    return game.isReleased;
-  });
-}
-
 const { addToList } = useAddToList();
-const lists = getListsForActions();
 
 function action(listId: number): void {
   if (isProfile) {
