@@ -26,7 +26,7 @@ import type { GameIdsWithListKeys } from "./types";
 import type { AxiosError } from "axios";
 
 import { useAddToList } from "../composables/addToList";
-import { LIST_IDS, LIST_KEYS, LISTS } from "../const";
+import { LIST_IDS, LISTS } from "../const";
 import { getUrl, requireAuthenticated } from "../helpers";
 import { useAuthStore } from "../stores/auth";
 import { useGamesStore } from "../stores/games";
@@ -77,7 +77,15 @@ function changeList(recordId: number, listId: number): void {
     .put(getUrl(`records/${recordId}/change-list/`), { listId })
     .then(() => {
       console.log("Game list changed");
-      records.value[props.index].listKey = LIST_KEYS[listId];
+      gamesStore
+        .reloadGames()
+        .then(() => {
+          console.log("Games reloaded");
+        })
+        .catch((error: AxiosError) => {
+          console.log(error);
+          $toast.error("Error reloading games");
+        });
     })
     .catch((error: AxiosError) => {
       console.log(error);
