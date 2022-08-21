@@ -17,7 +17,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: backend
-          image: ghcr.io/desecho/games:backend
+          image: ghcr.io/desecho/games-backend:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
@@ -27,7 +27,7 @@ spec:
             - configMapRef:
                 name: games
         - name: frontend
-          image: ghcr.io/desecho/games:frontend
+          image: ghcr.io/desecho/games-frontend:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 9000
