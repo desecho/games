@@ -26,7 +26,7 @@ import type { GameIdsWithListKeys } from "./types";
 import type { AxiosError } from "axios";
 
 import { useAddToList } from "../composables/addToList";
-import { ListIds, ListKeys, Lists } from "../const";
+import { LIST_IDS, LIST_KEYS, LISTS } from "../const";
 import { getUrl, requireAuthenticated } from "../helpers";
 import { useAuthStore } from "../stores/auth";
 import { useGamesStore } from "../stores/games";
@@ -77,7 +77,7 @@ function changeList(recordId: number, listId: number): void {
     .put(getUrl(`records/${recordId}/change-list/`), { listId })
     .then(() => {
       console.log("Game list changed");
-      records.value[props.index].listKey = ListKeys[listId];
+      records.value[props.index].listKey = LIST_KEYS[listId];
     })
     .catch((error: AxiosError) => {
       console.log(error);
@@ -100,7 +100,7 @@ function deleteGame(recordId: number): void {
 }
 
 function getListsForActions(): List[] {
-  let lists = Lists;
+  let lists = LISTS;
   const game = props.record.game;
   if (isGameinGames.value) {
     lists = lists.filter((list) => list.key === gameIdsWithListKeys.value[game.id]);
@@ -113,7 +113,7 @@ function getListsForActions(): List[] {
   }
   // Don't show action buttons for lists other than "Want to Play" if the game has not been released yet
   return lists.filter((list) => {
-    if (list.id === ListIds.WantToPlay) {
+    if (list.id === LIST_IDS.WantToPlay) {
       return true;
     }
     return game.isReleased;

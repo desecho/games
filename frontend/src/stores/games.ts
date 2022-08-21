@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 
 import type { RecordType } from "../types";
 
-import { DefaultList } from "../const";
+import { DEFAULT_LIST } from "../const";
 import { getUrl } from "../helpers";
 import { router } from "../router";
 
@@ -16,7 +16,7 @@ export const useGamesStore = defineStore({
   state: () => ({
     records: recordsInitialState,
     areLoaded: false,
-    tab: DefaultList,
+    tab: DEFAULT_LIST,
   }),
   actions: {
     async loadGames(reload = false) {

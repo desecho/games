@@ -37,7 +37,7 @@ import type { SortData } from "./types";
 import type { AxiosError } from "axios";
 
 import { useMobile } from "../composables/mobile";
-import { DlcKindCategories } from "../const";
+import { DLC_KIND_CATEGORIES } from "../const";
 import { getUrl, requireAuthenticated, rewriteArray } from "../helpers";
 import { useSettingsStore } from "../stores/settings";
 import { $toast } from "../toast";
@@ -86,7 +86,7 @@ function isShowGame(game: Game): boolean {
   if (settings.value.games.areUnreleasedGamesHidden && !game.isReleased) {
     return false;
   }
-  if (settings.value.games.areDLCsHidden && DlcKindCategories.includes(game.category)) {
+  if (settings.value.games.areDLCsHidden && DLC_KIND_CATEGORIES.includes(game.category)) {
     return false;
   }
   return true;

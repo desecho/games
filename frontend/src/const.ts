@@ -1,47 +1,47 @@
 import type { List, ListKey } from "./types";
 
-export enum ListIds {
+export enum LIST_IDS {
   WantToPlay = 1,
   Playing,
   Beaten,
   OnHold,
 }
 
-export const ListKeys: Record<number, ListKey> = {};
-ListKeys[ListIds.WantToPlay] = "want-to-play";
-ListKeys[ListIds.Playing] = "playing";
-ListKeys[ListIds.Beaten] = "beaten";
-ListKeys[ListIds.OnHold] = "on-hold";
+export const LIST_KEYS: Record<number, ListKey> = {};
+LIST_KEYS[LIST_IDS.WantToPlay] = "want-to-play";
+LIST_KEYS[LIST_IDS.Playing] = "playing";
+LIST_KEYS[LIST_IDS.Beaten] = "beaten";
+LIST_KEYS[LIST_IDS.OnHold] = "on-hold";
 
-export const Lists: List[] = [
+export const LISTS: List[] = [
   {
-    id: ListIds.WantToPlay,
+    id: LIST_IDS.WantToPlay,
     name: "Want to Play",
-    key: ListKeys[ListIds.WantToPlay],
+    key: LIST_KEYS[LIST_IDS.WantToPlay],
     icon: "star",
   },
   {
-    id: ListIds.Playing,
+    id: LIST_IDS.Playing,
     name: "Playing",
-    key: ListKeys[ListIds.Playing],
+    key: LIST_KEYS[LIST_IDS.Playing],
     icon: "controller",
   },
   {
-    id: ListIds.Beaten,
+    id: LIST_IDS.Beaten,
     name: "Beaten",
-    key: ListKeys[ListIds.Beaten],
+    key: LIST_KEYS[LIST_IDS.Beaten],
     icon: "trophy",
   },
   {
-    id: ListIds.OnHold,
+    id: LIST_IDS.OnHold,
     name: "On Hold",
-    key: ListKeys[ListIds.OnHold],
+    key: LIST_KEYS[LIST_IDS.OnHold],
     icon: "pause-circle-outline",
   },
 ];
 
-export const Email = import.meta.env.VITE_ADMIN_EMAIL as string;
+export const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL as string;
 
-export const DlcKindCategories = ["DLC", "Expansion", "Standalone Expansion"];
+export const DLC_KIND_CATEGORIES = ["DLC", "Expansion", "Standalone Expansion"];
 
-export const DefaultList = ListKeys[ListIds.WantToPlay];
+export const DEFAULT_LIST = LIST_KEYS[LIST_IDS.WantToPlay];
