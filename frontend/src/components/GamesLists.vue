@@ -20,10 +20,12 @@
 import { onMounted, toRef } from "vue";
 
 import type { RecordType } from "../types";
+import type { AxiosError } from "axios";
 
 import { LISTS } from "../const";
 import { useAuthStore } from "../stores/auth";
 import { useGamesStore } from "../stores/games";
+import { $toast } from "../toast";
 
 import GamesList from "./GamesList.vue";
 import GamesSettings from "./GamesSettings.vue";
@@ -43,10 +45,17 @@ const gamesStore = useGamesStore();
 const tab = toRef(gamesStore, "tab");
 
 // We are loading games here because games need to be loaded even if it is the profile page
-onMounted(async () => {
+onMounted(() => {
   if (user.isLoggedIn) {
     const { loadGames } = useGamesStore();
-    await loadGames();
+    loadGames()
+      .then(() => {
+        console.log("Games loaded");
+      })
+      .catch((error: AxiosError) => {
+        console.log(error);
+        $toast.error("Error loading games");
+      });
   }
 });
 </script>
