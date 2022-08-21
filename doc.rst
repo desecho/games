@@ -36,6 +36,7 @@ Cron jobs are run with `GitHub Actions`_. Time zone is UTC.
 - ``Update games data`` runs at 04:00 UTC (00:00 EDT) on the first day of the month
 - ``Remove unused games`` runs at 07:00 UTC (03:00 EDT) on the first day of the month
 - ``DB backup`` runs at 09:00 UTC (05:00 EDT) daily
+- ``Update GitHub actions`` runs at 04:00 UTC (00:00 EDT) on the first day of the month
 
 CI/CD
 ----------
@@ -59,6 +60,7 @@ The following GitHub Actions are used:
 * Cache_
 * `Docker Setup Buildx`_
 * `Set Timezone`_
+* `GitHub Actions Version Updater`_
 
 
 .. _Image Not Found icon: https://uxwing.com/image-not-found-icon/
@@ -77,3 +79,4 @@ The following GitHub Actions are used:
 .. _Cache: https://github.com/marketplace/actions/cache
 .. _Docker Setup Buildx: https://github.com/marketplace/actions/docker-setup-buildx
 .. _Set Timezone: https://github.com/marketplace/actions/set-timezone
+.. _GitHub Actions Version Updater: https://github.com/marketplace/actions/github-actions-version-updater
