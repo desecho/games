@@ -389,7 +389,7 @@ poetry-update:
 ## Show outdated python packages (outside of ranges)
 poetry-show-outdated:
 	$(call print,Showing outdated python packages)
-	@poetry show --outdated | grep --file=<(poetry show --tree | grep '^\w' | cut -d' ' -f1 | sed 's/.*/^&\\s/')
+	@poetry show --outdated | { grep --file=<(poetry show --tree | grep '^\w' | cut -d' ' -f1 | sed 's/.*/^&\\s/') || true; }
 #------------------------------------
 
 #------------------------------------
