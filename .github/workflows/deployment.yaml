@@ -41,7 +41,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ghcr.io/${{ github.repository }}:backend
+          tags: ghcr.io/${{ github.repository }}-backend:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
           context: .
@@ -55,7 +55,7 @@ jobs:
             VITE_BACKEND_URL=${{ env.VITE_BACKEND_URL }}
             VITE_ADMIN_EMAIL=${{ env.VITE_ADMIN_EMAIL }}
           push: true
-          tags: ghcr.io/${{ github.repository }}:frontend
+          tags: ghcr.io/${{ github.repository }}-frontend:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
   upload_files:
