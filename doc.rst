@@ -16,10 +16,10 @@ Dev
 * ``@typescript-eslint/parser`` is ``@typescript-eslint/eslint-plugin`` dependency
 * ``sass`` is required for processing ``sass`` files
 
-These warnings are to be ignored as webpack is not used.
+These warnings are to be ignored.
 
-* ``null-loader@npm:4.0.1 [1a5b9]            → ^4.0.0 || ^5.0.0 ✘``
-* ``vue-cli-plugin-vuetify@npm:2.5.1 [51c7d] → ^4.0.0 || ^5.0.0 ✘``
+* ``games-frontend@workspace:. doesn't provide webpack (p7122b), requested by vue-cli-plugin-vuetify``
+* ``vite-plugin-vuetify@npm:1.0.0-alpha.14 [51c7d] doesn't provide vue (p1d729), requested by @vuetify/loader-shared``
 
 Cache
 --------
