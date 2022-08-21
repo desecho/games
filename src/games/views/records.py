@@ -99,7 +99,7 @@ class ChangeListView(APIView):
         records: QuerySet[Record] = user.records.filter(pk=record_id)
         if not records.exists():
             return Response(status=HTTPStatus.NOT_FOUND)
-        records.update(list_id=list_id)
+        records.update(list_id=list_id, order=0)
         return Response()
 
 

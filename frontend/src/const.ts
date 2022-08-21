@@ -7,7 +7,7 @@ export enum LIST_IDS {
   OnHold,
 }
 
-export const LIST_KEYS: Record<number, ListKey> = {};
+const LIST_KEYS: Record<number, ListKey> = {};
 LIST_KEYS[LIST_IDS.WantToPlay] = "want-to-play";
 LIST_KEYS[LIST_IDS.Playing] = "playing";
 LIST_KEYS[LIST_IDS.Beaten] = "beaten";
