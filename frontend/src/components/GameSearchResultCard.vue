@@ -18,7 +18,7 @@
 <script lang="ts" setup>
 import type { Game } from "../types";
 
-import { ListIds, Lists } from "../const";
+import { LIST_IDS, LISTS } from "../const";
 
 import ActionButton from "./ActionButton.vue";
 import GameCover from "./GameCover.vue";
@@ -31,8 +31,8 @@ const props = defineProps<{
 defineEmits<(e: "addToList", listId: number) => void>();
 
 // Don't show action buttons for lists other than "Want to Play" if the game has not been released yet
-const lists = Lists.filter((list) => {
-  if (list.id === ListIds.WantToPlay) {
+const lists = LISTS.filter((list) => {
+  if (list.id === LIST_IDS.WantToPlay) {
     return true;
   }
   return props.game.isReleased;

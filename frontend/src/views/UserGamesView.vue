@@ -17,7 +17,7 @@ import type { AxiosError } from "axios";
 import type { Ref } from "vue";
 
 import GamesLists from "../components/GamesLists.vue";
-import { DefaultList } from "../const";
+import { DEFAULT_LIST } from "../const";
 import { getUrl } from "../helpers";
 import { $toast } from "../toast";
 
@@ -27,7 +27,7 @@ const props = withDefaults(
     username: string;
   }>(),
   {
-    listKey: DefaultList,
+    listKey: DEFAULT_LIST,
   }
 );
 

@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Email } from "../const";
+import { ADMIN_EMAIL } from "../const";
 
-const email = Email;
+const email = ADMIN_EMAIL;
 </script>

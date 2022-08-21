@@ -21,7 +21,7 @@ import { onMounted, toRef } from "vue";
 
 import type { RecordType } from "../types";
 
-import { Lists } from "../const";
+import { LISTS } from "../const";
 import { useAuthStore } from "../stores/auth";
 import { useGamesStore } from "../stores/games";
 
@@ -38,7 +38,7 @@ defineProps<{
   username?: string;
 }>();
 
-const lists = Lists;
+const lists = LISTS;
 const gamesStore = useGamesStore();
 const tab = toRef(gamesStore, "tab");
 

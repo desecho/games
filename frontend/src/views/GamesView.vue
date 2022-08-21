@@ -8,7 +8,7 @@ import { toRef } from "vue";
 import type { ListKey } from "../types";
 
 import GamesLists from "../components/GamesLists.vue";
-import { DefaultList } from "../const";
+import { DEFAULT_LIST } from "../const";
 import { useGamesStore } from "../stores/games";
 
 withDefaults(
@@ -16,7 +16,7 @@ withDefaults(
     listKey?: ListKey;
   }>(),
   {
-    listKey: DefaultList,
+    listKey: DEFAULT_LIST,
   }
 );
 
