@@ -13,14 +13,14 @@ import { toRef } from "vue";
 import type { ListKey } from "../types";
 
 import { useMobile } from "../composables/mobile";
-import { Lists } from "../const";
+import { LISTS } from "../const";
 import { useGamesStore } from "../stores/games";
 
 const props = defineProps<{
   username?: string;
 }>();
 
-const lists = Lists;
+const lists = LISTS;
 const gamesStore = useGamesStore();
 const tab = toRef(gamesStore, "tab");
 const isProfile = props.username !== undefined;
