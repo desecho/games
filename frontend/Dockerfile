@@ -14,7 +14,7 @@ RUN yarn install --immutable && \
     export VITE_ADMIN_EMAIL=$VITE_ADMIN_EMAIL && \
     yarn build
 
-FROM nginx:1.21.6-alpine
+FROM nginx:1.23.1-alpine
 
 COPY ./docker/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/dist /usr/share/nginx/html
