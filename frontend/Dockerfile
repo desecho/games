@@ -1,4 +1,4 @@
-FROM node:lts-alpine3.16 as builder
+FROM node:18.7.0-alpine3.16 as builder
 
 ARG VITE_BACKEND_URL
 ARG VITE_GOOGLE_ANALYTICS_ID=""
