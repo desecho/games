@@ -1842,6 +1842,7 @@ __metadata:
     eslint-plugin-vue: ^9.4.0
     jwt-decode: ^3.1.2
     pinia: ^2.0.21
+    pinia-plugin-persist: ^1.0.0
     prettier: ^2.7.1
     roboto-fontface: ^0.10.0
     sass: ^1.54.5
@@ -3027,6 +3028,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pinia-plugin-persist@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "pinia-plugin-persist@npm:1.0.0"
+  dependencies:
+    vue-demi: ^0.12.1
+  peerDependencies:
+    "@vue/composition-api": ^1.0.0
+    pinia: ^2.0.0
+    vue: ^2.0.0 || >=3.0.0
+  peerDependenciesMeta:
+    "@vue/composition-api":
+      optional: true
+  checksum: 49335d720751d00e990bdb4e0a8a90a67c617b4402a55c7427bfdb2f2b60bdb5a75745d94cc7aa227eb41248fb8ca5c607816d2d482878e3a0113b8cd32fdc2e
+  languageName: node
+  linkType: hard
+
 "pinia@npm:^2.0.21":
   version: 2.0.21
   resolution: "pinia@npm:2.0.21"
@@ -3808,6 +3825,22 @@ __metadata:
     vue-demi-fix: bin/vue-demi-fix.js
     vue-demi-switch: bin/vue-demi-switch.js
   checksum: 085dbab000609d90837d730ccef33328caa7e381f1afe27e6b71c37a3be4be24843b692968805aee3d8079576ab54f554d5c5b1ec6bc823a70d668007dab3fc8
+  languageName: node
+  linkType: hard
+
+"vue-demi@npm:^0.12.1":
+  version: 0.12.5
+  resolution: "vue-demi@npm:0.12.5"
+  peerDependencies:
+    "@vue/composition-api": ^1.0.0-rc.1
+    vue: ^3.0.0-0 || ^2.6.0
+  peerDependenciesMeta:
+    "@vue/composition-api":
+      optional: true
+  bin:
+    vue-demi-fix: bin/vue-demi-fix.js
+    vue-demi-switch: bin/vue-demi-switch.js
+  checksum: 40a0470caea8312e0d4df2541f141c36c768dfc7f2f7d41f0f28ba29df11d3119e2f09b94c815f13b7c7f3f45dbc247b0e9e0c02a1800e2823e241c1d771e39b
   languageName: node
   linkType: hard
 

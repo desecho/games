@@ -13,25 +13,20 @@ const userDefault: UserStore = {
   isLoggedIn: false,
 };
 
-function getUser(): UserStore {
-  const userLocalStorageData = localStorage.getItem("user");
-  if (userLocalStorageData !== null) {
-    const user = JSON.parse(userLocalStorageData) as UserStore;
-    return user;
-  }
-  return userDefault;
-}
-
-function saveUser(user: UserStore): void {
-  localStorage.setItem("user", JSON.stringify(user));
-}
-
 export const useAuthStore = defineStore({
   id: "auth",
   state: () => ({
-    // TODO - maybe refactor this and have isLoggedIn be separate from user
-    user: getUser(),
+    user: userDefault,
   }),
+  persist: {
+    enabled: true,
+    strategies: [
+      {
+        key: "user",
+        storage: localStorage,
+      },
+    ],
+  },
   actions: {
     async login(username: string, password: string) {
       const response = await axios.post(getUrl("token/"), { username, password });
@@ -42,7 +37,6 @@ export const useAuthStore = defineStore({
         isLoggedIn: true,
         username,
       };
-      saveUser(this.user);
       initAxios();
       void router.push("/");
     },
@@ -60,7 +54,6 @@ export const useAuthStore = defineStore({
       const response = await axios.post(getUrl("token/refresh/"), { refresh: this.user.refreshToken });
       const data = response.data as TokenRefreshData;
       this.user.accessToken = data.access;
-      saveUser(this.user);
       initAxios();
     },
     logout() {
