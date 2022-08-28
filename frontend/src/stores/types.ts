@@ -11,11 +11,6 @@ export interface GamesSettings {
   areDLCsHidden: boolean;
 }
 
-export interface SettingsStore {
-  games: GamesSettings;
-  isGamesSettingsActive: boolean;
-}
-
 export interface TokenData {
   refresh: string;
   access: string;
