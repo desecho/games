@@ -93,7 +93,7 @@ jobs:
           restore-keys: |
             venv-
 
-      - name: Install poetry
+      - name: Install Poetry
         run: pip3 install poetry
 
       # This is needed to avoid errors when running collectstatic command
