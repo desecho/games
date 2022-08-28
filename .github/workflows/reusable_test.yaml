@@ -45,7 +45,8 @@ jobs:
           cd frontend
           echo "::set-output name=dir::$(yarn config get cacheFolder)"
 
-      - uses: actions/cache@v3.0.7
+      - name: Use yarn cache
+        uses: actions/cache@v3.0.7
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: yarn-${{ hashFiles('frontend/yarn.lock') }}
@@ -61,7 +62,7 @@ jobs:
       - name: Install main Python dependencies
         run: make install-main-python-deps
 
-      - name: Install python requirements
+      - name: Install Python requirements
         run: tox -e py-requirements
 
       - name: Install yarn
