@@ -80,13 +80,13 @@ jobs:
           # cache-dependency-path: poetry.lock
 
       - name: Use pip cache
-        uses: actions/cache@v3.0.8
+        uses: actions/cache@v3.0.9
         with:
           path: ~/.cache/pip
           key: pip
 
       - name: Use venv cache
-        uses: actions/cache@v3.0.8
+        uses: actions/cache@v3.0.9
         with:
           path: .venv
           key: venv-${{ hashFiles('poetry.lock') }}
@@ -107,7 +107,7 @@ jobs:
         run: make collectstatic
 
       - name: Upload static files
-        uses: BetaHuhn/do-spaces-action@v2.0.70
+        uses: BetaHuhn/do-spaces-action@v2.0.74
         with:
           access_key: ${{ secrets.SPACES_ACCESS_KEY }}
           secret_key: ${{ secrets.SPACES_SECRET_KEY }}
