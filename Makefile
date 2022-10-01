@@ -120,7 +120,7 @@ load-initial-fixtures:
 
 .PHONY: bootstrap
 ## Bootstrap project
-bootstrap: install-python-deps yarn-install-locked create-env-files create-venvs create-db migrate \
+bootstrap: yarn-install-locked create-env-files create-venvs create-db migrate \
 	load-initial-fixtures build
 
 .PHONY: create-env-files

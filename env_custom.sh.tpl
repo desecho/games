@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export ADMIN_EMAIL=
+export ADMIN_EMAIL=desecho@gmail.com
 
 # bool
 export EMAIL_USE_SSL=
