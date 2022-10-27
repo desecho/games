@@ -1,4 +1,4 @@
-FROM python:3.10.6-alpine3.16
+FROM python:3.11.0-alpine3.16
 
 ENV PYTHONUNBUFFERED=1
 
@@ -14,7 +14,7 @@ RUN apk add --no-cache --virtual .build-deps git gcc musl-dev libffi-dev openssl
     poetry config virtualenvs.create false --local && \
     poetry install --no-dev --no-root && \
     apk del .build-deps && \
-    rm -rf /usr/local/lib/python3.10/site-packages/poetry && \
+    rm -rf /usr/local/lib/python3.11/site-packages/poetry && \
     rm poetry.toml poetry.lock pyproject.toml
 
 COPY src .

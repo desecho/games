@@ -19,7 +19,8 @@ SHELL := /bin/bash
 VENV_DIR := .venv
 SOURCE_CMDS := source $(VENV_DIR)/bin/activate && source $(ENV_FILE) && source $(ENV_CUSTOM_FILE) && source $(ENV_SECRETS_FILE)
 CMD_FRONTEND := cd frontend && source $(ENV_FILE)
-PYTHON := python3.10
+PYTHON_VERSION := 3.11
+PYTHON := python$(PYTHON_VERSION)
 
 #------------------------------------
 # Installation
@@ -87,6 +88,7 @@ install-main-python-deps:
 ## Create venv and install requirements
 create-venv:
 	$(call print,Creating venv)
+	@poetry env use ${PYTHON_VERSION}
 	@poetry install --no-root
 
 .PHONY: create-tox-venv

@@ -13,7 +13,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4.2.0
         with:
-          python-version: "3.10"
+          python-version: "3.11"
           # This is not working currently. See https://github.com/actions/setup-python/issues/369
           # cache: poetry
           # cache-dependency-path: poetry.lock
