@@ -25,7 +25,7 @@ jobs:
         with:
           committer_username: ${{ env.COMMITTER_USERNAME }}
           committer_email: ${{ env.COMMITTER_EMAIL }}
-          commit_message: Update GitHub actions
+          commit_message: "ci: update GitHub actions"
           pull_request_title: Update GitHub actions
           # Access token with `workflow` scope is required
           token: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
