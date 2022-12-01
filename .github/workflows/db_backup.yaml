@@ -18,7 +18,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3.1.0
 
-      - uses: szenius/set-timezone@v1.0
+      - uses: szenius/set-timezone@v1.1
         with:
           timezoneLinux: "America/New_York"
 
@@ -28,7 +28,7 @@ jobs:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
       - name: Upload backup
-        uses: BetaHuhn/do-spaces-action@v2.0.80
+        uses: BetaHuhn/do-spaces-action@v2.0.83
         with:
           access_key: ${{ secrets.SPACES_ACCESS_KEY }}
           secret_key: ${{ secrets.SPACES_SECRET_KEY }}

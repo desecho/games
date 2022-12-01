@@ -107,7 +107,7 @@ jobs:
         run: make collectstatic
 
       - name: Upload static files
-        uses: BetaHuhn/do-spaces-action@v2.0.80
+        uses: BetaHuhn/do-spaces-action@v2.0.83
         with:
           access_key: ${{ secrets.SPACES_ACCESS_KEY }}
           secret_key: ${{ secrets.SPACES_SECRET_KEY }}
