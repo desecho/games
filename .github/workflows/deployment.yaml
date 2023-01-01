@@ -35,7 +35,7 @@ jobs:
           password: ${{ github.token }}
 
       - name: Checkout code
-        uses: actions/checkout@v3.1.0
+        uses: actions/checkout@v3.2.0
 
       - name: Build and push docker backend image
         uses: docker/build-push-action@v3.2.0
@@ -69,10 +69,10 @@ jobs:
       SPACE_NAME: cdn.games.samarchyan.me
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3.1.0
+        uses: actions/checkout@v3.2.0
 
       - name: Set up Python
-        uses: actions/setup-python@v4.3.0
+        uses: actions/setup-python@v4.4.0
         with:
           python-version: "3.11"
           # This is not working currently. See https://github.com/actions/setup-python/issues/369
@@ -80,13 +80,13 @@ jobs:
           # cache-dependency-path: poetry.lock
 
       - name: Use pip cache
-        uses: actions/cache@v3.0.11
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.cache/pip
           key: pip
 
       - name: Use venv cache
-        uses: actions/cache@v3.0.11
+        uses: actions/cache@v3.2.2
         with:
           path: .venv
           key: venv-${{ hashFiles('poetry.lock') }}
@@ -107,7 +107,7 @@ jobs:
         run: make collectstatic
 
       - name: Upload static files
-        uses: BetaHuhn/do-spaces-action@v2.0.80
+        uses: BetaHuhn/do-spaces-action@v2.0.87
         with:
           access_key: ${{ secrets.SPACES_ACCESS_KEY }}
           secret_key: ${{ secrets.SPACES_SECRET_KEY }}
@@ -116,7 +116,7 @@ jobs:
           source: static
 
       - name: Install doctl
-        uses: digitalocean/action-doctl@v2.2.0
+        uses: digitalocean/action-doctl@v2.3.0
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
@@ -138,10 +138,10 @@ jobs:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3.1.0
+        uses: actions/checkout@v3.2.0
 
       - name: Install kubectl
-        uses: azure/setup-kubectl@v3.0
+        uses: azure/setup-kubectl@v3.1
 
       - name: Configure kubectl
         run: |
