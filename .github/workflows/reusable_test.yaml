@@ -8,10 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3.1.0
+        uses: actions/checkout@v3.5.2
 
       - name: Set up Python
-        uses: actions/setup-python@v4.3.0
+        uses: actions/setup-python@v4.6.1
         with:
           python-version: "3.11"
           # This is not working currently. See https://github.com/actions/setup-python/issues/369
@@ -19,13 +19,13 @@ jobs:
           # cache-dependency-path: poetry.lock
 
       - name: Use pip cache
-        uses: actions/cache@v3.0.11
+        uses: actions/cache@v3.3.1
         with:
           path: ~/.cache/pip
           key: pip
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3.5.1
+        uses: actions/setup-node@v3.6.0
         with:
           node-version: 18.x
           registry-url: https://registry.npmjs.org
@@ -34,7 +34,7 @@ jobs:
           # cache-dependency-path: frontend/yarn.lock
 
       - name: Use tox cache
-        uses: actions/cache@v3.0.11
+        uses: actions/cache@v3.3.1
         with:
           path: .tox
           key: tox-${{ hashFiles('poetry.lock') }}
@@ -46,7 +46,7 @@ jobs:
           echo "::set-output name=dir::$(yarn config get cacheFolder)"
 
       - name: Use yarn cache
-        uses: actions/cache@v3.0.11
+        uses: actions/cache@v3.3.1
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: yarn-${{ hashFiles('frontend/yarn.lock') }}
@@ -76,4 +76,4 @@ jobs:
         run: make test
 
       - name: Run codecov
-        uses: codecov/codecov-action@v3.1.1
+        uses: codecov/codecov-action@v3.1.4
