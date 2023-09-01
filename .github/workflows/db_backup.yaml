@@ -16,9 +16,9 @@ jobs:
       SPACE_NAME: scrap-db-backups
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3.1.0
+        uses: actions/checkout@v3.6.0
 
-      - uses: szenius/set-timezone@v1.0
+      - uses: szenius/set-timezone@v1.2
         with:
           timezoneLinux: "America/New_York"
 
@@ -28,7 +28,7 @@ jobs:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
       - name: Upload backup
-        uses: BetaHuhn/do-spaces-action@v2.0.80
+        uses: BetaHuhn/do-spaces-action@v2.0.122
         with:
           access_key: ${{ secrets.SPACES_ACCESS_KEY }}
           secret_key: ${{ secrets.SPACES_SECRET_KEY }}
