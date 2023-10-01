@@ -10,10 +10,10 @@ jobs:
       PROJECT: games
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3.1.0
+        uses: actions/checkout@v4.1.0
 
       - name: Install kubectl
-        uses: azure/setup-kubectl@v3.0
+        uses: azure/setup-kubectl@v3.2
 
       - name: Configure kubectl
         run: |
