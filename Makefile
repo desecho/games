@@ -72,10 +72,15 @@ install-python:
 	$(call print,Installing Python)
 	@sudo apt install ${PYTHON} ${PYTHON}-venv ${PYTHON}-dev -y
 
+.PHONY: install-mysql-client-apt
+install-mysql-client-apt:
+	$(call print,Installing MySQL client)
+	@sudo apt install libmysqlclient-dev -y
+
 .PHONY: install-mysql-client
 install-mysql-client:
 	$(call print,Installing MySQL client)
-	@sudo apt install libmysqlclient-dev -y
+	@brew install mysql-client pkg-config
 
 .PHONY: install-main-python-deps
 ## Install main Python dependencies
