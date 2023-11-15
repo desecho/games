@@ -87,7 +87,6 @@ install-mysql-client:
 install-main-python-deps:
 	@pip3 install poetry
 	@pip3 install tox
-	@pip3 install tox-poetry
 
 .PHONY: create-venv
 ## Create venv and install requirements
