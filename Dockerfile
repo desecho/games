@@ -10,7 +10,7 @@ COPY poetry.lock .
 # Removing poetry manually because it doesn't work otherwise
 RUN apk add --no-cache --virtual .build-deps git gcc musl-dev libffi-dev openssl-dev python3-dev cargo && \
     apk add --no-cache mariadb-dev && \
-    pip3 install --no-cache-dir poetry==1.1.14 && \
+    pip3 install --no-cache-dir poetry==1.7.0 && \
     poetry config virtualenvs.create false --local && \
     poetry install --no-dev --no-root && \
     apk del .build-deps && \
