@@ -50,7 +50,13 @@ GAME_CATEGORIES_MAPPING = {
     CATEGORY_REMASTER: Category.REMASTER,
 }
 
-PLATFORM_PC = 6
+PLATFORM_PC_WINDOWS = 6
+PLATFORM_PC_DOS = 13
+
+PLATFORMS_SUPPORTED = (
+    PLATFORM_PC_WINDOWS,
+    PLATFORM_PC_DOS,
+)
 
 
 class IGDB:
@@ -98,7 +104,7 @@ class IGDB:
             fields name, cover.image_id, first_release_date, category;
             search "{query}";
             where version_parent = null &
-                platforms = ({PLATFORM_PC}) &
+                platforms = {PLATFORMS_SUPPORTED} &
                 category = {GAME_CATEGORIES_SUPPORTED};
             limit {settings.MAX_RESULTS};
         """
