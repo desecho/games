@@ -1,4 +1,5 @@
 """User views."""
+
 from http import HTTPStatus
 
 from rest_framework.request import Request

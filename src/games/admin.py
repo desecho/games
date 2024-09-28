@@ -1,4 +1,5 @@
 """Admin."""
+
 from typing import Optional
 
 from django.contrib.admin import ModelAdmin, register, site

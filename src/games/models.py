@@ -1,4 +1,5 @@
 """Models."""
+
 from typing import Any, Optional
 
 from django.contrib.auth.models import AbstractUser
