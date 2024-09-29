@@ -9,9 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@mdi/font": "^7.0.96",
-    "axios": "^0.27.2",
-    "jwt-decode": "^3.1.2",
+    "@mdi/font": "^7.4.47",
+    "axios": "^1.7.7",
+    "jwt-decode": "^4.0.0",
     "pinia": "^2.0.22",
     "pinia-plugin-persist": "^1.0.0",
     "roboto-fontface": "^0.10.0",
@@ -25,8 +25,8 @@
     "x-axios-progress-bar": "^1.2.2"
   },
   "devDependencies": {
-    "@types/webfontloader": "^1.6.35",
-    "@types/x-axios-progress-bar": "^1.2.1",
+    "@types/webfontloader": "^1.6.38",
+    "@types/x-axios-progress-bar": "^1.2.4",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",
     "@vitejs/plugin-vue": "^3.1.0",

@@ -1,5 +1,5 @@
 import axios from "axios";
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { defineStore } from "pinia";
 
 import type { JWTDecoded } from "../types";
@@ -44,7 +44,7 @@ export const useAuthStore = defineStore({
     async refreshToken() {
       // Use `!` because we know that refresh token is not null when user is logged in
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const decodedToken: JWTDecoded = jwt_decode(this.user.refreshToken!);
+      const decodedToken: JWTDecoded = jwtDecode(this.user.refreshToken!);
       // If refresh token expired we log the user out
       if (decodedToken.exp < Date.now() / 1000) {
         this.logout();

@@ -7,7 +7,7 @@ import { useAuthStore } from "./stores/auth";
 
 export function initAxios(): void {
   const headers: AxiosRequestHeaders = {
-    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+    "Content-Type": "application/json; charset=UTF-8",
     "X-Requested-With": "XMLHttpRequest",
   };
 
