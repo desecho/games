@@ -38,7 +38,7 @@ jobs:
         uses: actions/checkout@v4.2.0
 
       - name: Build and push docker backend image
-        uses: docker/build-push-action@v6.8.0
+        uses: docker/build-push-action@v6.9.0
         with:
           push: true
           tags: ghcr.io/${{ github.repository }}-backend:latest
@@ -47,7 +47,7 @@ jobs:
           context: .
 
       - name: Build and push docker frontend image
-        uses: docker/build-push-action@v6.8.0
+        uses: docker/build-push-action@v6.9.0
         with:
           context: ./frontend
           build-args: |
