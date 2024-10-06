@@ -177,6 +177,11 @@ flush-cdn-cache:
 test: shellcheck hadolint shfmt actionlint tox eslint prettier-json-lint prettier-scss-lint \
 	prettier-yaml-lint prettier-ts-lint prettier-html-lint prettier-vue-lint
 
+.PHONY: test2
+## Run tests 2 | Tests
+test2: eslint prettier-json-lint prettier-scss-lint \
+	prettier-yaml-lint prettier-ts-lint prettier-html-lint prettier-vue-lint
+
 .PHONY: tox
 ## Run tox
 tox:
@@ -599,7 +604,13 @@ docker-run: collectstatic
 ## Run docker shell
 docker-sh:
 	$(call print,Running docker shell)
-	@docker run -ti --env-file ${DOCKER_ENV_FILE} --env-file $(DOCKER_SECRETS_ENV_FILE) ${PROJECT} sh
+	@docker run -ti --env-file ${DOCKER_ENV_FILE} --env-file $(DOCKER_SECRETS_ENV_FILE) ${PROJECT}:backend sh
+
+.PHONY: docker-mypy
+## Run mypy in docker
+docker-mypy:
+	$(call print,Running mypy in docker)
+	@docker run -v .:/app ${PROJECT}:backend /app/scripts/docker_test.sh
 #------------------------------------
 
 #------------------------------------
