@@ -5,8 +5,7 @@
         ><div>
           Powered by <a href="https://www.igdb.com/" target="_blank">IGDB</a><br />
           <router-link to="/about">About Games</router-link><br />
-          © 2022 {{ email }}. All rights reserved.
-          <!-- {{ new Date().getFullYear() }}-->
+          © 2022 - {{ new Date().getFullYear() }} {{ email }}. All rights reserved.
         </div>
       </v-footer>
     </v-window-item>
