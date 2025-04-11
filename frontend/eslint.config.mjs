@@ -35,6 +35,7 @@ export default [...fixupConfigRules(compat.extends(
         parserOptions: {
             project: ["./tsconfig.json"],
             extraFileExtensions: [".vue"],
+            projectService: true
         },
     },
 

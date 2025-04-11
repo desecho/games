@@ -1,4 +1,7 @@
 /* eslint import/no-extraneous-dependencies: 0 */
+/* eslint @typescript-eslint/strict-boolean-expressions: 0 */
+/* eslint @typescript-eslint/no-unsafe-assignment: 0 */
+/* eslint @typescript-eslint/no-unsafe-call: 0 */
 
 import vue from "@vitejs/plugin-vue";
 import { defineConfig } from "vite";
