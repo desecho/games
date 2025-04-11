@@ -11,8 +11,7 @@ import { useAuthStore } from "./auth";
 
 const recordsInitialState: RecordType[] = [];
 
-export const useGamesStore = defineStore({
-  id: "games",
+export const useGamesStore = defineStore("games", {
   state: () => ({
     records: recordsInitialState,
     areLoaded: false,

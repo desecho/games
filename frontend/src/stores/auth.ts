@@ -13,8 +13,7 @@ const userDefault: UserStore = {
   isLoggedIn: false,
 };
 
-export const useAuthStore = defineStore({
-  id: "auth",
+export const useAuthStore = defineStore("auth", {
   state: () => ({
     user: userDefault,
   }),
