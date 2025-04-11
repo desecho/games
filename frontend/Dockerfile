@@ -18,3 +18,4 @@ FROM nginx:1.23.1-alpine
 
 COPY ./docker/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/dist /usr/share/nginx/html
+RUN chmod -R o+r /usr/share/nginx/html
