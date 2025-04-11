@@ -24,6 +24,6 @@ withDefaults(
   {
     disabled: false,
     active: false,
-  }
+  },
 );
 </script>

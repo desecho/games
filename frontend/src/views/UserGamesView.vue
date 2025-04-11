@@ -28,7 +28,7 @@ const props = withDefaults(
   }>(),
   {
     listKey: DEFAULT_LIST,
-  }
+  },
 );
 
 const records: Ref<RecordType[]> = ref([]);

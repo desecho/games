@@ -14,7 +14,7 @@ const props = withDefaults(
   }>(),
   {
     active: false,
-  }
+  },
 );
 
 const color = computed(() => (props.active ? "grey" : "white"));

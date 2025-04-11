@@ -39,6 +39,6 @@ export function initAxios(): void {
         void router.push("/login");
       }
       return Promise.reject(error);
-    }
+    },
   );
 }

@@ -21,7 +21,6 @@ import type { Game } from "../types";
 import { LISTS } from "../const";
 import { LIST_IDS } from "../types";
 
-
 import ActionButton from "./ActionButton.vue";
 import GameCover from "./GameCover.vue";
 import GameTitle from "./GameTitle.vue";

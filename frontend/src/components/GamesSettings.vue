@@ -48,7 +48,7 @@ function getSwitches(): Switch[] {
     {
       name: "areDLCsHidden",
       label: "Hide DLCs",
-    }
+    },
   );
   return switches;
 }

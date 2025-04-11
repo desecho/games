@@ -29,15 +29,10 @@ const gtag = createGtag({
   tagId: import.meta.env.VITE_GOOGLE_ANALYTICS_ID as string,
   pageTracker: {
     router,
-  }
-})
+  },
+});
 
-createApp(App)
-  .use(vuetify)
-  .use(pinia)
-  .use(router)
-  .use(gtag)
-  .mount("#app");
+createApp(App).use(vuetify).use(pinia).use(router).use(gtag).mount("#app");
 
 /* Not entirely sure I need to init axios here.
    This has to be after creating an app because of pinia */

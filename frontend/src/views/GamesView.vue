@@ -17,7 +17,7 @@ withDefaults(
   }>(),
   {
     listKey: DEFAULT_LIST,
-  }
+  },
 );
 
 const gamesStore = useGamesStore();
