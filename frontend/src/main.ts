@@ -7,7 +7,7 @@ import "./styles/styles.scss";
 import { createPinia } from "pinia";
 import piniaPersist from "pinia-plugin-persist";
 import { createApp } from "vue";
-import VueGtag from "vue-gtag";
+import { createGtag } from "vue-gtag";
 import { loadProgressBar } from "x-axios-progress-bar";
 
 import App from "./App.vue";
@@ -25,11 +25,18 @@ loadProgressBar();
 const pinia = createPinia();
 pinia.use(piniaPersist);
 
+const gtag = createGtag({
+  tagId: import.meta.env.VITE_GOOGLE_ANALYTICS_ID as string,
+  pageTracker: {
+    router,
+  }
+})
+
 createApp(App)
   .use(vuetify)
   .use(pinia)
   .use(router)
-  .use(VueGtag, { config: { id: import.meta.env.VITE_GOOGLE_ANALYTICS_ID as string } }, router)
+  .use(gtag)
   .mount("#app");
 
 /* Not entirely sure I need to init axios here.

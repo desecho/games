@@ -883,17 +883,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/devtools-api@npm:^6.1.4":
-  version: 6.2.0
-  resolution: "@vue/devtools-api@npm:6.2.0"
-  checksum: 20cc7a3393af1992e02dfdd21c494b33fc1ed00b7b6b57bea92ae360b43f938a416759e8c3c1a269ba44fe8ae4436b9520419a7a3f1a6d65fb3cf4d56c2e8763
-  languageName: node
-  linkType: hard
-
 "@vue/devtools-api@npm:^6.2.1":
   version: 6.2.1
   resolution: "@vue/devtools-api@npm:6.2.1"
   checksum: 34765af0be9b0cc7e3def73b2792b1514e3c348852c5a7503fe07d013f0e907af6c27c0a32c0637dd748caf37c075af8e53ca3220433e0bd34b6f3405f358272
+  languageName: node
+  linkType: hard
+
+"@vue/devtools-api@npm:^6.6.4":
+  version: 6.6.4
+  resolution: "@vue/devtools-api@npm:6.6.4"
+  checksum: beccd79c7c7794ea511e35581fbbe5411d3c5d63b2418bc3771efc66959966df4cbfc391ff5954028e2728eb0f0e37b41722e1c39fde61295f2814a143d2ef0e
   languageName: node
   linkType: hard
 
@@ -2543,9 +2543,9 @@ __metadata:
     vue: ^3.2.40
     vue-cli-plugin-vuetify: ^2.5.8
     vue-eslint-parser: ^10.1.3
-    vue-gtag: ^2.0.1
-    vue-router: ^4.1.5
-    vue-toast-notification: ^3.0.4
+    vue-gtag: ^3.3.0
+    vue-router: ^4.5.0
+    vue-toast-notification: ^3.1.3
     vue-tsc: ^0.40.13
     vuedraggable: ^4.1.0
     vuetify: ^3.0.0-beta.11
@@ -4825,32 +4825,36 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-gtag@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "vue-gtag@npm:2.0.1"
+"vue-gtag@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "vue-gtag@npm:3.3.0"
   peerDependencies:
-    vue: ^3.0.0
-  checksum: 949260ae4fbe6db62759d4050fa80c061e39025f7a9f50a97c662cac8d7d8ebf5d60228a7f9aa75d7ea910fb977852e954099a276f432c8cd13a063c40ba4ccd
+    vue: ^3.5.13
+    vue-router: ^4.5.0
+  peerDependenciesMeta:
+    vue-router:
+      optional: true
+  checksum: 8e194ae12463436addfab0568da3212e0802471a1110876df795db377f731cf997bb837adaf2c6497b79c56462e38084813baf54d9115fe78b19107eb83d0b0c
   languageName: node
   linkType: hard
 
-"vue-router@npm:^4.1.5":
-  version: 4.1.5
-  resolution: "vue-router@npm:4.1.5"
+"vue-router@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "vue-router@npm:4.5.0"
   dependencies:
-    "@vue/devtools-api": ^6.1.4
+    "@vue/devtools-api": ^6.6.4
   peerDependencies:
     vue: ^3.2.0
-  checksum: cafa2f4e14188bca0d4d45e05a901b6ff7bb3933010a6b2c9372bed7fa872bb2e18f1f033b23f540d3a75e1ecd6840b79a5ba5a714de01942d02e1e6cce88dec
+  checksum: 2604db5a6b33c5079e3ba1a3aabf5693b4a112899b7cb2c44521961cf60677b48efdf87bb76a284ce938d70ca39e5e46e2b5dbe59f684ca519526bc6cd91efaa
   languageName: node
   linkType: hard
 
-"vue-toast-notification@npm:^3.0.4":
-  version: 3.0.4
-  resolution: "vue-toast-notification@npm:3.0.4"
+"vue-toast-notification@npm:^3.1.3":
+  version: 3.1.3
+  resolution: "vue-toast-notification@npm:3.1.3"
   peerDependencies:
     vue: ^3.0
-  checksum: a51c116c43a4e189af5524b5d7c178994e1f589929abc2a2de367fe712da32bf8e19a0d89dc5fa5d2a3da89efc4be90b617b96659d540137d2bddcef059156cc
+  checksum: 62b1b1ece7ed39dc761a06a77f7701035444cf2e614d0cdd0e871091a69cb7ab487ecf6d7142b911f4bf45bf43caaf8c24fa2117393c63694408841539895677
   languageName: node
   linkType: hard
 
