@@ -1,5 +1,5 @@
 <template>
-  <v-tabs v-model="tab" bg-color="primary" centered stacked>
+  <v-tabs v-model="tab" bg-color="primary" align-tabs="center" stacked>
     <v-tab v-for="list in lists" :key="list.id" :value="list.key" :to="getPath(list.key)" :title="list.name">
       <v-icon>mdi-{{ list.icon }}</v-icon>
       <span v-if="!isPhone">{{ list.name }}</span>
