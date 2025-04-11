@@ -18,7 +18,9 @@
 <script lang="ts" setup>
 import type { Game } from "../types";
 
-import { LIST_IDS, LISTS } from "../const";
+import { LISTS } from "../const";
+import { LIST_IDS } from "../types";
+
 
 import ActionButton from "./ActionButton.vue";
 import GameCover from "./GameCover.vue";

@@ -26,12 +26,13 @@ import type { GameIdsWithListKeys } from "./types";
 import type { AxiosError } from "axios";
 
 import { useAddToList } from "../composables/addToList";
-import { LIST_IDS, LISTS } from "../const";
+import { LISTS } from "../const";
 import { getUrl, requireAuthenticated } from "../helpers";
 import { useAuthStore } from "../stores/auth";
 import { useGamesStore } from "../stores/games";
 import { useSettingsStore } from "../stores/settings";
 import { $toast } from "../toast";
+import { LIST_IDS } from "../types";
 
 import ActionButton from "./ActionButton.vue";
 import GameCover from "./GameCover.vue";

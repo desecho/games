@@ -1,11 +1,6 @@
 import type { List, ListKey } from "./types";
 
-export enum LIST_IDS {
-  WantToPlay = 1,
-  Playing,
-  Beaten,
-  OnHold,
-}
+import { LIST_IDS } from "./types";
 
 const LIST_KEYS: Record<number, ListKey> = {};
 LIST_KEYS[LIST_IDS.WantToPlay] = "want-to-play";

@@ -4,6 +4,7 @@ import parser from "vue-eslint-parser";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
+import globals from "globals";
 import { FlatCompat } from "@eslint/eslintrc";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -19,7 +20,7 @@ export default [...fixupConfigRules(compat.extends(
     "plugin:eslint-comments/recommended",
     "plugin:import/recommended",
     "plugin:import/typescript",
-    "plugin:vue/vue3-recommended",
+    "plugin:vue/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:@typescript-eslint/strict",
@@ -28,7 +29,9 @@ export default [...fixupConfigRules(compat.extends(
     languageOptions: {
         ecmaVersion: 5,
         sourceType: "module",
-
+        globals: {
+            ...globals.browser,
+        },
         parserOptions: {
             project: ["./tsconfig.json"],
             extraFileExtensions: [".vue"],
@@ -136,8 +139,7 @@ export default [...fixupConfigRules(compat.extends(
 
         "@typescript-eslint/unbound-method": "off",
         "@typescript-eslint/default-param-last": "error",
-        "@typescript-eslint/lines-between-class-members": "error",
-        "@typescript-eslint/no-duplicate-imports": "error",
+        "@/lines-between-class-members": "error",
         "@typescript-eslint/no-loop-func": "error",
         "@typescript-eslint/no-shadow": "error",
         "@typescript-eslint/no-unused-expressions": "error",
@@ -154,7 +156,6 @@ export default [...fixupConfigRules(compat.extends(
         "@typescript-eslint/no-require-imports": "error",
         "@typescript-eslint/no-unnecessary-qualifier": "error",
         "@typescript-eslint/no-useless-empty-export": "error",
-        "@typescript-eslint/sort-type-union-intersection-members": "error",
         "@typescript-eslint/strict-boolean-expressions": "error",
         "@typescript-eslint/prefer-readonly": "error",
         "@typescript-eslint/prefer-regexp-exec": "error",

@@ -30,6 +30,7 @@ export function initAxios(): void {
             try {
               await refreshToken();
             } catch (err) {
+              // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
               return Promise.reject(err);
             }
           }

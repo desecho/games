@@ -23,8 +23,15 @@ export interface RecordType {
   order: number;
 }
 
+export enum LIST_IDS {
+  WantToPlay = 1,
+  Playing,
+  Beaten,
+  OnHold,
+}
+
 export interface List {
-  id: number;
+  id: LIST_IDS;
   name: string;
   key: ListKey;
   icon: string;
