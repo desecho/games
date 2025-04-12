@@ -16,9 +16,12 @@ import vuetify from "./plugins/vuetify";
 import { loadFonts } from "./plugins/webfontloader";
 import { router } from "./router";
 
-await loadFonts().catch(() => {
-  throw new Error("Failed to load fonts");
-});
+// eslint-disable-next-line @typescript-eslint/no-floating-promises, @typescript-eslint/explicit-function-return-type
+(async () => {
+  await loadFonts().catch(() => {
+    throw new Error("Failed to load fonts");
+  });
+})();
 
 loadProgressBar();
 
