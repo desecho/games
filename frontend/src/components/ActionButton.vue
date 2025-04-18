@@ -8,7 +8,7 @@
     :title="title"
     :disabled="disabled"
     :active="active"
-    width="33"
+    width="30"
   >
   </v-btn>
 </template>
