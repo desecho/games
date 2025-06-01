@@ -1,9 +1,11 @@
 """IGDB."""
 
 import json
+import time
 from datetime import date, datetime
 from typing import Optional
 
+import requests
 from authlib.integrations.requests_client import OAuth2Session
 from django.conf import settings
 from igdb.wrapper import IGDBWrapper
@@ -125,15 +127,22 @@ class IGDB:
             "cover": game["cover"]["image_id"] if "cover" in game else None,
         }
 
-    def get_game(self, game_id: int) -> IGDBGame:
+    def get_game(self, game_id: int, max_retries: int = 10) -> IGDBGame:
         """Get game."""
         request = f"""
             fields name, cover.image_id, first_release_date, category;
             where id = {game_id};
         """
-        try:
-            response = self.igdb.api_request("games", request)
-        except Exception as exc:
-            raise IGDBError from exc
-        result: IGDBGameRaw = json.loads(response)[0]
-        return self._process_game(result)
+        for attempt in range(max_retries):
+            try:
+                response = self.igdb.api_request("games", request)
+                result: IGDBGameRaw = json.loads(response)[0]
+                return self._process_game(result)
+            except requests.exceptions.HTTPError as exc:
+                if exc.response.status_code == 429:
+                    wait_time = 2**attempt  # Exponential backoff
+                    print(f"Rate limit hit. Retrying in {wait_time} seconds...")
+                    time.sleep(wait_time)
+                    continue
+                raise IGDBError from exc
+        raise IGDBError("Too many requests to IGDB API")
