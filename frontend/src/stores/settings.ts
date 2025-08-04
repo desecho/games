@@ -9,6 +9,7 @@ export const useSettingsStore = defineStore("settings", {
         areDLCsHidden: false,
       },
       isGamesSettingsActive: false,
+      darkMode: false,
     },
   }),
   persist: {
@@ -23,6 +24,9 @@ export const useSettingsStore = defineStore("settings", {
   actions: {
     toggleGamesSettings() {
       this.settings.isGamesSettingsActive = !this.settings.isGamesSettingsActive;
+    },
+    toggleDarkMode() {
+      this.settings.darkMode = !this.settings.darkMode;
     },
   },
 });

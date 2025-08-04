@@ -3,6 +3,8 @@
     <v-app-bar v-if="isMobile">
       <v-app-bar-nav-icon variant="text" @click="toggleDrawer()"></v-app-bar-nav-icon>
       <v-app-bar-title>Games</v-app-bar-title>
+      <v-spacer></v-spacer>
+      <DarkModeToggle />
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" width="170" elevation="2" touchless>
       <v-list>
@@ -15,6 +17,13 @@
           <MenuItem v-if="!user.isLoggedIn" title="Login" icon="login" to="/login" />
           <MenuItem v-if="user.isLoggedIn" title="Settings" icon="cog" to="/preferences" />
           <MenuItem v-if="user.isLoggedIn" title="Logout" icon="logout" to="/logout" />
+          <v-divider class="my-2"></v-divider>
+          <v-list-item class="px-2">
+            <div class="d-flex align-center justify-space-between">
+              <span class="text-caption">Theme</span>
+              <DarkModeToggle />
+            </div>
+          </v-list-item>
         </v-list>
       </template>
     </v-navigation-drawer>
@@ -27,6 +36,7 @@ import { onMounted, ref, toRef } from "vue";
 import { useMobile } from "../composables/mobile";
 import { useAuthStore } from "../stores/auth";
 
+import DarkModeToggle from "./DarkModeToggle.vue";
 import MenuItem from "./MenuItem.vue";
 
 const drawer = ref(false);
