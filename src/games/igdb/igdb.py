@@ -2,7 +2,7 @@
 
 import json
 import time
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 from typing import Optional
 
 import requests
@@ -83,7 +83,7 @@ class IGDB:
         """Process release date."""
         if release_date is None:
             return None
-        return datetime.fromtimestamp(release_date).date()
+        return datetime.fromtimestamp(release_date, tz=timezone.utc).date()
 
     def _process_search_games_results(self, results: list[IGDBGameRaw]) -> list[GameObject]:
         """Process search games results."""

@@ -69,6 +69,6 @@ class Command(BaseCommand):
         for game in games:
             tqdm.set_description(str(game))
             updated = self._update_game_data(game)
-            if updated:
+            if updated:  # pragma: no cover
                 tqdm.info(f'"{game}" is updated')
             tqdm.update()
