@@ -27,60 +27,27 @@ This is a full-stack web application for creating and managing game lists (e.g.,
 
 ## Essential Development Commands
 
-### Initial Setup
-```bash
-make bootstrap          # Complete project setup (deps, DB, migrations, build)
-make createsuperuser   # Create Django admin user
-```
-
-### Development
-```bash
-make run               # Start Django backend (localhost:8000)
-make dev               # Start Vue.js frontend (localhost:5173)
-```
-
-Both commands need to run simultaneously for full development.
-
-### Database
-```bash
-make create-db         # Create database
-make migrate           # Run Django migrations
-make drop-db           # Drop database
-make load-db           # Load from backup
-```
-
-### Python Backend
-```bash
-make manage [command]  # Run Django management commands
-make shell             # Django shell
-```
-
 ### Frontend
 ```bash
 make build             # Build frontend for production
-make yarn-install      # Install/update npm dependencies
-make serve             # Serve built frontend
 ```
 
 ### Testing & Linting
 ```bash
-make test              # Run all tests and linters
-make tox               # Run Python tests via tox
 make pytest            # Run Python unit tests only
 make eslint            # Run frontend linting
 ```
 
 ### Formatting
 ```bash
-make format-all        # Format all code (Python, Vue, TS, etc.)
-make format            # Format Python code only  
+make format            # Format Python code only
 make format-frontend   # Format frontend code only
 ```
 
-### Docker
+### Python Linting (Individual Tools)
 ```bash
-make docker-build-dev  # Build development Docker images
-make docker-run        # Run in Docker containers
+make pylint            # Python linting
+make mypy              # Type checking
 ```
 
 ## Code Organization
@@ -92,7 +59,7 @@ make docker-run        # Run in Docker containers
 - `src/games/igdb/` - IGDB API integration
 - `src/games/fixtures/` - Initial data (categories, lists)
 
-### Frontend Structure  
+### Frontend Structure
 - `frontend/src/components/` - Reusable Vue components
 - `frontend/src/views/` - Page-level components
 - `frontend/src/stores/` - Pinia state management (auth, games, settings)
@@ -107,11 +74,6 @@ make docker-run        # Run in Docker containers
 
 ## Important Notes
 
-### Environment Setup
-- Copy template files: `env_custom.sh.tpl` → `env_custom.sh`, `env_secrets.sh.tpl` → `env_secrets.sh`
-- Configure MySQL and Redis via Docker (see README.rst)
-- Edit environment files with proper credentials
-
 ### Testing Framework
 - Backend: pytest with Django test client
 - Frontend: No test framework currently configured
@@ -121,13 +83,8 @@ make docker-run        # Run in Docker containers
 - IGDB API used for game data via `update_games_data` management command
 - Rate limiting and error handling implemented for API calls
 
-### Development Workflow
-1. Use `make bootstrap` for initial setup
-2. Run `make run` and `make dev` in separate terminals
-3. Use `make format-all` before committing
-4. Run `make test` to verify changes
+## Additional instructions
 
-### Production Deployment
-- Kubernetes deployment configs in `deployment/`
-- Production commands prefixed with `prod-` in Makefile
-- Docker images built for both backend and frontend
+- Always run backend tests with `make pytest` command
+- Always run frontend tests with `make eslint` command
+- Before running tests and after you complete the coding - always run `make format` for backend changes and `make format-frontend` for frontend changes
