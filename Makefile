@@ -177,8 +177,12 @@ flush-cdn-cache:
 test: shellcheck hadolint shfmt actionlint tox eslint prettier-json-lint prettier-scss-lint \
 	prettier-yaml-lint prettier-ts-lint prettier-html-lint prettier-vue-lint
 
+.PHONY: test-python
+## Run python tests
+test-python: pylint mypy pytest
+
 .PHONY: test2
-## Run tests 2 | Tests
+## Run tests 2
 test2: eslint prettier-json-lint prettier-scss-lint \
 	prettier-yaml-lint prettier-ts-lint prettier-html-lint prettier-vue-lint
 

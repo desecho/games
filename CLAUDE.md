@@ -85,6 +85,6 @@ make mypy              # Type checking
 
 ## Additional instructions
 
-- Always run backend tests with `make pytest` command
+- Always run backend tests with `make test-python` command
 - Always run frontend tests with `make eslint` command
 - Before running tests and after you complete the coding - always run `make format` for backend changes and `make format-frontend` for frontend changes
