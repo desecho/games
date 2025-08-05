@@ -82,3 +82,9 @@ function addGame(gameId: number, listId: number, index: number): void {
     });
 }
 </script>
+
+<style scoped>
+.v-sheet {
+  background: none;
+}
+</style>
