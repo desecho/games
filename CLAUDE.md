@@ -35,6 +35,7 @@ make build             # Build frontend for production
 ### Testing & Linting
 ```bash
 make pytest            # Run Python unit tests only
+make test-frontend     # Run frontend unit tests
 make eslint            # Run frontend linting
 ```
 
@@ -76,7 +77,7 @@ make mypy              # Type checking
 
 ### Testing Framework
 - Backend: pytest with Django test client
-- Frontend: No test framework currently configured
+- Frontend: Vitest with Vue Test Utils and jsdom
 - Extensive linting via tox (pylint, flake8, mypy, black, etc.)
 
 ### API Integration
@@ -86,5 +87,6 @@ make mypy              # Type checking
 ## Additional instructions
 
 - Always run backend tests with `make test-python` command
-- Always run frontend tests with `make eslint` command
+- Always run frontend tests with `make test-frontend` command
+- Always run frontend linting with `make eslint` command
 - Before running tests and after you complete the coding - always run `make format` for backend changes and `make format-frontend` for frontend changes

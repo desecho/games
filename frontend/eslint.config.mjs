@@ -230,4 +230,14 @@ export default [...fixupConfigRules(compat.extends(
             parser: "@typescript-eslint/parser",
         },
     },
+}, {
+    files: ["**/*.test.ts", "**/test/**/*.ts", "vitest.config.ts"],
+    rules: {
+        "import/no-extraneous-dependencies": ["error", {
+            devDependencies: true,
+            optionalDependencies: false,
+            peerDependencies: false,
+            bundledDependencies: false,
+        }],
+    },
 }];

@@ -175,7 +175,7 @@ flush-cdn-cache:
 .PHONY: test
 ## Run tests | Tests
 test: shellcheck hadolint shfmt actionlint tox eslint prettier-json-lint prettier-scss-lint \
-	prettier-yaml-lint prettier-ts-lint prettier-html-lint prettier-vue-lint
+	prettier-yaml-lint prettier-ts-lint prettier-html-lint prettier-vue-lint test-frontend
 
 .PHONY: test-python
 ## Run python tests
@@ -257,6 +257,13 @@ black:
 mypy:
 	$(call print,Running mypy)
 	@tox -e py-mypy
+
+.PHONY: test-frontend
+## Run frontend tests
+test-frontend:
+	$(call print,Running frontend tests)
+	@${CMD_FRONTEND} && \
+	yarn run test:run
 
 .PHONY: eslint
 ## Run eslint linter
