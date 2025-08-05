@@ -9,6 +9,7 @@ from django.test import TestCase
 
 from games.exceptions import IGDBError
 from games.igdb.igdb import IGDB
+from games.igdb.token_cache import IGDBTokenCache
 from games.models import Category
 
 
@@ -21,21 +22,20 @@ class IGDBTest(TestCase):
         Category.objects.create(id=Category.MAIN_GAME, name="Main Game")
         Category.objects.create(id=Category.DLC, name="DLC")
 
-    @patch("games.igdb.igdb.OAuth2Session")
+        IGDBTokenCache().clear_cache()
+
+    @patch("games.igdb.token_cache.IGDBTokenCache.get_token")
     @patch("games.igdb.igdb.IGDBWrapper")
-    def test_init_creates_igdb_wrapper(self, mock_wrapper, mock_session):  # pylint: disable=no-self-use
+    def test_init_creates_igdb_wrapper(self, mock_wrapper, mock_get_token):  # pylint: disable=no-self-use
         """Test IGDB initialization creates wrapper with token."""
-        mock_session_instance = Mock()
-        mock_session.return_value = mock_session_instance
-        mock_session_instance.fetch_token.return_value = {"access_token": "test_token"}
+        mock_get_token.return_value = "test_token"
 
         IGDB()
 
-        mock_session.assert_called_once()
-        mock_session_instance.fetch_token.assert_called_once()
+        mock_get_token.assert_called_once()
         mock_wrapper.assert_called_once()
 
-    @patch("games.igdb.igdb.OAuth2Session")
+    @patch("games.igdb.token_cache.OAuth2Session")
     @patch("games.igdb.igdb.IGDBWrapper")
     def test_process_release_date_with_timestamp(self, mock_wrapper, mock_session):
         """Test processing release date with valid timestamp through get_game."""
@@ -54,7 +54,7 @@ class IGDBTest(TestCase):
         result = igdb.get_game(1)
         self.assertEqual(result["release_date"], date(2020, 1, 1))
 
-    @patch("games.igdb.igdb.OAuth2Session")
+    @patch("games.igdb.token_cache.OAuth2Session")
     @patch("games.igdb.igdb.IGDBWrapper")
     def test_process_release_date_with_none(self, mock_wrapper, mock_session):
         """Test processing release date with None through get_game."""
@@ -70,7 +70,7 @@ class IGDBTest(TestCase):
         result = igdb.get_game(1)
         self.assertIsNone(result["release_date"])
 
-    @patch("games.igdb.igdb.OAuth2Session")
+    @patch("games.igdb.token_cache.OAuth2Session")
     @patch("games.igdb.igdb.IGDBWrapper")
     def test_search_games_success(self, mock_wrapper, mock_session):
         """Test successful game search."""
@@ -102,7 +102,7 @@ class IGDBTest(TestCase):
         self.assertTrue(result[0]["isReleased"])
         self.assertIsNotNone(result[0]["cover"])
 
-    @patch("games.igdb.igdb.OAuth2Session")
+    @patch("games.igdb.token_cache.OAuth2Session")
     @patch("games.igdb.igdb.IGDBWrapper")
     def test_search_games_without_cover(self, mock_wrapper, mock_session):
         """Test game search with game that has no cover."""
@@ -122,7 +122,7 @@ class IGDBTest(TestCase):
         self.assertEqual(len(result), 1)
         self.assertIsNone(result[0]["cover"])
 
-    @patch("games.igdb.igdb.OAuth2Session")
+    @patch("games.igdb.token_cache.OAuth2Session")
     @patch("games.igdb.igdb.IGDBWrapper")
     def test_search_games_api_error(self, mock_wrapper, mock_session):
         """Test game search with API error."""
@@ -139,7 +139,7 @@ class IGDBTest(TestCase):
         with self.assertRaises(IGDBError):
             igdb.search_games("test query")
 
-    @patch("games.igdb.igdb.OAuth2Session")
+    @patch("games.igdb.token_cache.OAuth2Session")
     @patch("games.igdb.igdb.IGDBWrapper")
     def test_get_game_success(self, mock_wrapper, mock_session):
         """Test successful get game."""
@@ -170,7 +170,7 @@ class IGDBTest(TestCase):
         self.assertEqual(result["release_date"], date(2020, 1, 1))
         self.assertEqual(result["cover"], "test_cover")
 
-    @patch("games.igdb.igdb.OAuth2Session")
+    @patch("games.igdb.token_cache.OAuth2Session")
     @patch("games.igdb.igdb.IGDBWrapper")
     def test_get_game_without_cover(self, mock_wrapper, mock_session):
         """Test get game without cover."""
@@ -189,7 +189,7 @@ class IGDBTest(TestCase):
 
         self.assertIsNone(result["cover"])
 
-    @patch("games.igdb.igdb.OAuth2Session")
+    @patch("games.igdb.token_cache.OAuth2Session")
     @patch("games.igdb.igdb.IGDBWrapper")
     @patch("time.sleep")
     def test_get_game_rate_limit_retry(self, mock_sleep, mock_wrapper, mock_session):
@@ -217,7 +217,7 @@ class IGDBTest(TestCase):
         self.assertEqual(result["id"], 1)
         mock_sleep.assert_called_once_with(1)  # First retry waits 1 second
 
-    @patch("games.igdb.igdb.OAuth2Session")
+    @patch("games.igdb.token_cache.OAuth2Session")
     @patch("games.igdb.igdb.IGDBWrapper")
     @patch("time.sleep")
     def test_get_game_max_retries_exceeded(self, _mock_sleep, mock_wrapper, mock_session):
@@ -240,7 +240,7 @@ class IGDBTest(TestCase):
         with self.assertRaises(IGDBError):
             igdb.get_game(1, max_retries=2)
 
-    @patch("games.igdb.igdb.OAuth2Session")
+    @patch("games.igdb.token_cache.OAuth2Session")
     @patch("games.igdb.igdb.IGDBWrapper")
     def test_get_game_non_rate_limit_http_error(self, mock_wrapper, mock_session):
         """Test get game with non-rate-limit HTTP error."""

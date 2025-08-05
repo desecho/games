@@ -6,7 +6,6 @@ from datetime import date, datetime, timezone
 from typing import Optional
 
 import requests
-from authlib.integrations.requests_client import OAuth2Session
 from django.conf import settings
 from igdb.wrapper import IGDBWrapper
 
@@ -14,6 +13,7 @@ from ..exceptions import IGDBError
 from ..models import Category
 from ..types import GameObject
 from ..utils import get_cover_url, is_game_released
+from .token_cache import IGDBTokenCache
 from .types import IGDBGame, IGDBGameRaw
 
 # Full list is available here: https://api-docs.igdb.com/#game-enums
@@ -68,14 +68,8 @@ class IGDB:
 
     def __init__(self) -> None:
         """Init."""
-        session = OAuth2Session(  # nosec B106
-            settings.IGDB_CLIENT_ID,
-            settings.IGDB_CLIENT_SECRET,
-            token_endpoint=settings.IGDB_TOKEN_ENDPOINT,
-            grant_type="client_credentials",
-            token_endpoint_auth_method="client_secret_post",
-        )
-        token = session.fetch_token()["access_token"]
+        token_cache = IGDBTokenCache()
+        token = token_cache.get_token()
         self.igdb = IGDBWrapper(settings.IGDB_CLIENT_ID, token)
 
     @staticmethod
