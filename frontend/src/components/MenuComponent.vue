@@ -1,12 +1,21 @@
 <template>
   <div>
-    <v-app-bar v-if="isMobile">
+    <v-app-bar v-if="isMobile" height="72">
       <v-app-bar-nav-icon variant="text" @click="toggleDrawer()"></v-app-bar-nav-icon>
-      <v-app-bar-title>Games</v-app-bar-title>
+      <v-app-bar-title class="d-flex align-center">
+        <div class="d-flex align-center">
+          <v-img src="/img/logo.png" alt="Games logo" width="40" height="40" class="mr-2" contain></v-img>
+          <span class="text-h6 font-weight-medium">Games</span>
+        </div>
+      </v-app-bar-title>
       <v-spacer></v-spacer>
       <DarkModeToggle />
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" width="170" elevation="2" touchless>
+      <div class="app-brand pa-4 d-flex flex-column align-center">
+        <v-img src="/img/logo.png" alt="Games logo" width="85" height="85" class="mb-2" contain></v-img>
+        <span class="text-h6 font-weight-medium">Games</span>
+      </div>
       <v-list>
         <MenuItem title="Search" icon="magnify" to="/" />
         <MenuItem v-if="user.isLoggedIn" title="Games" icon="controller" to="/games" />
