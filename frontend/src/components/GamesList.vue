@@ -38,24 +38,16 @@ import type { AxiosError } from "axios";
 
 import { useMobile } from "../composables/mobile";
 import { DLC_KIND_CATEGORIES } from "../const";
-import { getUrl, requireAuthenticated, rewriteArray } from "../helpers";
+import { getUrl, requireAuthenticated } from "../helpers";
 import { useSettingsStore } from "../stores/settings";
 import { $toast } from "../toast";
 
 import GameCard from "./GameCard.vue";
 
-const props = defineProps<{
-  recordsProp: RecordType[];
-  listKey: ListKey;
-  username?: string;
-}>();
+const props = defineProps<{ listKey: ListKey; username?: string }>();
 
-const records = computed({
-  get: () => props.recordsProp,
-  set: (recordsNew: RecordType[]) => {
-    rewriteArray(props.recordsProp, recordsNew);
-  },
-});
+// Two-way binding for records (required)
+const records = defineModel<RecordType[]>("records", { required: true });
 const isProfile = props.username !== undefined;
 const isDraggable = computed(() => {
   const { isMobile } = useMobile();
@@ -94,8 +86,8 @@ function isShowGame(game: Game): boolean {
 </script>
 
 <style scoped>
-/* This is needed for the swipe to work */
+/* Ensure v-window has enough height for swipe/drag gestures without hardcoding pixels */
 .wrapper {
-  min-height: 500px;
+  min-height: 60vh;
 }
 </style>

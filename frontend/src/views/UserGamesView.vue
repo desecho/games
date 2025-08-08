@@ -1,6 +1,6 @@
 <template>
   <div v-if="isLoaded">
-    <GamesLists v-if="!userNotFound && !userIsHidden" :username="username" :records="records" />
+    <GamesLists v-if="!userNotFound && !userIsHidden" v-model:records="records" :username="username" />
     <v-alert v-if="userNotFound || userIsHidden" prominent type="error" variant="text" class="ma-5">
       <span v-if="userNotFound"> User {{ username }} not found. </span>
       <span v-if="userIsHidden"> {{ username }}'s profile is hidden. </span>
@@ -44,10 +44,11 @@ onMounted(() => {
       isLoaded.value = true;
     })
     .catch((error: AxiosError) => {
-      if (error.response.status === 404) {
+      const status = error.response?.status;
+      if (status === 404) {
         userNotFound.value = true;
         isLoaded.value = true;
-      } else if (error.response.status === 403) {
+      } else if (status === 403) {
         userIsHidden.value = true;
         isLoaded.value = true;
       } else {

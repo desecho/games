@@ -1,5 +1,5 @@
 <template>
-  <GamesLists :records="records" />
+  <GamesLists v-model:records="records" />
 </template>
 
 <script lang="ts" setup>

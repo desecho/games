@@ -8,7 +8,7 @@
       <GamesList
         v-for="list in lists"
         :key="list.id"
-        :records-prop="records"
+        v-model:records="records"
         :list-key="list.key"
         :username="username"
       />
@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, toRef } from "vue";
+import { defineModel, onMounted, toRef } from "vue";
 
 import type { RecordType } from "../types";
 import type { AxiosError } from "axios";
@@ -36,13 +36,15 @@ import GamesUserBar from "./GamesUserBar.vue";
 const { user } = useAuthStore();
 
 defineProps<{
-  records: RecordType[];
   username?: string;
 }>();
 
 const lists = LISTS;
 const gamesStore = useGamesStore();
 const tab = toRef(gamesStore, "tab");
+
+// Two-way binding for records from parent (required)
+const records = defineModel<RecordType[]>("records", { required: true });
 
 // We are loading games here because games need to be loaded even if it is the profile page
 onMounted(() => {
