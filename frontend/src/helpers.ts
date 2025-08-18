@@ -16,13 +16,3 @@ export function requireAuthenticated(): void {
     void router.push("/login");
   }
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function rewriteArray(arrayToRewrite: any[], newArray: any[]): void {
-  while (arrayToRewrite.length > 0) {
-    arrayToRewrite.pop();
-  }
-  newArray.forEach((item) => {
-    arrayToRewrite.push(item);
-  });
-}

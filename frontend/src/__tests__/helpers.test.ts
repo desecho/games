@@ -1,7 +1,7 @@
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { getUrl, requireAuthenticated, rewriteArray, rulesHelper } from "../helpers";
+import { getUrl, requireAuthenticated, rulesHelper } from "../helpers";
 import { useAuthStore } from "../stores/auth";
 
 // Mock router
@@ -65,35 +65,6 @@ describe("helpers", () => {
 
       const { router } = await import("../router");
       expect(router.push).toHaveBeenCalledWith("/login");
-    });
-  });
-
-  describe("rewriteArray", () => {
-    it("replaces array contents", () => {
-      const originalArray = [1, 2, 3];
-      const newArray = [4, 5, 6];
-
-      rewriteArray(originalArray, newArray);
-
-      expect(originalArray).toEqual([4, 5, 6]);
-    });
-
-    it("handles empty new array", () => {
-      const originalArray = [1, 2, 3];
-      const newArray: number[] = [];
-
-      rewriteArray(originalArray, newArray);
-
-      expect(originalArray).toEqual([]);
-    });
-
-    it("handles empty original array", () => {
-      const originalArray: number[] = [];
-      const newArray = [1, 2, 3];
-
-      rewriteArray(originalArray, newArray);
-
-      expect(originalArray).toEqual([1, 2, 3]);
     });
   });
 });
