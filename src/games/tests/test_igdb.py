@@ -47,7 +47,7 @@ class IGDBTest(TestCase):
         mock_wrapper.return_value = mock_igdb_wrapper
         # January 1, 2020 timestamp
         mock_igdb_wrapper.api_request.return_value = json.dumps(
-            [{"id": 1, "name": "Test Game", "category": 0, "first_release_date": 1577836800}]
+            [{"id": 1, "name": "Test Game", "game_type": 0, "first_release_date": 1577836800}]
         )
 
         igdb = IGDB()
@@ -64,7 +64,7 @@ class IGDBTest(TestCase):
 
         mock_igdb_wrapper = Mock()
         mock_wrapper.return_value = mock_igdb_wrapper
-        mock_igdb_wrapper.api_request.return_value = json.dumps([{"id": 1, "name": "Test Game", "category": 0}])
+        mock_igdb_wrapper.api_request.return_value = json.dumps([{"id": 1, "name": "Test Game", "game_type": 0}])
 
         igdb = IGDB()
         result = igdb.get_game(1)
@@ -85,7 +85,7 @@ class IGDBTest(TestCase):
                 {
                     "id": 1,
                     "name": "Test Game",
-                    "category": 0,
+                    "game_type": 0,
                     "first_release_date": 1577836800,
                     "cover": {"image_id": "test_cover"},
                 }
@@ -113,7 +113,7 @@ class IGDBTest(TestCase):
         mock_igdb_wrapper = Mock()
         mock_wrapper.return_value = mock_igdb_wrapper
         mock_igdb_wrapper.api_request.return_value = json.dumps(
-            [{"id": 1, "name": "Test Game", "category": 0, "first_release_date": 1577836800}]
+            [{"id": 1, "name": "Test Game", "game_type": 0, "first_release_date": 1577836800}]
         )
 
         igdb = IGDB()
@@ -154,7 +154,7 @@ class IGDBTest(TestCase):
                 {
                     "id": 1,
                     "name": "Test Game",
-                    "category": 0,
+                    "game_type": 0,
                     "first_release_date": 1577836800,
                     "cover": {"image_id": "test_cover"},
                 }
@@ -181,7 +181,7 @@ class IGDBTest(TestCase):
         mock_igdb_wrapper = Mock()
         mock_wrapper.return_value = mock_igdb_wrapper
         mock_igdb_wrapper.api_request.return_value = json.dumps(
-            [{"id": 1, "name": "Test Game", "category": 0, "first_release_date": 1577836800}]
+            [{"id": 1, "name": "Test Game", "game_type": 0, "first_release_date": 1577836800}]
         )
 
         igdb = IGDB()
@@ -208,7 +208,7 @@ class IGDBTest(TestCase):
 
         mock_igdb_wrapper.api_request.side_effect = [
             rate_limit_error,
-            json.dumps([{"id": 1, "name": "Test Game", "category": 0, "first_release_date": 1577836800}]),
+            json.dumps([{"id": 1, "name": "Test Game", "game_type": 0, "first_release_date": 1577836800}]),
         ]
 
         igdb = IGDB()

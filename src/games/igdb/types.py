@@ -20,7 +20,7 @@ class IGDBGameRaw(TypedDict):
 
     id: int
     name: str
-    category: int
+    game_type: int
     first_release_date: NotRequired[int]
     cover: NotRequired[IGDBGameCoverRaw]
 

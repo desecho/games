@@ -87,7 +87,7 @@ class IGDB:
             result_processed: GameObject = {
                 "id": result["id"],
                 "name": result["name"],
-                "category": GAME_CATEGORIES[result["category"]],
+                "category": GAME_CATEGORIES[result["game_type"]],
                 "isReleased": is_game_released(release_date),
                 "cover": get_cover_url(result["cover"]["image_id"]) if "cover" in result else None,
             }
@@ -97,11 +97,11 @@ class IGDB:
     def search_games(self, query: str) -> list[GameObject]:
         """Search games."""
         request = f"""
-            fields name, cover.image_id, first_release_date, category;
+            fields name, cover.image_id, first_release_date, game_type;
             search "{query}";
             where version_parent = null &
                 platforms = {PLATFORMS_SUPPORTED} &
-                category = {GAME_CATEGORIES_SUPPORTED};
+                game_type = {GAME_CATEGORIES_SUPPORTED};
             limit {settings.MAX_RESULTS};
         """
         try:
@@ -116,7 +116,7 @@ class IGDB:
         return {
             "id": game["id"],
             "name": game["name"],
-            "category_id": GAME_CATEGORIES_MAPPING[game["category"]],
+            "category_id": GAME_CATEGORIES_MAPPING[game["game_type"]],
             "release_date": self._process_release_date(game.get("first_release_date")),
             "cover": game["cover"]["image_id"] if "cover" in game else None,
         }
@@ -124,7 +124,7 @@ class IGDB:
     def get_game(self, game_id: int, max_retries: int = 10) -> IGDBGame:
         """Get game."""
         request = f"""
-            fields name, cover.image_id, first_release_date, category;
+            fields name, cover.image_id, first_release_date, game_type;
             where id = {game_id};
         """
         for attempt in range(max_retries):
