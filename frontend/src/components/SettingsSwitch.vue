@@ -19,14 +19,19 @@ const value = ref(false);
 const settingsStore = useSettingsStore();
 const settings = toRef(settingsStore, "settings");
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AnyRecord = Record<string, Record<string, any>>;
+
+function getSection(): Record<string, boolean> {
+  return (settings.value as unknown as AnyRecord)[props.type];
+}
+
 function saveSettings(): void {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  settings.value[props.type][props.name] = value.value;
+  getSection()[props.name] = value.value;
 }
 
 onMounted(() => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
-  value.value = settings.value[props.type][props.name];
+  value.value = getSection()[props.name];
 });
 </script>
 

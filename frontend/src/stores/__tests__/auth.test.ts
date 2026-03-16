@@ -6,7 +6,7 @@ import { useAuthStore } from '../auth'
 
 // Mock axios
 vi.mock('axios')
-const mockedAxios = vi.mocked(axios)
+const mockedAxios = vi.mocked(axios, true)
 
 // Mock helpers
 vi.mock('../../helpers', () => ({

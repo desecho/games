@@ -74,7 +74,7 @@ async function onSubmit(): Promise<void> {
   } catch (error) {
     console.log(error);
     const errorAxios = error as AxiosError;
-    const data = errorAxios.response.data as TokenErrorData;
+    const data = errorAxios.response?.data as TokenErrorData;
     $toast.error(data.detail);
   }
 }

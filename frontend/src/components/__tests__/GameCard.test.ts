@@ -36,9 +36,11 @@ const mockRecord = {
     id: 1,
     name: 'Test Game',
     cover: 'test-cover.jpg',
+    category: 'main_game',
     isReleased: true
   },
-  listKey: 'wantToPlay' as const
+  listKey: 'want-to-play' as const,
+  order: 0
 }
 
 describe('GameCard', () => {
@@ -61,7 +63,9 @@ describe('GameCard', () => {
     
     // Set up settings to show action buttons
     settingsStore.settings = {
-      games: { areActionButtonsHidden: false }
+      games: { areActionButtonsHidden: false, areUnreleasedGamesHidden: false, areDLCsHidden: false },
+      isGamesSettingsActive: false,
+      darkMode: false
     }
     
     gamesStore.records = []
@@ -70,7 +74,7 @@ describe('GameCard', () => {
       props: {
         record: mockRecord,
         index: 0,
-        listKey: 'wantToPlay',
+        listKey: 'want-to-play',
         username: 'anotheruser' // Different user to show actions
       }
     })
@@ -92,14 +96,16 @@ describe('GameCard', () => {
     }
     
     settingsStore.settings = {
-      games: { areActionButtonsHidden: true }
+      games: { areActionButtonsHidden: true, areUnreleasedGamesHidden: false, areDLCsHidden: false },
+      isGamesSettingsActive: false,
+      darkMode: false
     }
 
     const wrapper = mount(GameCard, {
       props: {
         record: mockRecord,
         index: 0,
-        listKey: 'wantToPlay',
+        listKey: 'want-to-play',
         username: 'anotheruser'
       }
     })
@@ -120,14 +126,16 @@ describe('GameCard', () => {
     }
     
     settingsStore.settings = {
-      games: { areActionButtonsHidden: false }
+      games: { areActionButtonsHidden: false, areUnreleasedGamesHidden: false, areDLCsHidden: false },
+      isGamesSettingsActive: false,
+      darkMode: false
     }
 
     const wrapper = mount(GameCard, {
       props: {
         record: mockRecord,
         index: 0,
-        listKey: 'wantToPlay',
+        listKey: 'want-to-play',
         username: 'testuser' // Same user
       }
     })
@@ -146,7 +154,7 @@ describe('GameCard', () => {
       props: {
         record: mockRecord,
         index: 0,
-        listKey: 'wantToPlay'
+        listKey: 'want-to-play'
       }
     })
 
