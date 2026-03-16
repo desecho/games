@@ -175,7 +175,7 @@ flush-cdn-cache:
 .PHONY: test
 ## Run tests | Tests
 test: shellcheck hadolint shfmt actionlint tox eslint prettier-json-lint prettier-scss-lint \
-	prettier-yaml-lint prettier-ts-lint prettier-html-lint prettier-vue-lint test-frontend
+	prettier-yaml-lint prettier-ts-lint prettier-html-lint prettier-vue-lint test-frontend ts-lint
 
 .PHONY: test-python
 ## Run python tests
@@ -184,7 +184,7 @@ test-python: pylint mypy pytest
 .PHONY: test2
 ## Run tests 2
 test2: eslint prettier-json-lint prettier-scss-lint \
-	prettier-yaml-lint prettier-ts-lint prettier-html-lint prettier-vue-lint
+	prettier-yaml-lint prettier-ts-lint prettier-html-lint prettier-vue-lint ts-lint
 
 .PHONY: tox
 ## Run tox
@@ -271,6 +271,13 @@ eslint:
 	$(call print,Running eslint linter)
 	@${CMD_FRONTEND} && \
 	yarn run eslint src/**/*.ts src/*.ts ./*.ts src/App.vue src/components/*.vue src/views/*.vue
+
+.PHONY: ts-lint
+## Run ts linter
+ts-lint:
+	$(call print,Running ts lint)
+	@${CMD_FRONTEND} && \
+	npx vue-tsc --noEmit
 
 .PHONY: shfmt
 ## Run shfmt linter
