@@ -1,6 +1,6 @@
 """Settings for tests."""
 
-from .settings import *  # noqa pylint: disable=unused-wildcard-import,wildcard-import
+from .settings import *  # noqa: F403,F401
 
 DATABASES["default"] = {  # noqa
     "ENGINE": "django.db.backends.sqlite3",

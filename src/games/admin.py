@@ -10,7 +10,7 @@ from .models import Category, Game, List, Record, User
 
 
 @register(Record)
-class RecordAdmin(ModelAdmin[Record]):  # pylint:disable=unsubscriptable-object
+class RecordAdmin(ModelAdmin[Record]):
     """Record admin."""
 
     list_display = ("user", "game", "list", "date_added")
@@ -18,7 +18,7 @@ class RecordAdmin(ModelAdmin[Record]):  # pylint:disable=unsubscriptable-object
 
 
 @register(Game)
-class GameAdmin(ModelAdmin[Game]):  # pylint:disable=unsubscriptable-object
+class GameAdmin(ModelAdmin[Game]):
     """Game admin."""
 
     list_display = ("name",)
@@ -26,10 +26,10 @@ class GameAdmin(ModelAdmin[Game]):  # pylint:disable=unsubscriptable-object
 
 
 @register(List)
-class ListAdmin(ModelAdmin[List]):  # pylint:disable=unsubscriptable-object
+class ListAdmin(ModelAdmin[List]):
     """List admin."""
 
-    def has_delete_permission(  # pylint:disable=no-self-use,unused-argument
+    def has_delete_permission(
         self, request: HttpRequest, obj: Optional[List] = None
     ) -> bool:
         """Return True if the user has delete permission."""
@@ -37,13 +37,13 @@ class ListAdmin(ModelAdmin[List]):  # pylint:disable=unsubscriptable-object
 
 
 @register(Category)
-class CategoryAdmin(ModelAdmin[Category]):  # pylint:disable=unsubscriptable-object
+class CategoryAdmin(ModelAdmin[Category]):
     """Category admin."""
 
     list_display = ("name",)
     search_fields = ("name",)
 
-    def has_delete_permission(  # pylint:disable=no-self-use,unused-argument
+    def has_delete_permission(
         self, request: HttpRequest, obj: Optional[Category] = None
     ) -> bool:
         """Return True if the user has delete permission."""
@@ -51,7 +51,7 @@ class CategoryAdmin(ModelAdmin[Category]):  # pylint:disable=unsubscriptable-obj
 
 
 @register(User)
-class UserAdmin(ModelAdmin[User]):  # pylint:disable=unsubscriptable-object
+class UserAdmin(ModelAdmin[User]):
     """User admin."""
 
     list_display = ("username", "first_name", "last_name")

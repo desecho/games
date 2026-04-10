@@ -49,7 +49,7 @@ class Command(BaseCommand):
     def handle(
         self,
         *args: Any,
-        **options: Any,  # pylint: disable=unused-argument
+        **options: Any,
     ) -> None:
         """Execute command."""
         game_id: Optional[int] = options["game_id"]

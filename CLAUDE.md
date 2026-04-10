@@ -34,7 +34,10 @@ make build             # Build frontend for production
 
 ### Testing & Linting
 ```bash
+make test-python       # Run backend linting and tests
 make pytest            # Run Python unit tests only
+make ruff              # Run Python linting
+make mypy              # Run Python type checking
 make test-frontend     # Run frontend unit tests
 make eslint            # Run frontend linting
 ```
@@ -43,12 +46,6 @@ make eslint            # Run frontend linting
 ```bash
 make format            # Format Python code only
 make format-frontend   # Format frontend code only
-```
-
-### Python Linting (Individual Tools)
-```bash
-make pylint            # Python linting
-make mypy              # Type checking
 ```
 
 ## Code Organization
@@ -78,7 +75,8 @@ make mypy              # Type checking
 ### Testing Framework
 - Backend: pytest with Django test client
 - Frontend: Vitest with Vue Test Utils and jsdom
-- Extensive linting via tox (pylint, flake8, mypy, black, etc.)
+- Backend environments and dependencies are managed with `uv`
+- Backend linting runs through `ruff`, `mypy`, and `tox`
 
 ### API Integration
 - IGDB API used for game data via `update_games_data` management command

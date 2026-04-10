@@ -12,7 +12,7 @@ class UsersView(APIView):
 
     permission_classes: list[str] = []  # type: ignore
 
-    def get(self, request: Request) -> Response:  # pylint: disable=no-self-use,unused-argument
+    def get(self, request: Request) -> Response:
         """Get user list."""
         users = User.objects.filter(hidden=False).values_list("username", flat=True)
         return Response(users)

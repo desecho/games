@@ -26,7 +26,7 @@ class IGDBTest(TestCase):
 
     @patch("games.igdb.token_cache.IGDBTokenCache.get_token")
     @patch("games.igdb.igdb.IGDBWrapper")
-    def test_init_creates_igdb_wrapper(self, mock_wrapper, mock_get_token):  # pylint: disable=no-self-use
+    def test_init_creates_igdb_wrapper(self, mock_wrapper, mock_get_token):
         """Test IGDB initialization creates wrapper with token."""
         mock_get_token.return_value = "test_token"
 

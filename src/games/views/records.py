@@ -22,7 +22,7 @@ def get_records_objects(user: User) -> list[RecordObject]:
 class RecordsView(APIView):
     """Records view."""
 
-    def get(self, request: Request) -> Response:  # pylint: disable=no-self-use
+    def get(self, request: Request) -> Response:
         """Get game records."""
         user: User = request.user  # type: ignore
         return Response(get_records_objects(user))
@@ -33,7 +33,7 @@ class UserRecordsView(APIView):
 
     permission_classes: list[str] = []  # type: ignore
 
-    def get(self, request: Request, username: str) -> Response:  # pylint: disable=no-self-use,unused-argument
+    def get(self, request: Request, username: str) -> Response:
         """Get game records."""
         try:
             user = User.objects.get(username=username)
@@ -86,7 +86,7 @@ class RecordAdd(IGDBAPIView):
 class ChangeListView(APIView):
     """Change list view."""
 
-    def put(self, request: Request, record_id: int) -> Response:  # pylint: disable=no-self-use
+    def put(self, request: Request, record_id: int) -> Response:
         """Change list."""
         try:
             list_id = int(request.data["listId"])
@@ -107,7 +107,7 @@ class ChangeListView(APIView):
 class RecordDeleteView(APIView):
     """Record delete view."""
 
-    def delete(self, request: Request, record_id: int) -> Response:  # pylint: disable=no-self-use
+    def delete(self, request: Request, record_id: int) -> Response:
         """Delete record."""
         user: User = request.user  # type: ignore
         records: QuerySet[Record] = user.records.filter(pk=record_id)
@@ -120,7 +120,7 @@ class RecordDeleteView(APIView):
 class RecordsSaveOrderView(APIView):
     """Records save order view."""
 
-    def put(self, request: Request) -> Response:  # pylint: disable=no-self-use
+    def put(self, request: Request) -> Response:
         """Save records order."""
         try:
             records = request.data["records"]

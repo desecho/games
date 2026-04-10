@@ -24,7 +24,7 @@ django_stubs_ext.monkeypatch()
 
 SENTRY_TRACE_SAMPLING = 0.5
 
-sentry_sdk.init(  # pylint: disable=abstract-class-instantiated
+sentry_sdk.init(
     dsn=getenv("SENTRY_DSN"),
     integrations=[DjangoIntegration()],
     # Set traces_sample_rate to 1.0 to capture 100%

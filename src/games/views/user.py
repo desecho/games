@@ -14,7 +14,7 @@ class UserCheckEmailAvailabilityView(APIView):
 
     permission_classes: list[str] = []  # type: ignore
 
-    def post(self, request: Request) -> Response:  # pylint: disable=no-self-use
+    def post(self, request: Request) -> Response:
         """Return True if email is available."""
         try:
             email = request.data["email"]
@@ -27,7 +27,7 @@ class UserCheckEmailAvailabilityView(APIView):
 class UserPreferencesView(APIView):
     """User preferences view."""
 
-    def put(self, request: Request) -> Response:  # pylint: disable=no-self-use
+    def put(self, request: Request) -> Response:
         """Save preferences."""
         user: User = request.user  # type: ignore
         try:
@@ -38,7 +38,7 @@ class UserPreferencesView(APIView):
         user.save()
         return Response()
 
-    def get(self, request: Request) -> Response:  # pylint: disable=no-self-use
+    def get(self, request: Request) -> Response:
         """Load preferences."""
         user: User = request.user  # type: ignore
         return Response(user.preferences)

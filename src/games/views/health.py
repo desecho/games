@@ -10,6 +10,6 @@ class HealthView(APIView):
 
     permission_classes: list[str] = []  # type: ignore
 
-    def get(self, request: Request) -> Response:  # pylint: disable=no-self-use,unused-argument
+    def get(self, request: Request) -> Response:
         """Return health status."""
         return Response({"status": "ok"})

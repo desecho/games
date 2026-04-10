@@ -85,15 +85,15 @@ install-mysql-client:
 .PHONY: install-main-python-deps
 ## Install main Python dependencies
 install-main-python-deps:
-	@pip3 install poetry
+	@pip3 install uv
 	@pip3 install tox
 
 .PHONY: create-venv
 ## Create venv and install requirements
 create-venv:
 	$(call print,Creating venv)
-	@poetry env use ${PYTHON_VERSION}
-	@poetry install --no-root
+	@uv venv --python ${PYTHON_VERSION}
+	@uv sync
 
 .PHONY: create-tox-venv
 create-tox-venv:
@@ -153,11 +153,6 @@ $(DB_ENV_PROD_FILE):
 #------------------------------------
 # Scripts
 #------------------------------------
-.PHONY: pydiatra-script
-pydiatra-script:
-	$(call print,Running pydiatra script)
-	@scripts/pydiatra.sh
-
 .PHONY: backup-db
 backup-db:
 	$(call print,Running backup DB script)
@@ -179,7 +174,7 @@ test: shellcheck hadolint shfmt actionlint tox eslint prettier-json-lint prettie
 
 .PHONY: test-python
 ## Run python tests
-test-python: pylint mypy pytest
+test-python: ruff mypy pytest
 
 .PHONY: test2
 ## Run tests 2
@@ -192,53 +187,11 @@ tox:
 	$(call print,Running tox)
 	@tox
 
-.PHONY: pydiatra
-## Run pydiatra linter
-pydiatra:
-	$(call print,Running pydiatra)
-	@tox -e py-pydiatra
-
-.PHONY: pylint
-## Run pylint linter
-pylint:
-	$(call print,Running pylint)
-	@tox -e py-pylint
-
-.PHONY: flake8
-## Run flake8 linter
-flake8:
-	$(call print,Running flake8)
-	@tox -e py-flake8
-
-.PHONY: isort
-## Run isort linter
-isort:
-	$(call print,Running isort linter)
-	@tox -e py-isort
-
-.PHONY: bandit
-## Run bandit linter
-bandit:
-	$(call print,Running bandit)
-	@tox -e py-bandit
-
 .PHONY: rstlint
 ## Run rstlint linter
 rstlint:
 	$(call print,Running rstlint)
 	@tox -e py-rstlint
-
-.PHONY: pydocstyle
-## Run pydocstyle linter
-pydocstyle:
-	$(call print,Running pydocstyle)
-	@tox -e py-pydocstyle
-
-.PHONY: safety
-## Run safety linter
-safety:
-	$(call print,Running safety)
-	@tox -e py-safety
 
 .PHONY: pytest
 ## Run pytest
@@ -246,11 +199,11 @@ pytest:
 	$(call print,Running pytest)
 	@tox -e py-pytest
 
-.PHONY: black
-## Run black linter
-black:
-	$(call print,Running black linter)
-	@tox -e py-black
+.PHONY: ruff
+## Run ruff linter
+ruff:
+	$(call print,Running ruff)
+	@tox -e py-ruff
 
 .PHONY: mypy
 ## Run mypy linter
@@ -408,17 +361,17 @@ load-db: drop-db create-db
 	@source $(ENV_FILE) && \
 	scripts/load_db.sh
 
-.PHONY: poetry-update
+.PHONY: uv-update
 ## Update python packages
-poetry-update:
+uv-update:
 	$(call print,Updating python packages)
-	@poetry update
+	@uv lock --upgrade
 
-.PHONY: poetry-show-outdated
-## Show outdated python packages (outside of ranges)
-poetry-show-outdated:
+.PHONY: uv-show-outdated
+## Show outdated python packages
+uv-show-outdated:
 	$(call print,Showing outdated python packages)
-	@poetry show --outdated | { grep --file=<(poetry show --tree | grep '^\w' | cut -d' ' -f1 | sed 's/.*/^&\\s/') || true; }
+	@uv pip list --outdated
 #------------------------------------
 
 #------------------------------------
@@ -429,9 +382,8 @@ poetry-show-outdated:
 format:
 	$(call print,Formatting python code)
 	@${SOURCE_CMDS} && \
-	autoflake --remove-all-unused-imports --in-place -r src && \
-	isort src && \
-	black .
+	ruff check --fix src && \
+	ruff format src
 
 .PHONY: f
 ## Format python code (format alias)

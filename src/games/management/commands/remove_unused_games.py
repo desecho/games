@@ -12,7 +12,7 @@ class Command(BaseCommand):
 
     help = "Remove unused games"
 
-    def handle(self, *args: Any, **options: Any) -> None:  # pylint: disable=unused-argument
+    def handle(self, *args: Any, **options: Any) -> None:
         """Remove unused games."""
         games = Game.objects.all()
         tqdm = self.tqdm(total=games.count(), unit="game")

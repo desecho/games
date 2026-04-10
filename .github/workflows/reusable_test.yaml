@@ -15,8 +15,8 @@ jobs:
         with:
           python-version: "3.11"
           # This is not working currently. See https://github.com/actions/setup-python/issues/369
-          # cache: poetry
-          # cache-dependency-path: poetry.lock
+          # cache: uv
+          # cache-dependency-path: uv.lock
 
       - name: Use pip cache
         uses: actions/cache@v5.0.3
@@ -37,7 +37,7 @@ jobs:
         uses: actions/cache@v5.0.3
         with:
           path: .tox
-          key: tox-${{ hashFiles('poetry.lock') }}
+          key: tox-${{ hashFiles('uv.lock') }}
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
