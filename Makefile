@@ -92,7 +92,7 @@ install-main-python-deps:
 ## Create venv and install requirements
 create-venv:
 	$(call print,Creating venv)
-	@uv venv --python ${PYTHON_VERSION}
+	@uv venv --python ${PYTHON_VERSION} --allow-existing
 	@uv sync
 
 .PHONY: create-tox-venv
