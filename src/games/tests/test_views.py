@@ -1,12 +1,17 @@
 """Tests for views."""
 
+from datetime import datetime
 from unittest.mock import Mock, patch
 
 from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
 
+from games.exceptions import IGDBError
 from games.models import Category, Game, List, Record, User
+from games.openai.exceptions import OpenAIError
+from games.openai.types import RecommendationRequest
+from games.views.recommendations import RecommendationsView
 
 
 class HealthViewTest(TestCase):
@@ -448,3 +453,174 @@ class SearchViewTest(TestCase):
             self.assertEqual(len(results), 1)
             self.assertEqual(results[0]["id"], 999)
             self.assertEqual(results[0]["name"], "Other Game")
+
+
+class RecommendationsViewTest(TestCase):
+    """Test recommendations view."""
+
+    def setUp(self):
+        """Set up test data."""
+        self.client = APIClient()
+        self.user = User.objects.create_user(username="testuser", email="test@example.com")
+        self.category = Category.objects.create(name="Main Game")
+        self.liked_game = Game.objects.create(id=1, name="Liked Game", category=self.category)
+        self.disliked_game = Game.objects.create(id=2, name="Disliked Game", category=self.category)
+        self.unrated_game = Game.objects.create(id=3, name="Unrated Game", category=self.category)
+        self.game_list = List.objects.create(name="Beaten", key_name="beaten")
+        Record.objects.create(user=self.user, game=self.liked_game, list=self.game_list, rating=4)
+        Record.objects.create(user=self.user, game=self.disliked_game, list=self.game_list, rating=1)
+        Record.objects.create(user=self.user, game=self.unrated_game, list=self.game_list, rating=0)
+        self.client.force_authenticate(user=self.user)
+
+    def test_get_recommendations_unauthenticated(self):
+        """Test recommendations endpoint without authentication."""
+        self.client.logout()
+        response = self.client.get("/recommendations/")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_parse_year_range(self):
+        """Test parsing year range parameters."""
+        self.assertEqual(RecommendationsView._parse_year_range("2000", "2020"), {"start": 2000, "end": 2020})
+        self.assertIsNone(RecommendationsView._parse_year_range("2000", None))
+
+        with self.assertRaises(ValueError) as context:
+            RecommendationsView._parse_year_range("bad", "2020")
+        self.assertEqual(str(context.exception), "Invalid year range values")
+
+        with self.assertRaises(ValueError) as context:
+            RecommendationsView._parse_year_range("2020", "2000")
+        self.assertEqual(str(context.exception), "Start year cannot be greater than end year")
+
+        with self.assertRaises(ValueError) as context:
+            RecommendationsView._parse_year_range("1970", str(datetime.now().year))
+        self.assertIn("Year range must be between", str(context.exception))
+
+    def test_parse_min_rating(self):
+        """Test parsing minimum rating parameter."""
+        self.assertEqual(RecommendationsView._parse_min_rating("5"), 5)
+        self.assertIsNone(RecommendationsView._parse_min_rating(None))
+
+        with self.assertRaises(ValueError) as context:
+            RecommendationsView._parse_min_rating("bad")
+        self.assertEqual(str(context.exception), "Invalid minimum rating value")
+
+        with self.assertRaises(ValueError) as context:
+            RecommendationsView._parse_min_rating("6")
+        self.assertIn("Minimum rating must be between", str(context.exception))
+
+    def test_parse_recommendations_number(self):
+        """Test parsing recommendations number parameter."""
+        self.assertEqual(RecommendationsView._parse_recommendations_number("5"), 5)
+        self.assertIsNone(RecommendationsView._parse_recommendations_number(None))
+
+        with self.assertRaises(ValueError) as context:
+            RecommendationsView._parse_recommendations_number("bad")
+        self.assertEqual(str(context.exception), "Invalid recommendations number value")
+
+        with self.assertRaises(ValueError) as context:
+            RecommendationsView._parse_recommendations_number("0")
+        self.assertIn("Number of recommendations must be between", str(context.exception))
+
+    def test_get_user_game_preferences(self):
+        """Test getting user game preferences based on ratings."""
+        liked_games, disliked_games = RecommendationsView._get_user_game_preferences(self.user)
+
+        self.assertEqual(liked_games, ["Liked Game"])
+        self.assertEqual(disliked_games, ["Disliked Game"])
+
+    @patch("games.views.recommendations.capture_exception")
+    def test_convert_recommendations_to_games_igdb_error(self, mock_capture):
+        """Test IGDB conversion failure returns empty results."""
+        mock_igdb = Mock()
+        mock_igdb.get_games.side_effect = IGDBError("IGDB error")
+
+        result = RecommendationsView._convert_recommendations_to_games([{"igdb_id": 1}], mock_igdb)
+
+        self.assertEqual(result, [])
+        mock_capture.assert_called_once()
+
+    @patch("games.views.recommendations.IGDB")
+    @patch("games.views.recommendations.OpenAIClient")
+    def test_get_recommendations_success_filters_existing_games(self, mock_client_class, mock_igdb_class):
+        """Test successful recommendations request filters games the user already has."""
+        mock_client = Mock()
+        mock_client_class.return_value = mock_client
+        mock_client.get_game_recommendations.return_value = [{"igdb_id": 1}, {"igdb_id": 999}]
+
+        recommended_game = {
+            "id": 999,
+            "name": "Recommended Game",
+            "cover": None,
+            "category": "Main Game",
+            "isReleased": True,
+        }
+        mock_igdb = mock_igdb_class.return_value
+        mock_igdb.get_games.return_value = [self.liked_game.object, recommended_game]
+
+        response = self.client.get("/recommendations/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json(), [recommended_game])
+
+        mock_client.get_game_recommendations.assert_called_once()
+        args = mock_client.get_game_recommendations.call_args.args[0]
+        self.assertIsInstance(args, RecommendationRequest)
+        self.assertEqual(args.liked_games, ["Liked Game"])
+        self.assertEqual(args.disliked_games, ["Disliked Game"])
+        self.assertEqual(args.recommendations_number, 50)
+
+    @patch("games.views.recommendations.IGDB")
+    @patch("games.views.recommendations.OpenAIClient")
+    def test_get_recommendations_with_all_parameters(self, mock_client_class, mock_igdb_class):
+        """Test recommendations request with all parameters."""
+        mock_client = Mock()
+        mock_client_class.return_value = mock_client
+        mock_client.get_game_recommendations.return_value = []
+        mock_igdb_class.return_value.get_games.return_value = []
+
+        response = self.client.get(
+            "/recommendations/",
+            {
+                "preferredGenre": "Action",
+                "yearStart": "2000",
+                "yearEnd": "2020",
+                "minRating": "4",
+                "recommendationsNumber": "5",
+            },
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        args = mock_client.get_game_recommendations.call_args.args[0]
+        self.assertEqual(args.preferred_genre, "Action")
+        self.assertEqual(args.year_range, {"start": 2000, "end": 2020})
+        self.assertEqual(args.min_rating, 4)
+        self.assertEqual(args.recommendations_number, 5)
+
+    def test_get_recommendations_invalid_parameters(self):
+        """Test recommendations request with invalid parameters."""
+        invalid_cases = [
+            ({"yearStart": "bad", "yearEnd": "2020"}, "Invalid year range values"),
+            ({"minRating": "bad"}, "Invalid minimum rating value"),
+            ({"recommendationsNumber": "bad"}, "Invalid recommendations number value"),
+            ({"preferredGenre": "Unknown"}, "Preferred genre 'Unknown' is not valid"),
+        ]
+
+        for params, expected_error in invalid_cases:
+            with self.subTest(params=params):
+                response = self.client.get("/recommendations/", params)
+                self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+                self.assertIn(expected_error, response.json()["error"])
+
+    @patch("games.views.recommendations.capture_exception")
+    @patch("games.views.recommendations.OpenAIClient")
+    def test_get_recommendations_openai_error(self, mock_client_class, mock_capture):
+        """Test handling of OpenAI errors."""
+        mock_client = Mock()
+        mock_client_class.return_value = mock_client
+        mock_client.get_game_recommendations.side_effect = OpenAIError("API error")
+
+        response = self.client.get("/recommendations/")
+
+        self.assertEqual(response.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR)
+        self.assertEqual(response.json()["error"], "Failed to get AI recommendations. Please try again later.")
+        mock_capture.assert_called_once()

@@ -40,3 +40,34 @@ export const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL as string;
 export const DLC_KIND_CATEGORIES = ["DLC", "Expansion", "Standalone Expansion"];
 
 export const DEFAULT_LIST = LIST_KEYS[LIST_IDS.WantToPlay];
+
+export const AI_MAX_RECOMMENDATIONS = 50;
+export const AI_MIN_RECOMMENDATIONS = 1;
+export const AI_MAX_RATING = 5;
+export const AI_MIN_YEAR = 1971;
+
+export const GAME_GENRES = [
+  "Action",
+  "Adventure",
+  "Arcade",
+  "Card & Board Game",
+  "Fighting",
+  "Hack and Slash",
+  "Indie",
+  "MOBA",
+  "Music",
+  "Platform",
+  "Point-and-Click",
+  "Puzzle",
+  "Quiz/Trivia",
+  "Racing",
+  "Real Time Strategy",
+  "Role-playing",
+  "Shooter",
+  "Simulator",
+  "Sport",
+  "Strategy",
+  "Tactical",
+  "Turn-based Strategy",
+  "Visual Novel",
+] as const;

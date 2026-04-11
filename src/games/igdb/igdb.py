@@ -111,6 +111,30 @@ class IGDB:
         results: list[IGDBGameRaw] = json.loads(response)
         return self._process_search_games_results(results)
 
+    def get_games(self, game_ids: list[int]) -> list[GameObject]:
+        """Get games by IGDB IDs."""
+        if not game_ids:
+            return []
+
+        unique_game_ids = list(dict.fromkeys(game_ids))
+        game_ids_query = ", ".join(str(game_id) for game_id in unique_game_ids)
+        request = f"""
+            fields name, cover.image_id, first_release_date, game_type;
+            where id = ({game_ids_query}) &
+                version_parent = null &
+                platforms = {PLATFORMS_SUPPORTED} &
+                game_type = {GAME_CATEGORIES_SUPPORTED};
+            limit {len(unique_game_ids)};
+        """
+        try:
+            response = self.igdb.api_request("games", request)
+        except Exception as exc:
+            raise IGDBError from exc
+        results: list[IGDBGameRaw] = json.loads(response)
+        games = self._process_search_games_results(results)
+        games_by_id = {game["id"]: game for game in games}
+        return [games_by_id[game_id] for game_id in unique_game_ids if game_id in games_by_id]
+
     def _process_game(self, game: IGDBGameRaw) -> IGDBGame:
         """Process game."""
         return {

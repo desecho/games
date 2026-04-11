@@ -10,6 +10,7 @@ import ChangePasswordView from "./views/ChangePasswordView.vue";
 import GamesView from "./views/GamesView.vue";
 import LoginView from "./views/LoginView.vue";
 import LogoutView from "./views/LogoutView.vue";
+import RecommendationsView from "./views/RecommendationsView.vue";
 import RegistrationView from "./views/RegistrationView.vue";
 import ResetPasswordRequestView from "./views/ResetPasswordRequestView.vue";
 import ResetPasswordView from "./views/ResetPasswordView.vue";
@@ -34,6 +35,7 @@ export const router = createRouter({
     { path: "/", component: SearchView },
     { path: "/games", component: GamesView },
     { path: "/games/:listKey", component: GamesView, props: true },
+    { path: "/recommendations", component: RecommendationsView },
     { path: "/about", component: AboutView },
     { path: "/users/:username", component: UserGamesView, props: true },
     { path: "/users/:username/:listKey", component: UserGamesView, props: true },
@@ -58,7 +60,7 @@ export const router = createRouter({
 });
 
 router.beforeEach(async (to) => {
-  const privatePages = ["/games", "/preferences", "/change-password"];
+  const privatePages = ["/games", "/recommendations", "/preferences", "/change-password"];
   const authRequired = privatePages.includes(to.path);
   const { user, refreshToken } = useAuthStore();
 

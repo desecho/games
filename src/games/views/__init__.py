@@ -1,6 +1,7 @@
 """Views."""
 
 from .health import HealthView
+from .recommendations import RecommendationsView
 from .records import (
     ChangeListView,
     RecordAdd,
@@ -22,6 +23,7 @@ __all__ = [
     "RecordRatingView",
     "RecordsSaveOrderView",
     "RecordsView",
+    "RecommendationsView",
     "HealthView",
     "UserRecordsView",
     "UsersView",

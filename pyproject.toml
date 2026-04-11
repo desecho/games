@@ -23,6 +23,7 @@ dependencies = [
     "typing-extensions>=4.3.0,<5.0.0",
     "igdb-api-v4>=0.3.3,<0.4.0",
     "Authlib>=1.0.1,<2.0.0",
+    "openai>=1.0.0,<2.0.0",
     "pip>=25.2,<26.0.0",
 ]
 

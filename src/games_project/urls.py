@@ -8,6 +8,7 @@ from games.types import URL
 from games.views import (
     ChangeListView,
     HealthView,
+    RecommendationsView,
     RecordAdd,
     RecordDeleteView,
     RecordRatingView,
@@ -34,6 +35,7 @@ urlpatterns: list[URL] = [
     path("user/check-email-availability/", UserCheckEmailAvailabilityView.as_view()),
     # Search
     path("search/", SearchView.as_view()),
+    path("recommendations/", RecommendationsView.as_view()),
     # Users
     path("users/", UsersView.as_view()),
     # Records

@@ -212,8 +212,45 @@ REST_REGISTRATION = {
 # -------------------------------------------------------------------------------
 IGDB_CLIENT_ID = getenv("IGDB_CLIENT_ID")
 IGDB_CLIENT_SECRET = getenv("IGDB_CLIENT_SECRET")
+OPENAI_API_KEY = getenv("OPENAI_API_KEY")
 IGDB_TOKEN_ENDPOINT = "https://id.twitch.tv/oauth2/token"  # nosec B105
 IGDB_COVER_BASE_URL = "https://images.igdb.com/igdb/image/upload/t_cover_big/"
 
 # Search settings
 MAX_RESULTS = 100
+
+# AI Recommendations
+AI_MAX_RECOMMENDATIONS = 50
+AI_MIN_RECOMMENDATIONS = 1
+AI_MIN_RATING = 0
+AI_MAX_RATING = 5
+AI_MAX_GAME_TITLE_LENGTH = 255
+
+OPENAI_MODEL = "gpt-5-mini"
+OPENAI_MAX_TOKENS = 10000
+
+GAME_GENRES = [
+    "Action",
+    "Adventure",
+    "Arcade",
+    "Card & Board Game",
+    "Fighting",
+    "Hack and Slash",
+    "Indie",
+    "MOBA",
+    "Music",
+    "Platform",
+    "Point-and-Click",
+    "Puzzle",
+    "Quiz/Trivia",
+    "Racing",
+    "Real Time Strategy",
+    "Role-playing",
+    "Shooter",
+    "Simulator",
+    "Sport",
+    "Strategy",
+    "Tactical",
+    "Turn-based Strategy",
+    "Visual Novel",
+]

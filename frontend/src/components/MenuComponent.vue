@@ -19,6 +19,7 @@
       <v-list>
         <MenuItem title="Search" icon="magnify" to="/" />
         <MenuItem v-if="user.isLoggedIn" title="Games" icon="controller" to="/games" />
+        <MenuItem v-if="user.isLoggedIn" title="AI Picks" icon="robot" to="/recommendations" />
         <MenuItem title="Users" icon="account-group" to="/users" />
       </v-list>
       <template #append>

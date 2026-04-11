@@ -36,6 +36,7 @@ jobs:
             --from-literal=IGDB_CLIENT_SECRET=${{ secrets.IGDB_CLIENT_SECRET }} \
             --from-literal=SENTRY_DSN=${{ secrets.SENTRY_DSN }} \
             --from-literal=EMAIL_HOST_PASSWORD=${{ secrets.EMAIL_HOST_PASSWORD }} \
+            --from-literal=OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
             --dry-run=client -o yaml | kubectl apply -f -
           kubectl rollout restart "deployment/$PROJECT"
           kubectl rollout status "deployment/$PROJECT"
