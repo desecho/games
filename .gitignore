@@ -136,3 +136,18 @@ env_secrets.sh
 db_env_prod.sh
 docker_secrets.env
 /static
+
+# macOS
+.DS_Store
+
+# iOS / Xcode
+xcuserdata/
+*.xcuserstate
+DerivedData/
+.build/
+.swiftpm/
+*.xcresult
+*.xcarchive
+*.ipa
+*.dSYM
+*.dSYM.zip
