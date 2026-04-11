@@ -43,6 +43,7 @@ class RecordObject(TypedDict):
     game: GameObject
     listKey: str
     order: int
+    rating: int
 
 
 class UserPreferences(TypedDict):

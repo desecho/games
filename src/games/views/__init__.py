@@ -1,7 +1,15 @@
 """Views."""
 
 from .health import HealthView
-from .records import ChangeListView, RecordAdd, RecordDeleteView, RecordsSaveOrderView, RecordsView, UserRecordsView
+from .records import (
+    ChangeListView,
+    RecordAdd,
+    RecordDeleteView,
+    RecordRatingView,
+    RecordsSaveOrderView,
+    RecordsView,
+    UserRecordsView,
+)
 from .search import SearchView
 from .user import UserCheckEmailAvailabilityView, UserPreferencesView
 from .users import UsersView
@@ -11,6 +19,7 @@ __all__ = [
     "RecordAdd",
     "ChangeListView",
     "RecordDeleteView",
+    "RecordRatingView",
     "RecordsSaveOrderView",
     "RecordsView",
     "HealthView",

@@ -7,11 +7,13 @@ from django.db.models import (
     CASCADE,
     BooleanField,
     CharField,
+    CheckConstraint,
     DateField,
     DateTimeField,
     ForeignKey,
     Model,
     PositiveSmallIntegerField,
+    Q,
     QuerySet,
     UniqueConstraint,
 )
@@ -157,6 +159,7 @@ class Record(Model):
         constraints = [
             # A user should only have one record per game.
             UniqueConstraint(fields=("user", "game"), name="unique_user_game_record"),
+            CheckConstraint(condition=Q(rating__gte=0, rating__lte=5), name="record_rating_between_0_and_5"),
         ]
         ordering = ["order"]
 
@@ -172,4 +175,5 @@ class Record(Model):
             "game": self.game.object,
             "listKey": self.list.key_name,
             "order": self.order,
+            "rating": self.rating,
         }

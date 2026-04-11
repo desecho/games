@@ -159,12 +159,13 @@ class RecordModelTest(TestCase):
 
     def test_record_object_property(self):
         """Test record object property."""
-        record = Record.objects.create(user=self.user, game=self.game, list=self.game_list, order=5)
+        record = Record.objects.create(user=self.user, game=self.game, list=self.game_list, order=5, rating=4)
         obj = record.object
         self.assertEqual(obj["id"], record.pk)
         self.assertEqual(obj["game"], self.game.object)
         self.assertEqual(obj["listKey"], "want_to_play")
         self.assertEqual(obj["order"], 5)
+        self.assertEqual(obj["rating"], 4)
 
     def test_record_defaults(self):
         """Test record default values."""

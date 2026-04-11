@@ -32,13 +32,18 @@ const isOwnProfile = isProfile && props.username === user.username;
 
 function getSwitches(): Switch[] {
   const switches: Switch[] = [];
-  /* Don't show "Hide action buttons" switch for unauthenticated users because action buttons are always
-     hidden for them. Same if the user is on their own profile page. */
+  /* Keep these display controls together with "Hide action buttons". */
   if (user.isLoggedIn && !isOwnProfile) {
-    switches.push({
-      name: "areActionButtonsHidden",
-      label: "Hide action buttons",
-    });
+    switches.push(
+      {
+        name: "areActionButtonsHidden",
+        label: "Hide action buttons",
+      },
+      {
+        name: "areRatingsHidden",
+        label: "Hide ratings",
+      },
+    );
   }
   switches.push(
     {

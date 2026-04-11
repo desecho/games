@@ -115,7 +115,7 @@ class RecordsViewTest(TestCase):
         self.category = Category.objects.create(name="Main Game")
         self.game = Game.objects.create(name="Test Game", category=self.category)
         self.game_list = List.objects.create(name="Want to Play", key_name="want_to_play")
-        self.record = Record.objects.create(user=self.user, game=self.game, list=self.game_list)
+        self.record = Record.objects.create(user=self.user, game=self.game, list=self.game_list, rating=4)
         self.client.force_authenticate(user=self.user)
 
     def test_get_user_records(self):
@@ -124,6 +124,7 @@ class RecordsViewTest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]["game"]["name"], "Test Game")
+        self.assertEqual(response.data[0]["rating"], 4)
 
 
 class UserRecordsViewTest(TestCase):
@@ -269,6 +270,49 @@ class ChangeListViewTest(TestCase):
     def test_change_list_nonexistent_record(self):
         """Test changing list for nonexistent record returns 404."""
         response = self.client.put("/records/999/change-list/", {"listId": self.new_list.id}, format="json")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+
+class RecordRatingViewTest(TestCase):
+    """Test record rating view."""
+
+    def setUp(self):
+        """Set up test data."""
+        self.client = APIClient()
+        self.user = User.objects.create_user(username="testuser", email="test@example.com")
+        self.other_user = User.objects.create_user(username="otheruser", email="other@example.com")
+        self.category = Category.objects.create(name="Main Game")
+        self.game = Game.objects.create(name="Test Game", category=self.category)
+        self.game_list = List.objects.create(name="Want to Play", key_name="want_to_play")
+        self.record = Record.objects.create(user=self.user, game=self.game, list=self.game_list)
+        self.other_record = Record.objects.create(user=self.other_user, game=self.game, list=self.game_list)
+        self.client.force_authenticate(user=self.user)
+
+    def test_update_rating_success(self):
+        """Test successfully updating rating."""
+        for rating in [0, 1, 5]:
+            with self.subTest(rating=rating):
+                response = self.client.put(f"/records/{self.record.id}/rating/", {"rating": rating}, format="json")
+                self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+                self.record.refresh_from_db()
+                self.assertEqual(self.record.rating, rating)
+
+    def test_update_rating_missing_parameter(self):
+        """Test updating rating with missing parameter returns 400."""
+        response = self.client.put(f"/records/{self.record.id}/rating/", {}, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_update_rating_invalid_value(self):
+        """Test updating rating with invalid values returns 400."""
+        for rating in ["bad", 1.5, -1, 6]:
+            with self.subTest(rating=rating):
+                response = self.client.put(f"/records/{self.record.id}/rating/", {"rating": rating}, format="json")
+                self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_update_rating_other_users_record(self):
+        """Test updating another user's record returns 404."""
+        response = self.client.put(f"/records/{self.other_record.id}/rating/", {"rating": 4}, format="json")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 

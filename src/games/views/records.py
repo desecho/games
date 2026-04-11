@@ -104,6 +104,36 @@ class ChangeListView(APIView):
         return Response()
 
 
+class RecordRatingView(APIView):
+    """Record rating view."""
+
+    def put(self, request: Request, record_id: int) -> Response:
+        """Update record rating."""
+        try:
+            rating = request.data["rating"]
+        except KeyError:
+            return Response(status=HTTPStatus.BAD_REQUEST)
+
+        if isinstance(rating, bool):
+            return Response(status=HTTPStatus.BAD_REQUEST)
+        if isinstance(rating, int):
+            rating_value = rating
+        elif isinstance(rating, str) and rating.isdecimal():
+            rating_value = int(rating)
+        else:
+            return Response(status=HTTPStatus.BAD_REQUEST)
+
+        if rating_value < 0 or rating_value > 5:
+            return Response(status=HTTPStatus.BAD_REQUEST)
+
+        user: User = request.user  # type: ignore
+        records: QuerySet[Record] = user.records.filter(pk=record_id)
+        if not records.exists():
+            return Response(status=HTTPStatus.NOT_FOUND)
+        records.update(rating=rating_value)
+        return Response()
+
+
 class RecordDeleteView(APIView):
     """Record delete view."""
 

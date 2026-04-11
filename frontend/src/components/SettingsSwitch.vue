@@ -31,7 +31,7 @@ function saveSettings(): void {
 }
 
 onMounted(() => {
-  value.value = getSection()[props.name];
+  value.value = getSection()[props.name] === true;
 });
 </script>
 

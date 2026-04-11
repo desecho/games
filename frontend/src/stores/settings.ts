@@ -5,6 +5,7 @@ export const useSettingsStore = defineStore("settings", {
     settings: {
       games: {
         areActionButtonsHidden: false,
+        areRatingsHidden: false,
         areUnreleasedGamesHidden: false,
         areDLCsHidden: false,
       },

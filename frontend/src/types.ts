@@ -21,6 +21,7 @@ export interface RecordType {
   game: Game;
   listKey: ListKey;
   order: number;
+  rating: number;
 }
 
 export enum LIST_IDS {

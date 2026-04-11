@@ -10,6 +10,7 @@ from games.views import (
     HealthView,
     RecordAdd,
     RecordDeleteView,
+    RecordRatingView,
     RecordsSaveOrderView,
     RecordsView,
     SearchView,
@@ -40,6 +41,7 @@ urlpatterns: list[URL] = [
     path("records/add/", RecordAdd.as_view()),
     path("records/save-order/", RecordsSaveOrderView.as_view()),
     path("records/<int:record_id>/change-list/", ChangeListView.as_view()),
+    path("records/<int:record_id>/rating/", RecordRatingView.as_view()),
     path("records/<int:record_id>/delete/", RecordDeleteView.as_view()),
     path("records/users/<str:username>/", UserRecordsView.as_view()),
 ]

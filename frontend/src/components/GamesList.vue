@@ -18,6 +18,7 @@
                 :list-key="listKey"
                 :username="username"
                 :class="{ draggable: isDraggable }"
+                @update-rating="updateRecordRating"
               />
             </template>
           </draggable>
@@ -72,6 +73,13 @@ function saveRecordsOrder(): void {
     console.log(error);
     $toast.error("Error saving games order");
   });
+}
+
+function updateRecordRating(recordId: number, rating: number): void {
+  const matchedRecord = records.value.find((record) => record.id === recordId);
+  if (matchedRecord !== undefined) {
+    matchedRecord.rating = rating;
+  }
 }
 
 function isShowGame(game: Game): boolean {

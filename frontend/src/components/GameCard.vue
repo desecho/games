@@ -1,6 +1,24 @@
 <template>
   <v-card class="mb-5 mr-5" width="168" :height="height">
-    <GameCover :game="record.game" />
+    <div class="game-card-poster">
+      <GameCover :game="record.game" />
+      <div v-if="isRatingVisible" class="game-card-rating" @click.stop @mousedown.stop @touchstart.stop>
+        <v-rating
+          :model-value="rating"
+          :readonly="!isRatingEditable"
+          :clearable="isRatingEditable"
+          :hover="isRatingEditable"
+          :title="ratingTitle"
+          color="amber-darken-2"
+          active-color="amber-darken-2"
+          density="compact"
+          size="x-small"
+          length="5"
+          :ripple="false"
+          @update:model-value="updateRating"
+        />
+      </div>
+    </div>
     <v-card-actions v-if="areActionsVisible">
       <v-spacer></v-spacer>
       <ActionButton
@@ -19,7 +37,7 @@
 
 <script lang="ts" setup>
 import axios from "axios";
-import { computed, toRef } from "vue";
+import { computed, ref, toRef, watch } from "vue";
 
 import type { ListKey, RecordType } from "../types";
 import type { GameIdsWithListKeys } from "./types";
@@ -43,6 +61,9 @@ const props = defineProps<{
   listKey: ListKey;
   username?: string;
 }>();
+const emit = defineEmits<{
+  updateRating: [recordId: number, rating: number];
+}>();
 
 const { user } = useAuthStore();
 const isLoggedIn = user.isLoggedIn;
@@ -61,6 +82,19 @@ const isProfile = props.username !== undefined;
 const isOwnProfile = isProfile && props.username === user.username;
 const areActionsVisible = computed(() => {
   return isLoggedIn && !isOwnProfile && !settings.value.games.areActionButtonsHidden;
+});
+const isRatingEditable = computed(() => {
+  return isLoggedIn && (!isProfile || isOwnProfile);
+});
+const isRatingVisible = computed(() => {
+  return settings.value.games.areRatingsHidden !== true;
+});
+const rating = ref(props.record.rating);
+const ratingTitle = computed(() => {
+  if (rating.value === 0) {
+    return "Unrated";
+  }
+  return `${rating.value} out of 5`;
 });
 const height = computed(() => {
   return areActionsVisible.value ? 275 : 224;
@@ -128,6 +162,38 @@ function deleteGame(recordId: number): void {
     });
 }
 
+function updateRating(value: number | string): void {
+  if (!isRatingEditable.value) {
+    return;
+  }
+
+  const ratingValue = Number(value);
+  if (!Number.isInteger(ratingValue) || ratingValue < 0 || ratingValue > 5) {
+    return;
+  }
+
+  const previousRating = rating.value;
+  rating.value = ratingValue;
+  requireAuthenticated();
+  axios
+    .put(getUrl(`records/${props.record.id}/rating/`), { rating: ratingValue })
+    .then(() => {
+      emit("updateRating", props.record.id, ratingValue);
+    })
+    .catch((error: AxiosError) => {
+      console.log(error);
+      rating.value = previousRating;
+      $toast.error("Error updating rating");
+    });
+}
+
+watch(
+  () => props.record.rating,
+  (value) => {
+    rating.value = value;
+  },
+);
+
 const { addToList } = useAddToList();
 
 function action(listId: number): void {
@@ -141,3 +207,23 @@ function action(listId: number): void {
   }
 }
 </script>
+
+<style scoped>
+.game-card-poster {
+  height: 225px;
+  position: relative;
+}
+
+.game-card-rating {
+  align-items: center;
+  background: rgba(0, 0, 0, 0.62);
+  bottom: 0;
+  display: flex;
+  height: 36px;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  right: 0;
+  z-index: 1;
+}
+</style>
