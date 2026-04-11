@@ -47,7 +47,7 @@ const VuetifyStubs = {
       ' :data-readonly="readonly"',
       ' :data-clearable="clearable"',
       ' :title="title"',
-      ' @click="$emit(\'update:modelValue\', 5)"',
+      " @click=\"$emit('update:modelValue', 5)\"",
       "><slot /></div>",
     ].join(""),
     props: [

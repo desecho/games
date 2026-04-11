@@ -29,9 +29,7 @@ class GameAdmin(ModelAdmin[Game]):
 class ListAdmin(ModelAdmin[List]):
     """List admin."""
 
-    def has_delete_permission(
-        self, request: HttpRequest, obj: Optional[List] = None
-    ) -> bool:
+    def has_delete_permission(self, request: HttpRequest, obj: Optional[List] = None) -> bool:
         """Return True if the user has delete permission."""
         return False
 
@@ -43,9 +41,7 @@ class CategoryAdmin(ModelAdmin[Category]):
     list_display = ("name",)
     search_fields = ("name",)
 
-    def has_delete_permission(
-        self, request: HttpRequest, obj: Optional[Category] = None
-    ) -> bool:
+    def has_delete_permission(self, request: HttpRequest, obj: Optional[Category] = None) -> bool:
         """Return True if the user has delete permission."""
         return False
 
