@@ -1,10 +1,38 @@
 import SwiftUI
 
+private enum GameViewMode: Equatable {
+    case list
+    case gallery
+
+    var toggleSystemImage: String {
+        switch self {
+        case .list:
+            return "square.grid.3x3"
+        case .gallery:
+            return "list.bullet"
+        }
+    }
+
+    var toggleAccessibilityLabel: String {
+        switch self {
+        case .list:
+            return "Show gallery view"
+        case .gallery:
+            return "Show list view"
+        }
+    }
+
+    mutating func toggle() {
+        self = self == .list ? .gallery : .list
+    }
+}
+
 struct GameListView: View {
     @EnvironmentObject private var apiService: APIService
     let list: GameList
 
     @State private var errorMessage: String?
+    @State private var currentViewMode: GameViewMode = .list
 
     private var records: [GameRecord] {
         apiService.records(for: list)
@@ -22,6 +50,11 @@ struct GameListView: View {
                         systemImage: list.systemImage,
                         description: Text("Search for games and add them to \(list.title).")
                     )
+                } else if currentViewMode == .gallery {
+                    GameGalleryView(records: records)
+                        .refreshable {
+                            await reload()
+                        }
                 } else {
                     List {
                         ForEach(records) { record in
@@ -46,7 +79,14 @@ struct GameListView: View {
                     }
                 }
 
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    Button {
+                        currentViewMode.toggle()
+                    } label: {
+                        Image(systemName: currentViewMode.toggleSystemImage)
+                    }
+                    .accessibilityLabel(currentViewMode.toggleAccessibilityLabel)
+
                     Button {
                         Task {
                             await reload()
@@ -86,6 +126,75 @@ struct GameListView: View {
         } catch {
             errorMessage = error.localizedDescription
         }
+    }
+}
+
+private struct GameGalleryView: View {
+    let records: [GameRecord]
+
+    private let columns = [
+        GridItem(.adaptive(minimum: 104), spacing: 12)
+    ]
+
+    var body: some View {
+        ScrollView {
+            LazyVGrid(columns: columns, spacing: 14) {
+                ForEach(records) { record in
+                    GameGalleryItemView(record: record)
+                }
+            }
+            .padding(12)
+        }
+    }
+}
+
+private struct GameGalleryItemView: View {
+    let record: GameRecord
+
+    var body: some View {
+        VStack(spacing: 6) {
+            AsyncImage(url: record.game.coverURL) { phase in
+                switch phase {
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFill()
+                case .failure:
+                    placeholder
+                case .empty:
+                    ProgressView()
+                @unknown default:
+                    placeholder
+                }
+            }
+            .aspectRatio(0.75, contentMode: .fit)
+            .frame(maxWidth: .infinity)
+            .background(Color.secondary.opacity(0.12))
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .shadow(color: .black.opacity(0.08), radius: 2, x: 0, y: 1)
+
+            Text(record.game.name)
+                .font(.caption)
+                .fontWeight(.medium)
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity)
+
+            if !record.game.isReleased {
+                Label("Unreleased", systemImage: "clock")
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+            }
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    private var placeholder: some View {
+        Image(systemName: "gamecontroller")
+            .font(.title2)
+            .foregroundStyle(.secondary)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
